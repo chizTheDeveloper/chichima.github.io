@@ -50,10 +50,12 @@ align-content: center;
     letter-spacing: 3px;
     text-decoration: none;
     text-transform: capitalize;
+   
     
 }
 .navItems li:hover a, .links a:hover{
     color: #b30f2b;
+    text-decoration: underline;
 }
 .links a{
     font-size: 30px;
@@ -142,6 +144,7 @@ p{
     left: 150px;
 }
 button{
+    border-radius: 30px;
     outline: none;
     border: none;
     cursor: pointer;
@@ -154,6 +157,7 @@ button{
     letter-spacing: 2px;
     text-transform: capitalize;
     box-shadow: 0 15px 10px rgba(136, 52, 52, 0.4);
+    
 }
 button:hover{
 background-color: #b30f2b
