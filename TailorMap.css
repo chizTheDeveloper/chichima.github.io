@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+.div1 {
+  min-height: 100vh;
+  text-align: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+nav {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  height: 80px;
+  line-height: 80px;
+  z-index: 111;
+  background-color: #1b1b1b;
+}
+
+.logo a {
+  display: flex;
+  font-size: 40px;
+  font-weight: 800;
+  color: #f3f5f3;
+  letter-spacing: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.links a {
+  font-size: 30px;
+  color: #b30f2b;
+  margin: 25px 10px;
+}
+
+.button1 a {
+  color: #f1f1f1;
+  text-decoration: none;
+}
+
+button {
+  display: flex;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 400;
+  color: #fff;
+  background-color: #b30f2b;
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin: 12px 5px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  align-self: center;
+}
+button:hover {
+  background-color: #b30f2b;
+  box-shadow: 0 10px 10px rgba(255, 20, 20, 0.4);
+}
+
+b {
+  font-size: 50px;
+  color: #b30f2b;
+}
+.MediumImg {
+  padding-right: 50px;
+}
+h1 {
+  color: #1b1b1b;
+  padding-top: 20px;
+}
+h2 {
+  font-weight: 600;
+}
+h3 {
+  color: #1b1b1b;
+  font-weight: 400;
+  padding-bottom: 30px;
+  padding-right: 50px;
+}
+h4 {
+  color: #b30f2b;
+  font-size: 30px;
+}
+img {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.smallImg {
+  width: 800px;
+  height: 450px;
+  padding-top: 10px;
+}
+
+.Display1 {
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.Display2 {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: left;
+}
+
+.Display3 {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.smallImg {
+  padding-left: 10px;
+}
+
+.fragments {
+  width: 50%;
+}
+
+.imgButton i {
+  font-size: 30px;
+  color: #b30f2b;
+  margin: 25px 10px;
+}
+
+.largeImg {
+  height: 100%;
+}
+.NavTitle {
+  font-size: 30px;
+  color: #fff;
+}

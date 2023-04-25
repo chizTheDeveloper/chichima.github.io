@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="=en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--Font Awesome Link-->
+    <script
+      src="https://kit.fontawesome.com/2539c47f52.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="drawingApp.css" />
+    <title>Drawing App</title>
+  </head>
+  <body>
+    <!-- MAIN NAV--------------------------------------------------------------->
+    <nav>
+      <div class="logo">
+        <a href="index.html"> Chi<b>.</b> Chima </a>
+      </div>
+      <div class="imgButton">
+        <a href="TailorMap.html"
+          ><i class="fa-solid fa-circle-chevron-left"></i>
+        </a>
+      </div>
+      <h2 class="NavTitle">Drawing app</h2>
+      <div class="imgButton">
+        <a href="echo.html"
+          ><i class="fa-solid fa-circle-chevron-right"></i>
+        </a>
+      </div>
+
+      <div class="links">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"> </i></a>
+        <a href="#"><i class="fa-brands fa-twitter"> </i></a>
+      </div>
+    </nav>
+
+    <!-- MAIN NAV--------------------------------------------------------------->
+
+    <!-- BODY--------------------------------------------------------------->
+    <div class="div1">
+      <img class="smallImg" src="Assets/Andriod.png" />
+      <div class="Display1">
+        <div>
+          <h1>Project summary</h1>
+          <h3>
+            Develp a painting application using andriod studio using API 28,
+            this was a solo project in which was more focused on core features
+            so I apologize for the bad UI.
+          </h3>
+        </div>
+      </div>
+
+      <div class="Display1">
+        <h1>Core Features</h1>
+
+        <ul>
+          <li>
+            <h2>Multi-touch drawing:</h2>
+            <h3>
+              should support at least three simultaneous contact points to draw
+              on the screen. 3 fingers on the screen create a triangle.
+            </h3>
+          </li>
+          <li>
+            <h2>
+              Shape drawing: Support any three of the following four shapes.
+            </h2>
+            <ul>
+              <li>
+                <h3>
+                  Lines: – touching a point sets the starting point for a line.
+                  Each subsequent point touched draws another line from the
+                  previous touched point to this touched point.
+                </h3>
+              </li>
+              <li>
+                <h3>
+                  Rectangle – touching a point sets one corner of a quad in the
+                  current drawing colour. Touching a second point sets the other
+                  corner.
+                </h3>
+              </li>
+              <li>
+                <h3>
+                  Circle – Touching one point sets the centre of a circle,
+                  touching the second point sets its radius.
+                </h3>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h2>Clear the screen:</h2>
+            <h3>
+              Add a control to clear the screen, removing all drawn elements,
+              resetting the screen bank to a blank canvas.
+            </h3>
+          </li>
+          <li>
+            <h2>Eraser:</h2>
+            <h3>
+              Add a control to change to eraser mode. In eraser mode, touching
+              the screen should overwrite (e.g., in background colour)
+              previously drawn strokes.
+            </h3>
+          </li>
+          <li>
+            <h2>Undo last stroke:</h2>
+            <h3>
+              Add a control to undo the most recently drawn stroke. Repeatedly
+              hitting undo should continue to undo the next most recent stroke.
+              How you address multi-touch here is up to you (i.e., whether three
+              simultaneously strokes remove at the same time, or each in
+              sequence).
+            </h3>
+          </li>
+          <li>
+            <h2>Implement a nice colour picker:</h2>
+            <h3>
+              Add a colour picker control that supports a full range of colours
+            </h3>
+          </li>
+          <li>
+            <h2>Zoom Effect</h2>
+            <h3>Zoom in/out with a pinch gesture</h3>
+          </li>
+        </ul>
+
+        <h1>Showcase</h1>
+        <div class="Display4">
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile1.png" />
+            <h2>Color Picker</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile2.png" />
+            <h2>Tool Select</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile3.png" />
+            <h2>Pen Tool</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile4.png" />
+            <h2>Drawing Lines</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile5.png" />
+            <h2>Drawing a Square</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile6.png" />
+            <h2>Draing a circle</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile7.png" />
+            <h2>Draw a smiley face</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile8.png" />
+            <h2>Zoom in / zoom out</h2>
+          </div>
+          <div class="txt1">
+            <img class="midImg" src="Assets/mobile9.png" />
+            <h2>Eraser Tool</h2>
+          </div>
+        </div>
+        <h1>Prototype</h1>
+        <div class="reelDisplay">
+          <video width="1280" height="720" autoplay muted>
+            <source src="Assets/drawwingAppVid.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

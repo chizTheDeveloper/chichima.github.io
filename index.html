@@ -7,17 +7,20 @@
       src="https://kit.fontawesome.com/2539c47f52.js"
       crossorigin="anonymous"
     ></script>
+
     <link rel="stylesheet" href="style.css" />
     <title>CHI.CHIMA</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="main">
       <nav>
         <div class="logo">Chi<b>.</b> Chima</div>
+
         <ul class="navItems">
-          <li><a href="#">Projects</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact Me</a></li>
+          <button><a href="#Reel">Reel</a></button>
+          <button><a href="#about">About</a></button>
+          <button><a href="#projects">Projects</a></button>
+          <button><a href="#">Contact</a></button>
         </ul>
         <div class="links">
           <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -34,21 +37,115 @@
           <p>
             Im based in Ottawa, Canada. Multi Media Grad with Programming , 3d
             modelling and Illustration skills. The diversity of my skill set
-            enables me aid the teams in different tasks.
+            enables me aid the team in different tasks.
           </p>
-        <!-- <div class="btns">
-            <button>download CV</button>
-            <button>Contact Me</button>
-          </div>--> 
         </div>
         <div class="cols cols1">
           <div class="imgbox">
-            <img src="avatar.jpg" alt="avatar" id="Avatar" />
+            <img src="Assets/avatar.jpg" alt="avatar" id="Avatar" />
           </div>
         </div>
       </div>
     </div>
 
+    <div class="container2" id="Reel">
+      <!-- PROJECT REEL-->
+      <div class="header">Project Reel</div>
+      <div class="text1">Here is a reel show casing my various skill sets.</div>
+      <div class="reelDisplay">
+        <video width="1280" height="720" autoplay muted>
+          <source src="Assets/reel.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="container3" id="about">
+        <!-- ABOUT ME-->
+        <h1>About Me</h1>
+        <div class="infoDisplay">
+          <div class="item1">
+            <h2>Professional Summary</h2>
+            <p>
+              I am fond of learning new skills to diversify my capability which
+              enables me to work solo or with a team. This makes me proactive
+              and resourceful in any scenario. My exceptional attention to
+              details, provides me with the capability to work in a challenging,
+              fast-paced and deadline driving environment. Learning quickly from
+              supervisors and peers to adapt to new methods.
+            </p>
+          </div>
+          <div class="item2">
+            <h2>Skills</h2>
+            <ul>
+              Illustration
+              <li>Adobe Illustrator, After Effects, Photoshop, Figma</li>
+            </ul>
+
+            <ul>
+              Web Design
+              <li>
+                Java, CSS, REACT, MySQL, A-FRAME 3D Modelling Blender, Maya,
+                Spline
+              </li>
+            </ul>
+
+            <ul>
+              Research
+              <li>
+                Personas, A/B testing , Qualitative and quantitive surveys
+              </li>
+            </ul>
+
+            <ul>
+              Programming
+              <li>
+                Unity, android studios, Arduino,Visual Studio(C++, Java, C#)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container4" id="projects">
+      <!-- PROJECT -->
+      <div class="header">Projects</div>
+      <div class="text1">Some of my most recent ptojects.</div>
+
+      <div class="itemDisplay2">
+        <div class="proj">
+          <a href="echo.html">
+            <img src="Assets/project1.png" alt="avatar" />
+            <div class="text2">Echo (UX/UI Project)</div>
+          </a>
+        </div>
+
+        <div class="proj">
+          <a href="lumi.html">
+            <img src="Assets/lumi.png" alt="avatar" />
+            <div class="text2">Lumi (Unity Game Project)</div>
+          </a>
+        </div>
+
+        <div class="proj">
+          <a href="TailorMap.html">
+            <img src="Assets/TailorMap.png" alt="avatar" />
+            <div class="text2">Tailor Map (UX/ UI Project)</div>
+          </a>
+        </div>
+
+        <div class="proj">
+          <a href="DrawingApp.html">
+            <img src="Assets/Andriod.png" alt="avatar" />
+            <div class="text1">
+              <div class="text2">Drawing App (Andriod studios Project)</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!--scripts-->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
       var typingEffect = new Typed(".multiText", {
