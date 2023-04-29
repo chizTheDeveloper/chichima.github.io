@@ -100,8 +100,8 @@ img {
 }
 
 .smallImg {
-  width: 800px;
-  height: 450px;
+  width: 100%;
+  height: 50%;
   padding-top: 10px;
 }
 
@@ -142,4 +142,22 @@ img {
 .NavTitle {
   font-size: 30px;
   color: #fff;
+}
+
+@media only screen and (max-width: 1200px) {
+  .logo {
+    display: none;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .Display2 {
+    display: block;
+  }
+
+  .Display3 {
+    display: block;
+  }
 }

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="=en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta nae="viewport" content="width=device-width, initial-scale=1.0" />
     <!--Font Awesome Link-->
     <script
       src="https://kit.fontawesome.com/2539c47f52.js"
@@ -12,23 +13,20 @@
     <title>CHI.CHIMA</title>
   </head>
   <body>
-    <div class="container" id="main">
-      <nav>
-        <div class="logo">Chi<b>.</b> Chima</div>
 
+ 
+    <div class="container">
+      <div class="logo">Chi<b>.</b> Chima</div>
+      <nav class="webNav">
         <ul class="navItems">
           <button><a href="#Reel">Reel</a></button>
           <button><a href="#about">About</a></button>
           <button><a href="#projects">Projects</a></button>
-          <button><a href="#">Contact</a></button>
         </ul>
-        <div class="links">
-          <a href="#"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#"><i class="fa-brands fa-facebook"> </i></a>
-          <a href="#"><i class="fa-brands fa-twitter"> </i></a>
-        </div>
+       
       </nav>
 
+      </nav>
       <div class="wrapper">
         <div class="cols cols0">
           <span class="topline">Hello</span>
@@ -37,26 +35,28 @@
           <p>
             Im based in Ottawa, Canada. Multi Media Grad with Programming , 3d
             modelling and Illustration skills. The diversity of my skill set
-            enables me aid the team in different tasks.
+            enables me aid the team in different tasks. My knowledge in Java stems from using Android Studio to create
+            applications, using C++ when programming in Unity, HTML for web design, UX/Ui deseign in figma and graphic design skills in Adobe suite.
           </p>
         </div>
-        <div class="cols cols1">
-          <div class="imgbox">
-            <img src="Assets/avatar.jpg" alt="avatar" id="Avatar" />
-          </div>
+        <div >
+          <img class="profileImg" src="avatar.jpg"/>
+        </div>
         </div>
       </div>
-    </div>
 
-    <div class="container2" id="Reel">
-      <!-- PROJECT REEL-->
-      <div class="header">Project Reel</div>
-      <div class="text1">Here is a reel show casing my various skill sets.</div>
-      <div class="reelDisplay">
-        <video width="1280" height="720" autoplay muted>
-          <source src="Assets/reel.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      <div class="container2" id="Reel">
+        <!-- PROJECT REEL-->
+        <h1>Project Reel</h1>
+        <h2>
+          Here is a reel showcasing my various skill sets.
+        </h2>
+        <div class="reelDisplay">
+          <video autoplay muted>
+            <source class="videoSize" width="100px" src="Assets/reel.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
 
       <div class="container3" id="about">
@@ -105,48 +105,54 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="container4" id="projects">
-      <!-- PROJECT -->
-      <div class="header">Projects</div>
-      <div class="text1">Some of my most recent ptojects.</div>
+      <div class="container4" id="projects">
+        <!-- PROJECT -->
+        <h1>Projects</h1>
+        <h2 class="text2">Some of my most recent ptojects.</h2>
 
-      <div class="itemDisplay2">
-        <div class="proj">
-          <a href="echo.html">
-            <img src="Assets/project1.png" alt="avatar" />
-            <div class="text2">Echo (UX/UI Project)</div>
-          </a>
+        <div class="itemDisplay2">
+          <div class="proj">
+            <a href="echo.html">
+              <img src="Assets/project1.png" alt="avatar" />
+              <h3>Echo (UX/UI Project)</h3>
+            </a>
+          </div>
+
+          <div class="proj">
+            <a href="lumi.html">
+              <img src="Assets/lumi.png" alt="avatar" />
+              <h3>Lumi (Unity Game Project)</h3>
+            </a>
+          </div>
+
+          <div class="proj">
+            <a href="TailorMap.html">
+              <img src="Assets/TailorMap.png" alt="avatar" />
+              <h3>Tailor Map (UX/ UI Project)</h3>
+            </a>
+          </div>
+
+          <div class="proj">
+            <a href="DrawingApp.html">
+              <img src="Assets/Andriod.png" alt="avatar" />
+           
+                <h3>Drawing App (Andriod studios Project)</h3>
+              </div>
+            </a>
+          </div>
         </div>
-
-        <div class="proj">
-          <a href="lumi.html">
-            <img src="Assets/lumi.png" alt="avatar" />
-            <div class="text2">Lumi (Unity Game Project)</div>
-          </a>
-        </div>
-
-        <div class="proj">
-          <a href="TailorMap.html">
-            <img src="Assets/TailorMap.png" alt="avatar" />
-            <div class="text2">Tailor Map (UX/ UI Project)</div>
-          </a>
-        </div>
-
-        <div class="proj">
-          <a href="DrawingApp.html">
-            <img src="Assets/Andriod.png" alt="avatar" />
-            <div class="text1">
-              <div class="text2">Drawing App (Andriod studios Project)</div>
-            </div>
-          </a>
+        <div class="links">
+          <h2>Socials:</h2>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook"> </i></a>
+          <a href="#"><i class="fa-brands fa-twitter"> </i></a>
         </div>
       </div>
     </div>
 
     <!--scripts-->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" ></script>
     <script>
       var typingEffect = new Typed(".multiText", {
         strings: ["Programming", "3DModelling", "Illustrations"],

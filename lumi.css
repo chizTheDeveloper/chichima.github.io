@@ -103,7 +103,14 @@ h4 {
 }
 img {
   width: 100%;
-  padding-top: 10px;
+  height: 80%;
+  padding: 10%;
+}
+
+img {
+  width: 100%;
+  height: 80%;
+  padding: 5%;
 }
 
 .Display1 {
@@ -123,10 +130,6 @@ img {
   grid-template-columns: 1fr 1fr;
 }
 
-.smallImg {
-  padding-left: 10px;
-}
-
 .fragments {
   width: 50%;
 }
@@ -143,10 +146,29 @@ img {
 }
 
 video {
-  padding-left: 10px;
+  padding: 5%;
+  width: 100%;
 }
 
 .Display3 h3 {
   text-align: center;
   font-weight: 600;
+}
+
+@media only screen and (max-width: 1200px) {
+  .logo {
+    display: none;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .Display2 {
+    display: block;
+  }
+
+  .Display3 {
+    display: block;
+  }
 }

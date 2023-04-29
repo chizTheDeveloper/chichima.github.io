@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
+}
+body {
+  background-color: #1b1b1b;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 5%;
+  color: #f3f5f3;
+  font-size: 20px;
+}
+
+.container2 {
+  display: block;
+  padding-bottom: 10%;
+}
+
+.text1 {
+  padding-bottom: 10%;
+}
+.colscols1 {
+  display: block;
+  height: 5px;
+}
+.container3 ul,
+li,
+p {
+  text-align: left;
+}
+.container4 .text2 {
+  text-align: center;
+}
+.webNav {
+  display: none;
+}
+.phoneNav {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 5%;
+}
+
+b {
+  color: #b30f2b;
+  font-size: 100px;
+}
+
+h1 {
+  color: #b30f2b;
+  padding: 10px;
+  font-size: 80px;
+}
+
+h2 {
+  color: #f3f5f3;
+  font-size: 40px;
+  padding-bottom: 5%;
+}
+
+.reelDisplay {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.videoSize {
+  width: 100px;
+}
+
+.imgbox img {
+  position: relative;
+  border-radius: 50%;
+  width: calc(30% - 80px);
+  top: -700px;
+  left: 700px;
+  z-index: -2;
+  box-shadow: 0 15px 10px rgba(136, 52, 52, 0.4);
+}
+p {
+  padding-bottom: 10%;
+}
+li {
+  padding-bottom: 10%;
+}
+img {
+  width: 100%;
+}
+.itemDisplay2 {
+  display: block;
+}
+
+.text2 {
+  color: #f3f5f3;
+  margin: 5%;
+  font-size: 40px;
+}
+
+.links a {
+  display: none;
+  font-size: 100px;
+  color: #b30f2b;
+  margin: 25px 10px;
+}
+
+.logo {
+  font-size: 100px;
+  font-weight: 800;
+}
+
+.navigation {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #1b1b1b;
+}
+
+.wrapper {
+  position: relative;
+  z-index: -2;
+}
+.navigation ul {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  list-style: none;
+}
+
+.navigation ul li {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.navigation ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 60px;
+  font-weight: 500;
+  padding: 5px 50px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.navigation ul li a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  border-radius: 50px;
+  transform: scaleY(0);
+  z-index: -1;
+  transition: transform 0.3s ease;
+}
+
+@media only screen and (min-width: 768px) {
+  .imgbox img {
+    position: relative;
+    border-radius: 50%;
+    width: calc(30% - 80px);
+    top: -500px;
+    left: 700px;
+    z-index: -2;
+    box-shadow: 0 15px 10px rgba(136, 52, 52, 0.4);
+  }
+
+  .webNav {
+    display: flex;
+  }
+  .phoneNav {
+    display: none;
+  }
+}
