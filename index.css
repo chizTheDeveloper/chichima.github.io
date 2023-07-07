@@ -6,182 +6,400 @@
   box-sizing: border-box;
   font-family: "poppins", sans-serif;
 }
-body {
-  background-color: #1b1b1b;
-}
+
 html {
   scroll-behavior: smooth;
 }
 
+.wrapper {
+  background-color: #1b1b1b;
+}
 .container {
   width: 100%;
-  min-height: 100vh;
-  padding: 5%;
+  background-color: #1b1b1b;
+}
+
+.navDisplay {
+  background-color: #b30f2b;
+}
+.landingPage {
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+.profileImg {
+  display: none;
+}
+video {
+  width: 100%;
+}
+
+nav {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  height: 80px;
+  line-height: 80px;
+  z-index: 111;
+}
+.logo {
+  display: flex;
+  font-size: 4rem;
+  font-weight: 800;
   color: #f3f5f3;
-  font-size: 20px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding-left: 10%;
 }
 
-.container2 {
-  display: block;
-  padding-bottom: 10%;
+b {
+  font-size: 4rem;
+  color: #b30f2b;
 }
-
-.text1 {
-  padding-bottom: 10%;
-}
-.colscols1 {
-  display: block;
-  height: 5px;
-}
-.container3 ul,
-li,
 p {
-  text-align: left;
+  width: 80%;
+  display: block;
+  font-size: 1.5rem;
+  color: #f3f5f3;
 }
-.container4 .text2 {
-  text-align: center;
+
+h3,
+.item2 ul {
+  font-size: 1.5rem;
 }
 .webNav {
   display: none;
 }
+
 .phoneNav {
   display: flex;
+  justify-content: left;
+}
+.navItems {
+  display: flex;
+}
+
+.navItems button a {
+  font-size: 2.5rem;
   width: 100%;
-  justify-content: space-between;
-  padding-bottom: 5%;
+  color: #f1f1f1;
+  text-decoration: none;
 }
 
-b {
+.navItems button {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.links {
+  display: none;
+  padding-left: 10%;
+  padding-right: 10%;
+  justify-content: space-around;
+}
+.links a {
+  font-size: 2rem;
   color: #b30f2b;
-  font-size: 100px;
+  margin: 25px 10px;
+}
+.wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10%;
+  overflow: hidden;
 }
 
-h1 {
-  color: #b30f2b;
-  padding: 10px;
-  font-size: 80px;
-}
-
-h2 {
+.topline {
+  display: block;
+  position: relative;
+  font-size: 2rem;
+  letter-spacing: 5px;
   color: #f3f5f3;
-  font-size: 40px;
-  padding-bottom: 5%;
+}
+.topline::after {
+  position: absolute;
+  content: "";
+  height: 4px;
+  width: 45px;
+  bottom: 10px;
+  background-color: #b30f2b;
+}
+.container2 {
+  text-align: center;
+  width: 100%;
+  background-color: #f3f5f3;
+  padding-top: 10%;
 }
 
+.container2 h1 {
+  color: #1b1b1b;
+}
+
+.container2 h2 {
+  font-size: 2rem;
+  color: #1b1b1b;
+}
+.container3 {
+  width: 100%;
+  padding-bottom: 10%;
+  background-color: #1b1b1b;
+  padding-top: 5%;
+}
+
+.container4 {
+  width: 100%;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  background-color: #f3f5f3;
+}
 .reelDisplay {
+  margin: auto;
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 10%;
+}
+.text1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #3d535f;
+}
+
+.itemDisplay2 h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1b1b1b;
+}
+.proj a {
+  text-decoration: none;
+}
+
+.header {
+  text-align: center;
+  color: #1b1b1b;
+  font-size: 6rem;
+  font-weight: 900;
+}
+
+.container3 h1 {
+  text-align: center;
+}
+/*CONTAINER 4*/
+.container4 h1 {
+  color: #1b1b1b;
+  text-align: center;
+}
+.container4 h2 {
+  text-align: center;
+  font-size: 1rem;
+  color: #1b1b1b;
+}
+
+.container4 h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #1b1b1b;
+  font-weight: 600;
+}
+
+.text2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+}
+h1 {
+  display: block;
+  font-size: 6rem;
+  font-weight: 900;
+  color: #f3f5f3;
+}
+h2 {
+  font-size: 4rem;
+  font-weight: 600;
+  color: #b30f2b;
+}
+.multiText {
+  color: #b30f2b;
+  text-transform: capitalize;
+}
+
+.itemDisplay2 h3:hover {
+  color: #b30f2b;
+}
+
+.proj {
+  padding-bottom: 10%;
+}
+.proj img {
+  transform: scale(0.9);
+  transition: 0.3s ease-in-out;
+}
+.proj img {
+  display: block;
+  width: 100%;
+  height: 50%;
+  cursor: pointer;
+}
+
+.proj:hover img {
+  transform: scale(0.6);
+  box-shadow: 0 30px 10px rgba(136, 52, 52, 0.4);
+}
+
+ul {
+  display: block;
+  font-size: 2rem;
+  color: #f3f5f3;
+  font-weight: 600;
+}
+ul li {
+  font-size: 24px;
+  color: #f3f5f3;
+  font-weight: 200;
+  padding-bottom: 20px;
+}
+.btns {
+  width: 100%;
+  position: relative;
+  left: 150px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relataive;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f1f1f1;
+
+  box-shadow: 0 10px 10px rgba(136, 52, 52, 0.4);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: #b30f2b;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #b30f2b;
+  color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+button {
+  display: flex;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 400;
+  color: #fff;
+  background-color: #b30f2b;
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin: 12px 5px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  align-self: center;
+}
+button:hover {
+  background-color: rgba(238, 106, 106, 0.945);
+  box-shadow: 0 10px 10px rgba(255, 20, 20, 0.4);
+}
+
+.colscols1 {
+  width: 100%;
+  padding-left: 5%;
+  align-items: center;
+}
+
+@keyframes animateUser {
+  50% {
+    right: 30px;
+    top: -90px;
+  }
+}
+.infoDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   padding-left: 10%;
   padding-right: 10%;
 }
 
-.videoSize {
-  width: 100px;
+.item1 {
+  width: 100%;
+  padding-right: 10%;
+}
+
+.item1 h2,
+.item2 h2 {
+  font-size: 2rem;
+}
+.item2 {
+  width: 100%;
 }
 
 .imgbox img {
   position: relative;
   border-radius: 50%;
   width: calc(30% - 80px);
-  top: -700px;
+  top: -500px;
   left: 700px;
   z-index: -2;
   box-shadow: 0 15px 10px rgba(136, 52, 52, 0.4);
 }
-p {
-  padding-bottom: 10%;
+
+.webNav {
+  display: flex;
 }
-li {
-  padding-bottom: 10%;
+.phoneNav {
+  display: none;
 }
-img {
+
+.container4 {
   width: 100%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: #f3f5f3;
 }
+
 .itemDisplay2 {
-  display: block;
-}
-
-.text2 {
-  color: #f3f5f3;
-  margin: 5%;
-  font-size: 40px;
-}
-
-.links a {
-  display: none;
-  font-size: 100px;
-  color: #b30f2b;
-  margin: 25px 10px;
-}
-
-.logo {
-  font-size: 100px;
-  font-weight: 800;
-}
-
-.navigation {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
   width: 100%;
-  background: #1b1b1b;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  padding-bottom: 10%;
 }
 
-.wrapper {
-  position: relative;
-  z-index: -2;
-}
-.navigation ul {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  list-style: none;
-}
-
-.navigation ul li {
-  margin: 15px 0;
+.itemDisplay2 h3 {
   text-align: center;
+  font-size: 1.5rem;
+  color: #1b1b1b;
 }
 
-.navigation ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 60px;
-  font-weight: 500;
-  padding: 5px 50px;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.navigation ul li a:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background: #fff;
-  border-radius: 50px;
-  transform: scaleY(0);
-  z-index: -1;
-  transition: transform 0.3s ease;
-}
-
-@media only screen and (min-width: 768px) {
-  .imgbox img {
-    position: relative;
-    border-radius: 50%;
-    width: calc(30% - 80px);
-    top: -500px;
-    left: 700px;
-    z-index: -2;
-    box-shadow: 0 15px 10px rgba(136, 52, 52, 0.4);
-  }
-
-  .webNav {
-    display: flex;
-  }
-  .phoneNav {
-    display: none;
+@media only screen and (max-width: 1200px) {
+  .itemDisplay2 {
+    width: 100%;
+    display: block;
   }
 }

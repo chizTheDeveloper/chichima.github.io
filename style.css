@@ -128,6 +128,7 @@ h3,
   padding-bottom: 10%;
   background-color: #1b1b1b;
 }
+
 .container4 {
   width: 100%;
   padding-bottom: 10%;
@@ -335,13 +336,17 @@ button:hover {
     display: none;
   }
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 300px) {
   .itemDisplay2 {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: block;
   }
-
+  .proj img {
+    display: block;
+    width: 150%;
+    height: 50%;
+    cursor: pointer;
+  }
   .webNav {
     display: none;
   }
