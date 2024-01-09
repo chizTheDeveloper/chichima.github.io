@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font Awesome Link -->
+    <script
+      src="https://kit.fontawesome.com/2539c47f52.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="style.css" />
+    <title>Pokedex using CNN</title>
+  </head>
+
+  <body>
+    <div class="mainNavBar">
+    <div class="title2"><h2>Pokedex using CNN</h2></div>
+<div class="project-description">
+  <h3> This is the process of creating and training a Convolutional Neural Network (CNN) 
+  using TensorFlow and Keras for a Pokemon image classification task. </h3>
+  <div class="outSource"> 
+    <button><a href="https://github.com/chizTheDeveloper/Pokedex--CNN-Classification-"> View on Github</a></button>
+  </div>
+</div>
+   
+  <div class="projects-container">
+  <div class ="step-list">
+     <ul><li>
+  <div class="step">
+    <h2>Step 1 : Importing TensorFlow libraries </h2>
+    <img src="Assets/pk1.png"/>
+    <p>I import specific components from the TensorFlow Keras API. 
+      Keras is integrated into TensorFlow, and importing the 
+      Sequential model and various layers (Conv2D, MaxPooling2D, Dense, and Flatten) 
+      for building a neural network.</p>
+  </div>
+  <div class="step">
+  <h2>Step 2 : Loading Data</h2>
+  <img src="Assets/pk2.png"/>
+  <p>I check the content of a directory ('data') and lists subdirectories 
+    ('Fire_Types', 'Grass_Types', 'Water_Types').
+    TensorFlow's ImageDataGenerator is used to perform data 
+    augmentation and create training and validation datasets.</p>
+  </div>
+  <div class="step">
+    <h2>Step 3: Visualizing data</h2>
+    <img src="Assets/pk3.png"/>
+    <p>I visualized the class labels, few images from the training dataset 
+      using matplotlib and PIL.</p>
+    </div>
+    <div class="step">
+      <h2>Step 4: Data Reshaping</h2>
+      <img src="Assets/pk4.png"/>
+      <p>The code checks and prints the shapes of batches from the training and test datasets.</p>
+      </div>
+      <div class="step">
+        <h2>Step 5: Evaluating Accuracy</h2>
+        <img src="Assets/pk5.png"/>
+        <p>A Sequential model is created using Conv2D and MaxPooling2D layers for 
+          feature extraction, followed by Flatten and Dense layers for classification.
+          The model is compiled with binary crossentropy loss and the Adam optimizer.
+          The model is trained using the fit method on the training dataset for 5 epochs.</p>
+        </div>
+ </li> </ul>
+    </div>
+  </div>
+
+    <div class="footer" id="footer">
+      <div class="flexDisplay" id="footerDisplay">
+        <a href="index.html">
+          <i class="fas fa-home fa-3x"></i>
+          <h5>Home</h5>
+        </a>
+       
+      </div>
+    </div>
+    <!--scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+      var typingEffect = new Typed(".multiText", {
+        strings: ["Web Dev", "Software Dev", "A.I Robotics"],
+        loop: true,
+        typeSpeed: 100,
+        backSpeed: 80,
+        backDelay: 1500,
+      });
+    </script>
+  </body>
+</html>

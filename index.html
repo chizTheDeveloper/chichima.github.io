@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="=en">
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta nae="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--Font Awesome Link-->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font Awesome Link -->
     <script
       src="https://kit.fontawesome.com/2539c47f52.js"
       crossorigin="anonymous"
@@ -13,193 +13,153 @@
     <title>CHI.CHIMA</title>
   </head>
 
-
   <body>
     <div class="mainNavBar">
       <div class="logo">Chi<b>.</b> Chima</div>
-      
+
       <div class="navContent">
-        <ul >
-          <button><a href="#Reel">Reel</a></button>
-          <p>|</p>
-          <button><a href="#about">About</a></button>
-          <p>|</p>
-          <button><a href="#projects">Projects</a></button>
+        <ul>
+          <li><a href="#project">Projects</a></li>
+          <li>|</li>
+          <li><a href="#about">About Me</a></li>
+          <li>|</li>
+          <li><a href="#footer">Contact Me</a></li>
         </ul>
+      </div>
     </div>
 
+    <div class="wrapper">
+      <div class="landingPage">
+        <span class="topline">Hello</span>
+        <h1>I do</h1>
+        <h1><span class="multiText"></span></h1>
+        <p>
+          I'm based in Ottawa, Canada. Multimedia grad with programming, 3D
+          modeling, and illustration skills. The diversity of my skill set
+          enables me to aid the team in different tasks. My knowledge in Java
+          stems from using Android Studio to create applications, using C++ when
+          programming in Unity, HTML for web design, UX/UI design in Figma, and
+          graphic design skills in Adobe Suite.
+        </p>
+      </div>
+      <div>
+        <img class="profileImg" src="avatar.jpg" />
+      </div>
+    </div>
 
-      <div class="wrapper">
-        <div class="landingPage">
-          <span class="topline">Hello</span>
-          <h1>I do</h1>
-          <h1><span class="multiText"></span></h1>
+    <div class="project" id="project">
+      <!-- PROJECT REEL-->
+      <h2>Projects</h2>
+      <h3>Here is a reel showcasing my various skill sets.</h3>
+      <div class="wrapper2">
+        <div class="container">
+          <!-- ... (My project cards) ... -->
+          <input type="radio" name="slide" id="c1" checked />
+          <label for="c1" class="card">
+            <div class="row">
+              <div class="icon">1</div>
+              <div class="description">
+                <h4>Web Development</h4>
+                <p>
+                  A showcase of my web development with deployable front-end
+                  application with a mix of back-end support
+                </p>
+                <button><a href="errorPage.html">View</a></button>
+              </div>
+            </div>
+          </label>
+
+          <input type="radio" name="slide" id="c2" checked />
+          <label for="c2" class="card">
+            <div class="row">
+              <div class="icon">2</div>
+              <div class="description">
+                <h4>Software Development</h4>
+                <p>
+                  A showcase of my deep learning development with various
+                  marchine learning models
+                </p>
+                <button><a href="errorPage.html">View</a></button>
+              </div>
+            </div>
+          </label>
+          <input type="radio" name="slide" id="c3" checked />
+          <label for="c3" class="card">
+            <div class="row">
+              <div class="icon">3</div>
+              <div class="description">
+                <h4>A.I Robotics</h4>
+                <p>
+                  A showcase of my deep learning development with various
+                  marchine learning models
+                </p>
+                <button><a href="A.I Robotics.html">View</a></button>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="AboutMe" id="about">
+      <!-- ABOUT ME-->
+      <h1>About Me</h1>
+      <div class="gridDisplay">
+        <div>
+          <h4>Professional Summary</h4>
           <p>
-            Im based in Ottawa, Canada. Multi Media Grad with Programming , 3d
-            modelling and Illustration skills. The diversity of my skill set
-            enables me aid the team in different tasks. My knowledge in Java stems from using Android Studio to create
-            applications, using C++ when programming in Unity, HTML for web design, UX/Ui deseign in figma and graphic design skills in Adobe suite.
+            I am fond of learning new skills to diversify my capability which
+            enables me to work solo or with a team. This makes me proactive and
+            resourceful in any scenario. My exceptional attention to details,
+            provides me with the capability to work in a challenging, fast-paced
+            and deadline driving environment. Learning quickly from supervisors
+            and peers to adapt to new methods.
           </p>
         </div>
-        <div >
-          <img class="profileImg" src="avatar.jpg"/>
-        </div>
-        </div>
-      </div>
 
-      <div class="projectReel" id="Reel">
-        <!-- PROJECT REEL-->
-        <h2>Project Reel</h2>
-        <h3>
-          Here is a reel showcasing my various skill sets.
-        </h3>
-        <div class="reelDisplay">
-          <video autoplay controls loop>
-            <source class="videoSize" width="100px" src="Assets/Project Reel.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        <div>
+          <h4>Certifications</h4>
+          <ul>
+            <h2>Bachelor of Information Technology Degree</h2>
+            <li>Carleton University, Ottawa, ON, Canada</li>
+          </ul>
+          <ul>
+            <h2>AI Software Development Certification</h2>
+            <li>Algonquin College, Ottawa, ON, Canada</li>
+          </ul>
+          <ul>
+            <h2>Google UX Design Professional Certificate</h2>
+            <li>Coursera</li>
+          </ul>
         </div>
       </div>
-
-      <div class="AboutMe" id="about">
-        <!-- ABOUT ME-->
-        <h1>About Me</h1>
-        <div class="gridDisplay">
-          <div >
-            <h4>Professional Summary</h4>
-            <p>
-              I am fond of learning new skills to diversify my capability which
-              enables me to work solo or with a team. This makes me proactive
-              and resourceful in any scenario. My exceptional attention to
-              details, provides me with the capability to work in a challenging,
-              fast-paced and deadline driving environment. Learning quickly from
-              supervisors and peers to adapt to new methods.
-            </p>
-          </div>
-
-          <div >
-            <h4>Software Skills</h4>
-            <ul>
-            <h2>Illustration</h2>
-              <li>Adobe Illustrator, After Effects, Photoshop, Figma</li>
-            </ul>
-            <ul>
-            <h2> Web Design</h2>
-              <li>
-                Java, CSS, REACT, MySQL, A-FRAME 3D Modelling Blender, Maya,
-                Spline
-              </li>
-            </ul>
-            <ul>
-              <h2>Research</h2>
-              <li>
-                Personas, A/B testing , Qualitative and quantitive surveys
-              </li>
-            </ul>
-
-            <ul>
-            <h2> Programming</h2>
-              <li>
-                Unity, android studios, Arduino,Visual Studio(C++, Java, C#)
-              </li>
-            </ul>
-          </div>
-
-          <div>
-              <h4>Certifications</h4>
-              <ul>
-                <h2>Bachelor of Information Technology Degree</h2>
-                  <li>Carleton University, Ottawa, ON, Canada</li>
-                </ul>
-                <ul>
-                  <h2>AI Software Development Certification</h2>
-                    <li>Algonquin College, Ottawa, ON, Canada</li>
-                  </ul>
-                  <ul>
-                    <h2>Google UX Design Professional Certificate</h2>
-                      <li>Coursera</li>
-                    </ul>
-
-              
-            </div>
-            <div >
-              <h4>Soft Skills</h4>
-              <ul>
-              <h2>Communication skill: </h2>
-                <li>summarizing; research, project paths and project evaluation during group meetings.</li>
-              </ul>
-  
-              <ul>
-              <h2> Organization skills</h2>
-                <li>
-                  Setting daily meetings, weekly evaluations to maintain deadlines.
-                </li>
-              </ul>
-  
-              <ul>
-                <h2>Creative skills</h2>
-                <li>
-                  Doodling ideas and concepts to easily consider alternative solution.
-                </li>
-              </ul>
-  
-              <ul>
-              <h2> Adaptability skills</h2>
-                <li>
-                  Always willing to try out different solution and find best fit during project assessment.
-                </li>
-              </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="Projects" id="projects">
-        <!-- PROJECT -->
-        <h2>Projects</h2>
-        <div class="flexDisplay">
-          <div class="proj">
-            <a href="echo.html">
-              <img src="Assets/webDevIcon.png" alt="echo" />
-              <h3>Web Dev</h3>       
-            </a>
-          </div>
-
-          <div class="proj">
-            <a href="lumi.html">
-              <img src="Assets/webDevIcon.png"  alt="lumi" />
-              <h3>UX/UI Design</h3>
-            </a>
-          </div>
-
-          <div class="proj">
-            <a href="TailorMap.html">
-              <img src="Assets/webDevIcon.png" alt="Tailor Map" />
-              <h3>Graphic Design</h3>
-            </a>
-          </div>
-
-        </div>
     </div>
-   <!-- <div class="footer">
-      <a href="#"><i class="fa-brands fa-instagram"></i></a>
-      <a href="#"><i class="fa-brands fa-facebook"> </i></a>
-      <a href="#"><i class="fa-brands fa-twitter"> </i></a>
-    </div>-->
-  </div>
-<div class="footer">
-<h3>Contact me/ Socials</h3>
-<div class="flexDisplay">
-<a href="#"> <h5> Behance </h5> </a>
-<a href="#"> <h5> GitHub </h5> </a>
-<a href="#"> <h5> Linkedin </h5> </a>
-<a href="#"><h5>Email: chichimadesigns</h5></a>
-</div>
-</div>
+    <div class="footer" id="footer">
+      <h3>Contact me/ Socials</h3>
+      <div class="flexDisplay" id="footerDisplay">
+        <a href="#">
+          <i class="fab fa-behance fa-2x"></i>
+          <h5>Behance</h5>
+        </a>
+        <a href="#">
+          <i class="fab fa-github fa-2x"></i>
+          <h5>GitHub</h5>
+        </a>
+        <a href="#">
+          <i class="fab fa-linkedin fa-2x"></i>
+          <h5>LinkedIn</h5>
+        </a>
+        <a href="#">
+          <i class="far fa-envelope fa-2x"></i>
+          <h5>@chichimadesigns</h5>
+        </a>
+      </div>
+    </div>
     <!--scripts-->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
       var typingEffect = new Typed(".multiText", {
-        strings: ["Web Dev", "UX/UI Design", "Graphic Design"],
+        strings: ["Web Dev", "Software Dev", "A.I Robotics"],
         loop: true,
         typeSpeed: 100,
         backSpeed: 80,
