@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font Awesome Link -->
+    <script
+      src="https://kit.fontawesome.com/2539c47f52.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="style.css" />
+    <title>HandWritten</title>
+  </head>
+
+  <body>
+    <div class="mainNavBar">
+      <div class="title2">
+
+        <a href="A.I Robotics.html">
+          <div class="back-button">
+              <div class="back-arrow">
+          </div>  </a>
+
+        </div>
+        <h2>HandWritten MLP Classifier</h2>
+      </div>
+    
+<div class="project-description">
+  <h3> This is the process of creating and training a Multi-layer Perceptron (MLP) 
+  for a Handwritten number classifier. The MLP classifier achieves a high accuracy of 98% on the test set, 
+  and the confusion matrix and classification report provide detailed information about the model's performance for each digit class. </h3>
+  <div class="outSource"> 
+    <button><a href="https://github.com/chizTheDeveloper/Handwritten-Detection"> View on Github</a></button>
+  </div>
+</div>
+   
+  <div class="projects-container">
+  <div class ="step-list">
+     <ul><li>
+  <div class="step">
+    <h2>Step 1 : Loading Digits Data:</h2>
+    <img src="Assets/Handwritten/img1.png"/>
+    <p>I import and the 'load_digits' function from the 'sklearn.datasets' module to load the digits dataset.
+      The dataset consists of 8x8 pixel images of handwritten digits (0 through 9). 
+      Then I print the shape of the data, which is (1797, 64). 
+      This means there are 1797 samples, and each sample has 64 features.
+    </p>
+  </div>
+  <div class="step">
+  <h2>Step 2 : Plotting Digits</h2>
+  <img src="Assets/Handwritten/img2.png"/>
+  <p>I use matplotlib to plot the first image in the dataset, which corresponds to the digit '0'.</p>
+  </div>
+  <div class="step">
+    <h2>Step 3: Splitting Data into Train and Test Sets</h2>
+    <img src="Assets/Handwritten/img3.png"/>
+    <p>I import the train_test_split function from sklearn.model_selection to split the data into training and testing sets.
+      80% of the data is used for training (X_train, y_train), and 20% for testing (X_test, y_test).
+    </p>
+    </div>
+    <div class="step">
+      <h2>Step 4:Creating MLP Classifier</h2>
+      <img src="Assets/Handwritten/img4.png"/>
+      <img src="Assets/Handwritten/img5.png"/>
+      <img src="Assets/Handwritten/img6.png"/>
+      <p>The code uses the trained classifier to predict the labels for the test set.
+        Then I check the accuracy, confusion matrix, and classification report for the predictions.
+      </p>
+      </div>
+     
+          <div class="step">
+            <h2>Step 7:  Displaying Individual Predictions </h2>
+            <img src="Assets/Handwritten/img7.png"/>
+            <p> I print the index, actual digit, and predicted digit for each sample in the test set.
+
+            </p>
+            </div>
+ </li> </ul>
+    </div>
+  </div>
+
+    <div class="footer" id="footer">
+      <div class="flexDisplay" id="footerDisplay">
+        <a href="index.html">
+          <i class="fas fa-home fa-3x"></i>
+          <h5>Home</h5>
+        </a>
+       
+      </div>
+    </div>
+    <!--scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+      var typingEffect = new Typed(".multiText", {
+        strings: ["Web Dev", "Software Dev", "A.I Robotics"],
+        loop: true,
+        typeSpeed: 100,
+        backSpeed: 80,
+        backDelay: 1500,
+      });
+    </script>
+  </body>
+</html>

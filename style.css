@@ -157,7 +157,7 @@ a {
 }
 
 .step img {
-  width: 60rem;
+  width: 100%;
   height: auto;
 }
 .description {
@@ -538,6 +538,9 @@ button:hover {
 }
 
 /* Media Query for Mobile Devices */
+/****
+PHONE VIEWW
+*****/
 @media only screen and (max-width: 968px) {
   .title h2,
   .title b {
@@ -555,6 +558,11 @@ button:hover {
     justify-content: center;
   }
 
+  .logo {
+    width: 100%;
+    padding: 5%;
+    font-size: 3.5rem;
+  }
   .back-button {
     display: flex;
     align-items: center;
@@ -576,8 +584,10 @@ button:hover {
     height: 50rem;
   }
   .title2 {
+    width: 100%;
     display: flex;
     padding: 5%;
+    justify-content: space-evenly;
   }
   .title2 h2 {
     font-size: 2rem;
@@ -593,9 +603,7 @@ button:hover {
   .project-info p {
     font-size: 1rem;
   }
-  .title2 {
-    justify-content: center;
-  }
+
   .container {
     width: 100%;
     height: auto;
@@ -671,7 +679,7 @@ button:hover {
     font-size: 2rem;
   }
   .step img {
-    width: 25rem;
+    width: 100%;
     height: auto;
   }
 
