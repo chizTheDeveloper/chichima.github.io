@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font Awesome Link -->
+    <script
+      src="https://kit.fontawesome.com/2539c47f52.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="style.css" />
+    <title>A.I hearing</title>
+  </head>
+
+  <body>
+    <div class="mainNavBar">
+      <div class="title2">
+
+        <a href="A.I Robotics.html">
+          <div class="back-button">
+              <div class="back-arrow">
+          </div>  </a>
+
+        </div>
+        <h2>A.I Ros2 Dev</h2>
+      </div>
+    
+<div class="project-description">
+  <h3> This is the process of 4  ROS 2 packages, aisd_vision, aisd_hearing, aisd_speaking and aisd_move, to gain hands-on experience with ROS 2 development. </h3>
+  <div class="outSource"> 
+    <button><a href="https://github.com/gitalg/assignment-2-ros-2-and-vision-chizTheDeveloper-"> View on Github</a></button>
+  </div>
+</div>
+   
+  <div class="projects-container">
+  <div class ="step-list">
+     <ul><li>
+  <div class="step">
+    <h2>Step 1 :  Create aisd_vision Package </h2>
+    <img src="Assets/A.I_hear_vision/img3.png"/>
+    <p>Updated package.xml with dependencies (rclpy, image_transport, cv_bridge, sensor_msgs, std_msgs, aisd_msgs, python3-mediapipe-pip).
+      Modified setup.py for entry points, specifying nodes to run and implementing image_publisher.py and hands.py nodes .</p>
+  </div>
+  <div class="step">
+  <h2>Step 2 : Create aisd_motion Package</h2>
+  <img src="Assets/A.I_hear_vision/img2.png"/>
+  <p>Updated package.xml with the aisd_msgs dependency. Modify setup.py for entry points.
+    Implemented move.py, a node subscribing to Hand messages and publishing Twist messages.</p>
+  </div>
+  <div class="step">
+    <h2>Step 3: Building the Workspace</h2>
+    <img src="Assets/A.I_hear_vision/img4.png"/>
+    <p>Installed pip: sudo apt install python3-pip.
+      Used rosdep to install dependencies: rosdep install -i --from-path src --rosdistro humble -y.
+      Fixed potential numpy version issues by installing a specific version: pip install numpy==1.25.2.</p>
+    </div>
+    <div class="step">
+      <h2>Step 4: Create the aisd_hearing Package</h2>
+      <img src="Assets/A.I_hear_vision/img1.png"/>
+      <p> Updated aisd_hearing/package.xml with dependencies (rclpy, std_msgs, python3-pyaudio, portaudio19-dev, python3-pip).
+        Installed additional dependencies using terminal commands.
+        Edited aisd_hearing/setup.py for entry points.
+        Created recording_publisher.py and words_publisher.py using online templates.
+      </p>
+      </div>
+      <div class="step">
+        <h2>Step 5: Create the aisd_speaking Package</h2>
+        <img src="Assets/A.I_hear_vision/img5.png"/>
+        <p>Created speak.py by adapting MinimalService node code.
+          Updated aisd_speaking/package.xml with dependencies (rclpy, std_msgs, ffmpeg).
+          Installed gtts (Google Text-to-Speech) dependency using terminal command.
+          Edited aisd_speaking/setup.py for entry points.</p>
+        </div>
+       
+ </li> </ul>
+    </div>
+  </div>
+
+    <div class="footer" id="footer">
+      <div class="flexDisplay" id="footerDisplay">
+        <a href="index.html">
+          <i class="fas fa-home fa-3x"></i>
+          <h5>Home</h5>
+        </a>
+       
+      </div>
+    </div>
+    <!--scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+      var typingEffect = new Typed(".multiText", {
+        strings: ["Web Dev", "Software Dev", "A.I Robotics"],
+        loop: true,
+        typeSpeed: 100,
+        backSpeed: 80,
+        backDelay: 1500,
+      });
+    </script>
+  </body>
+</html>
