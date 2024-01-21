@@ -524,7 +524,12 @@ button:hover {
   width: 100%;
   font-size: 1.25rem;
 }
-
+.projectDisply img {
+  width: 100%;
+  height: auto;
+  align-items: center;
+  padding: 10%;
+}
 .projects-container {
   width: 100%;
   display: inline-grid;
