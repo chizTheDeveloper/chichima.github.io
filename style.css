@@ -351,8 +351,9 @@ ul li {
 }
 
 .AboutMe h2 {
-  font-size: 4rem;
-  font-weight: 900;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f3f5f3;
   background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -365,12 +366,6 @@ ul li {
   color: #dd4c4f;
 }
 
-.AboutMe h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #f3f5f3;
-}
-
 .project {
   max-width: 100%;
   padding: 2% 5%;
@@ -379,6 +374,7 @@ ul li {
 
 .project h2 {
   color: #dd4c4f;
+  font-size: 6rem;
 }
 .project h2,
 h3 {
@@ -586,6 +582,9 @@ PHONE VIEWW
   .wrapper2 {
     flex-direction: column;
   }
+  .project h2 {
+    font-size: 4rem;
+  }
 
   #errorPage {
     height: 50rem;
@@ -677,14 +676,20 @@ PHONE VIEWW
     font-size: 4rem;
   }
   h2 {
-    font-size: 3rem;
+    font-size: 2rem;
   }
   h3 {
     font-size: 1rem;
   }
   h4 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
+
+  .AboutMe h2,
+  p {
+    font-size: 1.5rem;
+  }
+
   .step img {
     width: 100%;
     height: auto;
