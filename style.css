@@ -529,7 +529,7 @@ button:hover {
 .projects-container {
   width: 100%;
   display: inline-grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   justify-content: space-between;
   padding: 5% 10%;
 }
