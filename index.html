@@ -1,170 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Font Awesome Link -->
-    <script
-      src="https://kit.fontawesome.com/2539c47f52.js"
-      crossorigin="anonymous"
-    ></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHI.CHIMA</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/2539c47f52.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header class="mainNavBar">
+    <div class="logo">Chi  Chima</div>
+    <nav class="navContent">
+      <ul>
+        <li><a href="#project">Projects</a></li>
+        <li>|</li>
+        <li><a href="#about">About Me</a></li>
+        <li>|</li>
+        <li><a href="#footer">Contact Me</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <link rel="stylesheet" href="style.css" />
-    <title>CHI.CHIMA</title>
-  </head>
+  <div class="wrapper">
+    <section class="landingPage">
+      <span class="topline">Hello</span>
+      <h1>I do</h1>
+      <h1><span class="multiText"></span></h1>
+      <p>I'm based in Ottawa, Canada. Multimedia grad with programming, 3D modeling, and illustration skills. The diversity of my skill set enables me to aid the team in different tasks. My knowledge in Java stems from using Android Studio to create applications, using C++ when programming in Unity, HTML for web design, UX/UI design in Figma, and graphic design skills in Adobe Suite.</p>
+    </section>
+ 
 
-  <body>
-    <div class="mainNavBar">
-      <div class="logo">Chi<b>.</b> Chima</div>
+  <section class="project" id="project">
+    <h2>Projects</h2>
+    <p>Here is a reel showcasing my various skill sets.</p>
+    <div class="wrapper2">
+      <div class="container">
+        <!-- ... (My project cards) ... -->
+        <label for="c1" class="card">
+          <div class="row">
+            <div > <h4>Web Development</h4>
+              <p>A showcase of my full stack skills with various devices</p></div>
+            <div class="description">
+              <a href="errorPage.html"><button>View</button></a>
+            </div>
+          </div>
+        </label>
 
-      <div class="navContent">
-        <ul>
-          <li><a href="#project">Projects</a></li>
-          <li>|</li>
-          <li><a href="#about">About Me</a></li>
-          <li>|</li>
-          <li><a href="#footer">Contact Me</a></li>
-        </ul>
+        <label for="c2" class="card">
+          <div class="row">
+            <div> <h4>UI/UX Design</h4>
+              <p>A showcase of my UX understanding with various UX design explained</p></div>
+            <div class="description">
+              <a href="errorPage.html"><button>View</button></a>
+            </div>
+          </div>
+        </label>
+
+        <label for="c3" class="card">
+          <div class="row">
+            <div> <h4>A.I/Machine Learning</h4>
+              <p>A showcase of my deep learning development with various machine learning models</p></div>
+            <div class="description">
+              <a href="A.I Robotics.html"><button>View</button></a>
+            </div>
+          </div>
+        </label>
       </div>
     </div>
+  </section>
 
-    <div class="wrapper">
-      <div class="landingPage">
-        <span class="topline">Hello</span>
-        <h1>I do</h1>
-        <h1><span class="multiText"></span></h1>
-        <p>
-          I'm based in Ottawa, Canada. Multimedia grad with programming, 3D
-          modeling, and illustration skills. The diversity of my skill set
-          enables me to aid the team in different tasks. My knowledge in Java
-          stems from using Android Studio to create applications, using C++ when
-          programming in Unity, HTML for web design, UX/UI design in Figma, and
-          graphic design skills in Adobe Suite.
-        </p>
+  <section class="AboutMe" id="about">
+    <h2>About Me</h2>
+    <div class="mainDisplay">
+      <div>
+        <p>I am fond of learning new skills to diversify my capability which enables me to work solo or with a team. This makes me proactive and resourceful in any scenario. My exceptional attention to details, provides me with the capability to work in a challenging, fast-paced and deadline driving environment. Learning quickly from supervisors and peers to adapt to new methods.</p>
       </div>
       <div>
-        <img class="profileImg" src="avatar.jpg" />
-      </div>
-    </div>
-
-    <div class="project" id="project">
-      <!-- PROJECT REEL-->
-      <h2>Projects</h2>
-      <h3>Here is a reel showcasing my various skill sets.</h3>
-      <div class="wrapper2">
-        <div class="container">
-          <!-- ... (My project cards) ... -->
-          <input type="radio" name="slide" id="c1" checked />
-          <label for="c1" class="card">
-            <div class="row">
-              <div class="icon">1</div>
-              <div class="description">
-                <h4>Web Development</h4>
-                <p>
-                  A showcase of my web development with deployable front-end
-                  application with a mix of back-end support
-                </p>
-                <button><a href="errorPage.html">View</a></button>
-              </div>
-            </div>
-          </label>
-
-          <input type="radio" name="slide" id="c2" checked />
-          <label for="c2" class="card">
-            <div class="row">
-              <div class="icon">2</div>
-              <div class="description">
-                <h4>Software Development</h4>
-                <p>
-                  A showcase of my deep learning development with various
-                  marchine learning models
-                </p>
-                <button><a href="errorPage.html">View</a></button>
-              </div>
-            </div>
-          </label>
-          <input type="radio" name="slide" id="c3" checked />
-          <label for="c3" class="card">
-            <div class="row">
-              <div class="icon">3</div>
-              <div class="description">
-                <h4>A.I/Machine Learning</h4>
-                <p>
-                  A showcase of my deep learning development with various
-                  marchine learning models
-                </p>
-                <button><a href="A.I Robotics.html">View</a></button>
-              </div>
-            </div>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="AboutMe" id="about">
-      <!-- ABOUT ME-->
-      <h1>About Me</h1>
-      <div class="gridDisplay">
-        <div>
-          <h4>Professional Summary</h4>
-          <p>
-            I am fond of learning new skills to diversify my capability which
-            enables me to work solo or with a team. This makes me proactive and
-            resourceful in any scenario. My exceptional attention to details,
-            provides me with the capability to work in a challenging, fast-paced
-            and deadline driving environment. Learning quickly from supervisors
-            and peers to adapt to new methods.
-          </p>
-        </div>
-
-        <div>
-          <h4>Certifications</h4>
+        <h2>Education</h2>
+        <ul>
+          <ul><p>Bachelor of Information Technology Degree</p><h3>Carleton University, Ottawa, ON, Canada</h3></ul>
+          <ul><p>AI Software Development Certification</p><h3>Algonquin College, Ottawa, ON, Canada</h3></ul>
+        </ul>
+        <div> </div>
+          <h2>Certification</h2>
           <ul>
-            <h2>Bachelor of Information Technology Degree</h2>
-            <li>Carleton University, Ottawa, ON, Canada</li>
+          <ul><p>Google UX Design Professional Certificate</p><h3>Coursera</h3></ul>
           </ul>
-          <ul>
-            <h2>AI Software Development Certification</h2>
-            <li>Algonquin College, Ottawa, ON, Canada</li>
-          </ul>
-          <ul>
-            <h2>Google UX Design Professional Certificate</h2>
-            <li>Coursera</li>
-          </ul>
-        </div>
       </div>
     </div>
-    <div class="footer" id="footer">
-      <h3>Contact me/ Socials</h3>
-      <div class="flexDisplay" id="footerDisplay">
-        <a href="https://www.behance.net/chimeziechima">
-          <i class="fab fa-behance fa-2x"></i>
-          <h5>Behance</h5>
-        </a>
-        <a href="https://github.com/chizTheDeveloper">
-          <i class="fab fa-github fa-2x"></i>
-          <h5>GitHub</h5>
-        </a>
-        <a href="https://www.linkedin.com/in/chimezie-chima-uzoka-253762186/">
-          <i class="fab fa-linkedin fa-2x"></i>
-          <h5>LinkedIn</h5>
-        </a>
-        <a href="mailto:recipient@example.com" target="@chichimadesigns">
-          <i class="far fa-envelope fa-2x"></i>
-          <h5>@chichimadesigns</h5>
-        </a>
-      </div>
+  </section>
+</div>
+
+  <footer class="footer" id="footer">
+    <h3>Contact me/ Socials</h3>
+    <div class="flexDisplay" id="footerDisplay">
+      <a href="https://www.behance.net/chimeziechima">
+        <i class="fab fa-behance fa-2x"></i>
+        <h5>Behance</h5>
+      </a>
+      <a href="https://github.com/chizTheDeveloper">
+        <i class="fab fa-github fa-2x"></i>
+        <h5>GitHub</h5>
+      </a>
+      <a href="https://www.linkedin.com/in/chimezie-chima-uzoka-253762186/">
+        <i class="fab fa-linkedin fa-2x"></i>
+        <h5>LinkedIn</h5>
+      </a>
+      <a href="mailto:recipient@example.com" target="@chichimadesigns">
+        <i class="far fa-envelope fa-2x"></i>
+        <h5>@chichimadesigns</h5>
+      </a>
     </div>
-    <!--scripts-->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script>
-      var typingEffect = new Typed(".multiText", {
-        strings: ["Web Dev", "Software Dev", "A.I/ML dev"],
-        loop: true,
-        typeSpeed: 100,
-        backSpeed: 80,
-        backDelay: 1500,
-      });
-    </script>
-  </body>
+ 
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script>
+    var typingEffect = new Typed(".multiText", {
+      strings: ["Web Development", "UI/UX Design", "Software/ML development"],
+      loop: true,
+      typeSpeed: 100,
+      backSpeed: 80,
+      backDelay: 1500,
+    });
+
+  document.addEventListener("DOMContentLoaded", function() {
+  const links = document.querySelectorAll('.navContent a');
+  
+  links.forEach(link => {
+    link.addEventListener('click', smoothScroll);
+  });
+  
+  function smoothScroll(e) {
+    e.preventDefault();
+    const targetId = e.target.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      const targetPosition = targetElement.offsetTop;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = 800;
+      let start = null;
+      
+      window.requestAnimationFrame(step);
+      
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        const progress = timestamp - start;
+        window.scrollTo(0, easeInOutCubic(progress, startPosition, distance, duration));
+        if (progress < duration) window.requestAnimationFrame(step);
+      }
+    }
+  }
+  
+  // Easing function
+  function easeInOutCubic(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t * t + b;
+    t -= 2;
+    return c / 2 * (t * t * t + 2) + b;
+  }
+});
+
+  </script>
+
+  
+</body>
 </html>
