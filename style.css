@@ -16,6 +16,7 @@ body {
 .mainNavBar {
   width: 100%;
   background-color: #1b1b1b;
+  align-content: center;
 }
 
 .navContent {
@@ -31,20 +32,24 @@ body {
   letter-spacing: 3px;
   cursor: pointer;
   text-transform: uppercase;
-  background: linear-gradient(to left, #ff8a00 0%, #dd4c4f 100%);
+  background: linear-gradient(to right, #78cc18 40%, #624cdd 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+
 .navContent ul {
   list-style: none;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
-.navContent li {
+.navContent li a {
   margin: 0 10px;
+  color:#624cdd;
+  opacity: 60%;
+  text-decoration: none;
 }
 
 .navContent a {
@@ -56,7 +61,7 @@ body {
 }
 
 .navContent a:hover {
-  color: #ff8a00;
+  color: #78cc18;
 }
 
 /* Content */
@@ -65,6 +70,8 @@ body {
     padding: 5%;
 
 }
+
+
 
 .description button {
   display: inline-block;
@@ -76,7 +83,7 @@ body {
   text-decoration: none;
   cursor: pointer;
   color: #f3f5f3;
-  background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 100%);
+  background: linear-gradient(to right, #78cc18 0%, #624cdd 60%);
   border-radius: 10px;
   border-color: none;
 }
@@ -103,14 +110,15 @@ body {
   content: "";
   height: 4px;
   width: 45px;
-  background-color: #dd4c4f;
+  background-color: #78cc18;
 }
 
 .multiText {
-  background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 100%);
+  background: linear-gradient(to right, #624cdd 0%, #624cdd 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: capitalize;
+  font-weight: 600;
 }
 
 /* Project Cards */
@@ -232,19 +240,20 @@ h1 {
 
 h2{
   font-size: 3rem;
-  background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 30%);
+  background: linear-gradient(to right, #624cdd 0%, #624cdd 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: capitalize;
+  font-weight: 600;
 }
 
 h3{
-  color: #dd4c4f;
+  color: #78cc18;
   font-size: 1.25rem;
   font-weight: 100;
 }
 h4{
-  background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 30%);
+  background: linear-gradient(to right, #78cc18 0%, #624cdd 60%);
   padding-left: 5px;
   color: #f3f5f3;
   font-size:1.5rem;
@@ -295,13 +304,14 @@ p{
 .footer {
   text-align: center;
   width: 100%;
-  background: linear-gradient(to right, #ff8a00 0%, #dd4c4f 60%);
+  background: linear-gradient(to right, #78cc18 0%, #624cdd 60%);
   padding: 2rem;
 }
 
 .footer h3 {
-  padding-bottom: 2rem;
+  padding-bottom: 5%;
   color: #f1f1f1;
+  font-size: 3rem;
   font-weight: 600;
 }
 
