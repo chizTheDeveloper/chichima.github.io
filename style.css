@@ -32,11 +32,10 @@ body {
   letter-spacing: 3px;
   cursor: pointer;
   text-transform: uppercase;
-  background: linear-gradient(to right, #78cc18 40%, #624cdd 60%);
+  background: linear-gradient(to right, #dddb4c 40%, #dddb4c 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 
 .navContent ul {
   list-style: none;
@@ -47,7 +46,7 @@ body {
 
 .navContent li a {
   margin: 0 10px;
-  color:#624cdd;
+  color: #dddb4c;
   opacity: 60%;
   text-decoration: none;
 }
@@ -67,11 +66,8 @@ body {
 /* Content */
 .wrapper {
   background-color: #1b1b1b;
-    padding: 5%;
-
+  padding: 5%;
 }
-
-
 
 .description button {
   display: inline-block;
@@ -89,11 +85,11 @@ body {
 }
 
 .description buttver {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
-.landingPage{
+.landingPage {
   padding-bottom: 10%;
 }
 
@@ -114,7 +110,7 @@ body {
 }
 
 .multiText {
-  background: linear-gradient(to right, #624cdd 0%, #624cdd 60%);
+  background: linear-gradient(to right, #78cc18 0%, #78cc18 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: capitalize;
@@ -137,7 +133,6 @@ body {
   justify-content: center;
   padding-top: 4%;
 }
-
 
 .project {
   text-align: center;
@@ -238,34 +233,34 @@ h1 {
   font-size: 2.5rem;
 }
 
-h2{
+h2 {
   font-size: 3rem;
-  background: linear-gradient(to right, #624cdd 0%, #624cdd 60%);
+  background: linear-gradient(to right, #dddb4c 0%, #dddb4c 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: capitalize;
   font-weight: 600;
 }
 
-h3{
+h3 {
   color: #78cc18;
   font-size: 1.25rem;
   font-weight: 100;
 }
-h4{
-  background: linear-gradient(to right, #78cc18 0%, #624cdd 60%);
+h4 {
+  background: linear-gradient(to right, #dddb4c 0%, #dddb4c 60%);
   padding-left: 5px;
   color: #f3f5f3;
-  font-size:1.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
-h5{
+h5 {
   color: #f3f5f3;
-  font-size:1.2rem;
+  font-size: 1.2rem;
   font-weight: 100;
 }
-p{
+p {
   color: #f3f5f3;
   font-size: 1.5rem;
 }
@@ -278,19 +273,19 @@ p{
   max-width: 100%;
   background-color: #1b1b1b;
 }
-.projects-container{
- 
+.projects-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
-.projects-container img{
+.projects-container img {
   height: 20rem;
+  border-radius: 10%;
 }
-.projectDisply{
+.projectDisply {
   justify-content: center;
   text-align: center;
-  margin:5%;
+  margin: 5%;
 }
 .title2 {
   text-align: center;
@@ -304,7 +299,7 @@ p{
 .footer {
   text-align: center;
   width: 100%;
-  background: linear-gradient(to right, #78cc18 0%, #624cdd 60%);
+  background: linear-gradient(to right, #1b1b1b 0%, #1b1b1b 60%);
   padding: 2rem;
 }
 
@@ -378,7 +373,7 @@ p{
     justify-content: center;
   }
 
-  .footer h5{
+  .footer h5 {
     display: none;
   }
   .card {
@@ -404,17 +399,17 @@ p{
     padding-left: 5%;
     padding-right: 5%;
   }
-  p{
+  p {
     font-size: 16px;
   }
-  h3{
+  h3 {
     font-size: 16px;
   }
-  h2{
+  h2 {
     font-size: 32px;
     padding-top: 5%;
   }
- .card p {
-  font-size: 16px;
- }
+  .card p {
+    font-size: 16px;
+  }
 }
