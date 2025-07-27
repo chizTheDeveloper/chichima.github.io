@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chima | Web Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --background: #1a1b26;
+            --foreground: #a9b1d6;
+            --black: #000000;
+            --red: #f7768e;
+            --green: #9ece6a;
+            --yellow: #e0af68;
+            --blue: #7aa2f7;
+            --magenta: #bb9af7;
+            --cyan: #7dcfff;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+
+        /* Custom scrollbar for a more integrated look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #414868;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #565f89;
+        }
+        
+        /* The main terminal window */
+        #terminal {
+            min-height: 100vh;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Blinking cursor effect */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--foreground);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            from, to { background-color: transparent; }
+            50% { background-color: var(--foreground); }
+        }
+
+        /* Input styling */
+        .input-line {
+            display: flex;
+            align-items: center;
+        }
+
+        .prompt {
+            color: var(--blue);
+            font-weight: 700;
+        }
+        
+        .user-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--foreground);
+            font-family: 'Fira Code', monospace;
+            font-size: 1em;
+            padding-left: 0.5rem;
+        }
+        
+        /* Styling for command outputs */
+        .output-line {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .output-line a {
+            color: var(--cyan);
+            text-decoration: underline;
+            transition: color 0.2s ease;
+        }
+        
+        .output-line a:hover {
+            color: var(--green);
+        }
+
+        .command {
+            color: var(--magenta);
+        }
+        
+        .project-title {
+            color: var(--yellow);
+            font-weight: 700;
+        }
+        
+        .project-tech {
+            color: var(--magenta);
+        }
+
+        .link-label {
+            color: var(--green);
+        }
+    </style>
+</head>
+<body class="p-2 sm:p-4">
+
+    <div id="terminal" class="w-full h-full p-4 rounded-lg" onclick="document.getElementById('current-input').focus()">
+        <div id="output"></div>
+        <div class="input-line" id="input-container">
+            <span class="prompt">user@chima.dev:~$</span>
+            <input type="text" id="current-input" class="user-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus />
+            <span class="cursor"></span>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const outputContainer = document.getElementById('output');
+        const inputContainer = document.getElementById('input-container');
+        let currentInput = document.getElementById('current-input');
+        
+        // --- CONTENT ---
+        const welcomeMessage = `
+  <span style="color: var(--green);">Welcome to my interactive portfolio.</span>
+  
+  Type '<span class="command">help</span>' to see the list of available commands.
+  
+  <pre style="color: var(--blue);">
+ ######  #      #  #   #             #      # #
+#        #      #  #   # #         # #     #   #   
+#        ########  #   #    #    #   #    #     #
+#        #      #  #   #     #  #    #   # # # # #
+ ######  #      #  #   #      #      #  #         #
+  </pre>
+        `;
+
+        const commands = {
+            help: `
+  <span class="command">about</span>      - Learn more about me
+  <span class="command">projects</span>   - View my recent work
+  <span class="command">resume</span>     - Get a link to my resume
+  <span class="command">contact</span>    - Find out how to reach me
+  <span class="command">clear</span>      - Clear the terminal screen
+  <span class="command">welcome</span>    - Display the welcome message again
+            `,
+            about: `
+  I am a detail-oriented Web Developer with hands-on experience in building and deploying 
+  responsive, full-stack web applications. 
+  
+  Proficient in JavaScript, React.js, and Python, with a strong foundation in database 
+  management and modern DevOps practices on platforms like Google Cloud. 
+  
+  I am passionate about creating intuitive user interfaces and scalable, serverless 
+  solutions to deliver exceptional user experiences.
+            `,
+            projects: `
+  <span class="project-title">1. Real-Time Project Management Board</span>
+  <span class="project-tech">[MERN Stack, Socket.IO, Docker, Google Cloud Run]</span>
+  Architected a full-stack, Trello-like application enabling real-time user collaboration.
+  <span class="link-label">GitHub:</span> <a href="https://github.com" target="_blank">github.com/chima/project-board</a>
+  
+  <span class="project-title">2. Automated E-commerce Price Tracker</span>
+  <span class="project-tech">[Node.js, Puppeteer, Google Cloud Functions, PostgreSQL]</span>
+  Developed a serverless tool to scrape product data and send email alerts on price drops.
+  <span class="link-label">GitHub:</span> <a href="https://github.com" target="_blank">github.com/chima/price-tracker</a>
+  
+  <span class="project-title">3. E-commerce Platform for Local Artisans</span>
+  <span class="project-tech">[React.js, Python/Flask, JWT, MySQL, Stripe API]</span>
+  Developed a full-stack marketplace with secure payment processing and user authentication.
+  <span class="link-label">GitHub:</span> <a href="https://github.com" target="_blank">github.com/chima/ecommerce-platform</a>
+            `,
+            resume: `
+  You can view or download my resume here:
+  <a href="#" target="_blank">chima_resume.pdf</a> (Link currently disabled)
+            `,
+            contact: `
+  You can reach me through the following channels:
+  
+  <span style="color: var(--green);">GitHub:</span>   <a href="https://github.com" target="_blank">github.com/chima</a>
+  <span style="color: var(--green);">LinkedIn:</span> <a href="https://linkedin.com" target="_blank">linkedin.com/in/chima</a>
+  <span style="color: var(--green);">Email:</span>    <a href="mailto:chima.dev@email.com">chima.dev@email.com</a>
+            `,
+            welcome: welcomeMessage
+        };
+
+        // --- CORE LOGIC ---
+        
+        // Initial "boot" sequence
+        window.onload = () => {
+            type(welcomeMessage, () => {
+                currentInput.focus();
+            });
+        };
+
+        // Handle command input
+        currentInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = currentInput.value.trim().toLowerCase();
+                
+                // Display the entered command
+                const commandOutputLine = document.createElement('div');
+                commandOutputLine.innerHTML = `<span class="prompt">user@chima.dev:~$</span> <span class="user-input">${command}</span>`;
+                outputContainer.appendChild(commandOutputLine);
+
+                // Process the command
+                if (command === 'clear') {
+                    outputContainer.innerHTML = '';
+                } else if (commands[command]) {
+                    type(commands[command]);
+                } else if (command === '') {
+                    // Do nothing for empty command
+                }
+                else {
+                    type(`Command not found: <span style="color: var(--red);">${command}</span>. Type '<span class="command">help</span>' for a list of commands.`);
+                }
+                
+                // Reset input
+                currentInput.value = '';
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        });
+
+        // Function to simulate typing effect
+        function type(text, callback) {
+            const outputLine = document.createElement('div');
+            outputLine.className = 'output-line';
+            outputContainer.appendChild(outputLine);
+            
+            let i = 0;
+            const speed = 10; // Typing speed in milliseconds
+
+            // Temporarily disable input
+            currentInput.disabled = true;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    // Handle HTML tags properly
+                    if (text.charAt(i) === '<') {
+                        const closingTagIndex = text.indexOf('>', i);
+                        if (closingTagIndex !== -1) {
+                            outputLine.innerHTML += text.substring(i, closingTagIndex + 1);
+                            i = closingTagIndex;
+                        }
+                    } else {
+                        outputLine.innerHTML += text.charAt(i);
+                    }
+                    i++;
+                    terminal.scrollTop = terminal.scrollHeight;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    // Re-enable input
+                    currentInput.disabled = false;
+                    currentInput.focus();
+                    if (callback) callback();
+                }
+            }
+            typeWriter();
+        }
+
+    </script>
+</body>
+</html>

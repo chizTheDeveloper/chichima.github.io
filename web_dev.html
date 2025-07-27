@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chima Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #202124;
+            --text-secondary: #4d5156;
+            --text-link: #1a0dab;
+            --border-color: #dfe1e5;
+            --shadow-color: rgba(32,33,36,.28);
+            --shadow-color-hover: rgba(32,33,36,.35);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --bg-primary: #202124;
+            --bg-secondary: #303134;
+            --text-primary: #e8eaed;
+            --text-secondary: #bdc1c6;
+            --text-link: #8ab4f8;
+            --border-color: #5f6368;
+            --shadow-color: rgba(0,0,0,.5);
+            --shadow-color-hover: rgba(0,0,0,.6);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #search-page {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #results-page {
+            transition: opacity 0.5s ease;
+            display: none; /* Initially hidden */
+        }
+        
+        .search-input-wrapper {
+            background-color: var(--bg-primary);
+            box-shadow: 0 1px 6px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+        .search-input-wrapper:hover, .search-input-wrapper.focused {
+             box-shadow: 0 2px 8px var(--shadow-color-hover);
+        }
+
+        .search-button {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 0 16px;
+            height: 36px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .search-button:hover {
+            border-color: var(--border-color);
+            box-shadow: 0 1px 1px rgba(0,0,0,.1);
+        }
+        
+        .result-item .result-url {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .result-item .result-title {
+            color: var(--text-link);
+            font-size: 20px;
+        }
+        .result-item .result-title:hover {
+            text-decoration: underline;
+        }
+        .result-item .result-snippet {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .result-item .result-snippet .highlight {
+            font-weight: 500;
+            color: var(--text-link);
+        }
+
+        /* Shortcuts */
+        .shortcut-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+        }
+        .shortcut-item:hover {
+            background-color: var(--bg-secondary);
+        }
+        .shortcut-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .shortcut-name {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        /* Suggestions Dropdown */
+        .suggestions-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            padding-top: 12px;
+            z-index: 10;
+        }
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 20px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background-color: var(--bg-secondary);
+        }
+    </style>
+</head>
+<body class="w-full">
+
+    <!-- Top Right Navigation -->
+    <div class="absolute top-4 right-4 z-50 flex items-center space-x-4">
+        <a href="index.html" class="text-[var(--text-primary)] hover:underline text-sm">
+            Home
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <!-- Sun Icon -->
+            <svg id="theme-icon-light" class="w-6 h-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <!-- Moon Icon -->
+            <svg id="theme-icon-dark" class="w-6 h-6 text-white hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        </button>
+    </div>
+
+    <!-- Main Search Page -->
+    <div id="search-page" class="flex flex-col items-center justify-center min-h-screen p-4">
+        <div class="flex flex-col items-center w-full max-w-xl">
+            <!-- Logo -->
+            <h1 class="text-7xl md:text-8xl font-medium mb-8">
+                <span class="text-[#4285F4]">C</span><span class="text-[#EA4335]">h</span><span class="text-[#FBBC05]">i</span><span class="text-[#4285F4]">m</span><span class="text-[#34A853]">a</span>
+            </h1>
+
+            <!-- Search Bar & Suggestions -->
+            <div class="relative w-full">
+                <form id="search-form">
+                    <div id="search-wrapper" class="search-input-wrapper flex items-center w-full rounded-full border py-2 px-5 transition-all">
+                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        <input type="text" id="search-input" class="w-full bg-transparent border-none focus:outline-none ml-4" placeholder="Search for projects (e.g., 'React', 'AI', 'ecommerce')">
+                    </div>
+                </form>
+                <div id="suggestions-container" class="suggestions-dropdown hidden">
+                    <!-- Suggestions will be injected here -->
+                </div>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="flex justify-center space-x-4 mt-7">
+                <button type="submit" form="search-form" class="search-button">Search Projects</button>
+                <button type="button" id="lucky-button" class="search-button">I'm Feeling Lucky</button>
+            </div>
+
+            <!-- Shortcuts -->
+            <div id="shortcuts-container" class="grid grid-cols-4 sm:grid-cols-5 gap-4 mt-8 w-full max-w-md">
+                <!-- Shortcuts will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Results Page -->
+    <div id="results-page" class="opacity-0">
+        <header class="sticky top-0 bg-[var(--bg-primary)] border-b border-[var(--border-color)] p-4 z-40">
+            <div class="container mx-auto flex items-center">
+                <a href="#" id="back-to-search" class="text-4xl md:text-5xl font-medium">
+                    <span class="text-[#4285F4]">C</span><span class="text-[#EA4335]">h</span><span class="text-[#FBBC05]">i</span><span class="text-[#4285F4]">m</span><span class="text-[#34A853]">a</span>
+                </a>
+                <form id="results-search-form" class="flex-grow ml-8">
+                    <div class="search-input-wrapper flex items-center w-full max-w-2xl rounded-full border py-2 px-5">
+                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        <input type="text" id="results-search-input" class="w-full bg-transparent border-none focus:outline-none ml-4">
+                        <button type="submit" class="hidden">Search</button>
+                    </div>
+                </form>
+            </div>
+        </header>
+        <main id="results-container" class="container mx-auto p-4 md:pl-28">
+            <!-- Results will be injected here -->
+        </main>
+    </div>
+
+    <script>
+        // --- PROJECT DATABASE ---
+        const projects = [
+            {
+                title: 'Project Board',
+                url: '#', // Replace with actual project URL
+                description: 'A full-stack, Trello-like application built with the MERN stack. Features real-time collaboration using Socket.IO and is deployed on Google Cloud Run.',
+                keywords: ['react', 'node.js', 'mongodb', 'socket.io', 'full-stack', 'collaboration', 'mern'],
+                icon: 'PB'
+            },
+            {
+                title: 'Price Tracker',
+                url: '#',
+                description: 'A serverless tool that scrapes product data using Puppeteer. It runs on a schedule with Google Cloud Functions and sends email alerts for price drops.',
+                keywords: ['node.js', 'puppeteer', 'serverless', 'automation', 'ecommerce', 'web scraping', 'google cloud'],
+                icon: 'PT'
+            },
+            {
+                title: 'Aisle Finder',
+                url: '#',
+                description: 'A smart search assistant to help customers locate store items using natural language queries, powered by the Groq API and a React front-end.',
+                keywords: ['ai', 'react', 'nlp', 'groq api', 'search', 'assistant', 'machine learning'],
+                icon: 'AF'
+            },
+            {
+                title: 'Artisan Shop',
+                url: '#',
+                description: 'A full-stack marketplace for local artisans featuring secure payments with Stripe API and user authentication with JWT. Built with Python/Flask and React.',
+                keywords: ['python', 'flask', 'react', 'ecommerce', 'stripe', 'jwt', 'mysql'],
+                icon: 'AS'
+            }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const searchPage = document.getElementById('search-page');
+        const resultsPage = document.getElementById('results-page');
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+        const luckyButton = document.getElementById('lucky-button');
+        const resultsContainer = document.getElementById('results-container');
+        const resultsSearchForm = document.getElementById('results-search-form');
+        const resultsSearchInput = document.getElementById('results-search-input');
+        const backToSearchLink = document.getElementById('back-to-search');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIconLight = document.getElementById('theme-icon-light');
+        const themeIconDark = document.getElementById('theme-icon-dark');
+        const shortcutsContainer = document.getElementById('shortcuts-container');
+        const suggestionsContainer = document.getElementById('suggestions-container');
+        const searchWrapper = document.getElementById('search-wrapper');
+
+        // --- CORE FUNCTIONS ---
+        
+        function performSearch(query) {
+            const lowerCaseQuery = query.toLowerCase().trim();
+            if (!lowerCaseQuery) {
+                displayResults(projects, lowerCaseQuery); // Show all if query is empty
+                return;
+            }
+
+            const filteredProjects = projects.filter(p => {
+                const titleMatch = p.title.toLowerCase().includes(lowerCaseQuery);
+                const descriptionMatch = p.description.toLowerCase().includes(lowerCaseQuery);
+                const keywordMatch = p.keywords.some(k => k.toLowerCase().includes(lowerCaseQuery));
+                return titleMatch || descriptionMatch || keywordMatch;
+            });
+
+            displayResults(filteredProjects, lowerCaseQuery);
+        }
+
+        function displayResults(results, query) {
+            resultsContainer.innerHTML = ''; // Clear previous results
+
+            const resultCount = document.createElement('p');
+            resultCount.className = 'text-sm text-[var(--text-secondary)] mb-4';
+            resultCount.textContent = `About ${results.length} results`;
+            resultsContainer.appendChild(resultCount);
+
+            if (results.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.innerHTML = `
+                    <p class="text-lg">Your search - <strong>${query}</strong> - did not match any projects.</p>
+                    <p class="mt-2 text-[var(--text-secondary)]">Suggestions:</p>
+                    <ul class="list-disc list-inside mt-2 text-[var(--text-secondary)]">
+                        <li>Make sure all words are spelled correctly.</li>
+                        <li>Try different keywords (e.g., 'react', 'python', 'ai').</li>
+                        <li>Try more general keywords.</li>
+                    </ul>
+                `;
+                resultsContainer.appendChild(noResults);
+            } else {
+                results.forEach(project => {
+                    const item = document.createElement('div');
+                    item.className = 'result-item mb-8 max-w-2xl';
+                    
+                    let description = project.description;
+                    if (query) {
+                        const regex = new RegExp(query, 'gi');
+                        description = description.replace(regex, `<span class="highlight">${query}</span>`);
+                    }
+
+                    item.innerHTML = `
+                        <a href="${project.url}" target="_blank">
+                            <p class="result-url">${project.url.replace('https://', '')}</p>
+                            <h3 class="result-title">${project.title}</h3>
+                        </a>
+                        <p class="result-snippet">${description}</p>
+                    `;
+                    resultsContainer.appendChild(item);
+                });
+            }
+
+            // Switch views
+            searchPage.style.opacity = '0';
+            searchPage.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                searchPage.style.display = 'none';
+                resultsPage.style.display = 'block';
+                setTimeout(() => {
+                    resultsPage.style.opacity = '1';
+                }, 50);
+            }, 500);
+        }
+
+        function handleLuckyClick() {
+            if (projects.length > 0) {
+                const randomProject = projects[Math.floor(Math.random() * projects.length)];
+                window.open(randomProject.url, '_blank');
+            }
+        }
+        
+        function showSearchPage() {
+            resultsPage.style.opacity = '0';
+            setTimeout(() => {
+                resultsPage.style.display = 'none';
+                searchPage.style.display = 'flex';
+                searchPage.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    searchPage.style.opacity = '1';
+                    searchInput.focus();
+                }, 50);
+            }, 500);
+        }
+        
+        // --- NEW FEATURES ---
+
+        // Theme Toggle
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIconLight.classList.add('hidden');
+                themeIconDark.classList.remove('hidden');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeIconLight.classList.remove('hidden');
+                themeIconDark.classList.add('hidden');
+            }
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.hasAttribute('data-theme') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // Load Shortcuts
+        function loadShortcuts() {
+            shortcutsContainer.innerHTML = '';
+            projects.slice(0, 5).forEach(project => { // Show up to 5 shortcuts
+                const shortcut = document.createElement('a');
+                shortcut.href = project.url;
+                shortcut.target = '_blank';
+                shortcut.className = 'shortcut-item';
+                shortcut.innerHTML = `
+                    <div class="shortcut-icon">${project.icon}</div>
+                    <span class="shortcut-name">${project.title}</span>
+                `;
+                shortcutsContainer.appendChild(shortcut);
+            });
+        }
+        
+        // Suggestions
+        function showSuggestions() {
+            suggestionsContainer.innerHTML = '';
+            projects.forEach(project => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.innerHTML = `
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>${project.title}</span>
+                `;
+                item.addEventListener('mousedown', (e) => { // mousedown to fire before blur
+                    e.preventDefault();
+                    searchInput.value = project.title;
+                    performSearch(project.title);
+                    hideSuggestions();
+                });
+                suggestionsContainer.appendChild(item);
+            });
+            suggestionsContainer.classList.remove('hidden');
+            searchWrapper.classList.add('focused');
+            searchWrapper.style.borderRadius = '24px 24px 0 0';
+        }
+
+        function hideSuggestions() {
+            suggestionsContainer.classList.add('hidden');
+            searchWrapper.classList.remove('focused');
+            searchWrapper.style.borderRadius = '9999px';
+        }
+
+        searchInput.addEventListener('focus', showSuggestions);
+        searchInput.addEventListener('blur', () => {
+             // Delay to allow click on suggestion to register
+            setTimeout(hideSuggestions, 150);
+        });
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+            loadShortcuts();
+        });
+
+        // --- EVENT LISTENERS ---
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value;
+            resultsSearchInput.value = query;
+            performSearch(query);
+            hideSuggestions();
+        });
+
+        resultsSearchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = resultsSearchInput.value;
+            searchInput.value = query;
+            performSearch(query);
+        });
+        
+        luckyButton.addEventListener('click', handleLuckyClick);
+        
+        backToSearchLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSearchPage();
+        });
+
+    </script>
+</body>
+</html>
