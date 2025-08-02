@@ -5,17 +5,17 @@
   
   <!-- Status Bar -->
   <rect x="20" y="30" width="280" height="40" fill="#2D3748"/>
-  <text x="30" y="55" fill="#E2E8F0" font-family="Inter" font-size="18" font-weight="bold">LifeLas</text>
+  <text x="30" y="55" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">LifeLas</text>
   <circle cx="270" cy="50" r="15" fill="#667EEA"/>
-  <text x="265" y="55" fill="white" font-family="Inter" font-size="14" font-weight="bold">S</text>
-  
+  <text x="265" y="55" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">S</text>
+
   <!-- Greeting -->
-  <text x="30" y="90" fill="#E2E8F0" font-family="Inter" font-size="24" font-weight="bold">Good evening, Sarah</text>
-  <text x="30" y="115" fill="#A0AEC0" font-family="Inter" font-size="14">Your LifePath is evolving beautifully</text>
+  <text x="30" y="90" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="24" font-weight="bold">Good evening, Sarah</text>
+  <text x="30" y="115" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="14">Your LifePath is evolving beautifully</text>
   
   <!-- LifePath Roadmap -->
   <rect x="30" y="140" width="260" height="120" rx="15" fill="#2D3748"/>
-  <text x="40" y="165" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="600">LifePath Roadmap</text>
+  <text x="40" y="165" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="600">LifePath Roadmap</text>
   
   <!-- Roadmap Path -->
   <path d="M50 200 Q100 180 150 200 T250 180" stroke="#ED64A6" stroke-width="3" fill="none"/>
@@ -25,56 +25,56 @@
   <circle cx="250" cy="180" r="6" fill="#ED64A6"/>
   
   <!-- Path Labels -->
-  <text x="40" y="225" fill="#A0AEC0" font-family="Inter" font-size="10">Emergency Fund</text>
-  <text x="100" y="215" fill="#A0AEC0" font-family="Inter" font-size="10">Career Pivot</text>
-  <text x="200" y="230" fill="#A0AEC0" font-family="Inter" font-size="10">Dream Home</text>
+  <text x="40" y="225" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">Emergency Fund</text>
+  <text x="100" y="215" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">Career Pivot</text>
+  <text x="200" y="230" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">Dream Home</text>
   
   <!-- Active Goals Section -->
-  <text x="30" y="295" fill="#E2E8F0" font-family="Inter" font-size="18" font-weight="bold">Active Goals</text>
+  <text x="30" y="295" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Active Goals</text>
   
   <!-- Goal 1: Condo Down Payment -->
   <rect x="30" y="310" width="260" height="70" rx="12" fill="#2D3748"/>
   <rect x="40" y="320" width="30" height="30" rx="8" fill="#ED64A6" opacity="0.2"/>
   <path d="M50 330 L55 340 L60 330 M45 340 L65 340 M50 345 L60 345" stroke="#ED64A6" stroke-width="2" fill="none"/>
-  <text x="80" y="335" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="600">Condo Down</text>
-  <text x="80" y="350" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="600">Payment</text>
-  <text x="80" y="365" fill="#A0AEC0" font-family="Inter" font-size="12">Target: Dec 2025</text>
-  <text x="220" y="335" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="bold">$21,450</text>
-  <text x="220" y="350" fill="#A0AEC0" font-family="Inter" font-size="12">/ $75,000</text>
-  <text x="220" y="365" fill="#48BB78" font-family="Inter" font-size="14" font-weight="600">28%</text>
+  <text x="80" y="335" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="600">Condo Down</text>
+  <text x="80" y="350" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="600">Payment</text>
+  <text x="80" y="365" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="12">Target: Dec 2025</text>
+  <text x="220" y="335" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">$21,450</text>
+  <text x="220" y="350" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="12">/ $75,000</text>
+  <text x="220" y="365" fill="#48BB78" font-family="Arial, sans-serif" font-size="14" font-weight="600">28%</text>
   
   <!-- Goal 2: Career Pivot Fund -->
   <rect x="30" y="390" width="260" height="70" rx="12" fill="#2D3748"/>
   <rect x="40" y="400" width="30" height="30" rx="8" fill="#667EEA" opacity="0.2"/>
   <path d="M50 410 L60 420 M50 420 L60 410 M45 415 L65 415" stroke="#667EEA" stroke-width="2" fill="none"/>
-  <text x="80" y="415" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="600">Career Pivot</text>
-  <text x="80" y="430" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="600">Fund</text>
-  <text x="80" y="445" fill="#A0AEC0" font-family="Inter" font-size="12">Learn Python & AI</text>
-  <text x="220" y="415" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="bold">$8,500</text>
-  <text x="220" y="430" fill="#A0AEC0" font-family="Inter" font-size="12">/ $17,000</text>
-  <text x="220" y="445" fill="#48BB78" font-family="Inter" font-size="14" font-weight="600">50%</text>
+  <text x="80" y="415" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="600">Career Pivot</text>
+  <text x="80" y="430" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="600">Fund</text>
+  <text x="80" y="445" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="12">Learn Python & AI</text>
+  <text x="220" y="415" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">$8,500</text>
+  <text x="220" y="430" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="12">/ $17,000</text>
+  <text x="220" y="445" fill="#48BB78" font-family="Arial, sans-serif" font-size="14" font-weight="600">50%</text>
   
   <!-- Goal 3: Travel to Japan -->
   <rect x="30" y="470" width="260" height="70" rx="12" fill="#2D3748"/>
   <rect x="40" y="480" width="30" height="30" rx="8" fill="#F56565" opacity="0.2"/>
   <path d="M50 490 L60 500 L55 505 L50 500 Z" stroke="#F56565" stroke-width="2" fill="none"/>
-  <text x="80" y="495" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="600">Travel to Japan</text>
-  <text x="220" y="495" fill="#E2E8F0" font-family="Inter" font-size="16" font-weight="bold">$4,800</text>
-  <text x="220" y="510" fill="#A0AEC0" font-family="Inter" font-size="12">/ $8,000</text>
-  <text x="220" y="525" fill="#48BB78" font-family="Inter" font-size="14" font-weight="600">60%</text>
+  <text x="80" y="495" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="600">Travel to Japan</text>
+  <text x="220" y="495" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">$4,800</text>
+  <text x="220" y="510" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="12">/ $8,000</text>
+  <text x="220" y="525" fill="#48BB78" font-family="Arial, sans-serif" font-size="14" font-weight="600">60%</text>
   
   <!-- Bottom Navigation -->
   <rect x="0" y="580" width="320" height="60" fill="#1A202C"/>
   <rect x="30" y="590" width="50" height="40" rx="8" fill="#ED64A6"/>
-  <text x="45" y="605" fill="white" font-family="Inter" font-size="10">🏠</text>
-  <text x="40" y="620" fill="white" font-family="Inter" font-size="10" font-weight="600">Home</text>
+  <text x="45" y="605" fill="white" font-family="Arial, sans-serif" font-size="10">🏠</text>
+  <text x="40" y="620" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="600">Home</text>
   
-  <text x="105" y="605" fill="#A0AEC0" font-family="Inter" font-size="10">📊</text>
-  <text x="95" y="620" fill="#A0AEC0" font-family="Inter" font-size="10">Analytics</text>
+  <text x="105" y="605" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">📊</text>
+  <text x="95" y="620" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">Analytics</text>
   
-  <text x="165" y="605" fill="#A0AEC0" font-family="Inter" font-size="10">➕</text>
-  <text x="155" y="620" fill="#A0AEC0" font-family="Inter" font-size="10">Add Goal</text>
+  <text x="165" y="605" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">➕</text>
+  <text x="155" y="620" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">Add Goal</text>
   
-  <text x="225" y="605" fill="#A0AEC0" font-family="Inter" font-size="10">👤</text>
-  <text x="220" y="620" fill="#A0AEC0" font-family="Inter" font-size="10">Profile</text>
+  <text x="225" y="605" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">👤</text>
+  <text x="220" y="620" fill="#A0AEC0" font-family="Arial, sans-serif" font-size="10">Profile</text>
 </svg>

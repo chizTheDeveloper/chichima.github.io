@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a202c;
+            color: white;
+        }
+        .image-test {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+        }
+        img {
+            max-width: 200px;
+            height: auto;
+            border: 1px solid #666;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #51cf66;
+        }
+    </style>
+</head>
+<body>
+    <h1>LifeLas Image Loading Test</h1>
+    
+    <div class="image-test">
+        <h3>Home Screen SVG</h3>
+        <img src="assets/lifelas-home.svg" alt="Home Screen" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="home-status">Loading...</p>
+    </div>
+    
+    <div class="image-test">
+        <h3>Analytics Screen SVG</h3>
+        <img src="assets/lifelas-analytics.svg" alt="Analytics Screen" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="analytics-status">Loading...</p>
+    </div>
+    
+    <div class="image-test">
+        <h3>Add Goal Screen SVG</h3>
+        <img src="assets/lifelas-add-goal.svg" alt="Add Goal Screen" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="add-goal-status">Loading...</p>
+    </div>
+    
+    <div class="image-test">
+        <h3>Profile Screen SVG</h3>
+        <img src="assets/lifelas-profile.svg" alt="Profile Screen" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="profile-status">Loading...</p>
+    </div>
+    
+    <div class="image-test">
+        <h3>Analytics PNG (if exists)</h3>
+        <img src="assets/lifelas-analytics.png" alt="Analytics PNG" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="png-status">Loading...</p>
+    </div>
+
+    <div class="image-test">
+        <h3>Simple Test SVG</h3>
+        <img src="assets/test-simple.svg" alt="Simple Test" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="simple-test-status">Loading...</p>
+    </div>
+
+    <h2>Your Custom PNG Images</h2>
+
+    <div class="image-test">
+        <h3>LLS Home PNG</h3>
+        <img src="assets/LLS_Home.png" alt="LLS Home" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="lls-home-status">Loading...</p>
+    </div>
+
+    <div class="image-test">
+        <h3>LLS Analytics PNG</h3>
+        <img src="assets/LLS_Analytics.png" alt="LLS Analytics" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="lls-analytics-status">Loading...</p>
+    </div>
+
+    <div class="image-test">
+        <h3>LLS Add Goal PNG</h3>
+        <img src="assets/LLS_addGoal.png" alt="LLS Add Goal" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="lls-add-goal-status">Loading...</p>
+    </div>
+
+    <div class="image-test">
+        <h3>LLS Profile PNG</h3>
+        <img src="assets/LLS_profile.png" alt="LLS Profile" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="lls-profile-status">Loading...</p>
+    </div>
+
+    <h2>Branding Assets</h2>
+
+    <div class="image-test">
+        <h3>Logo Design PNG</h3>
+        <img src="assets/logodesign.png" alt="LifeLas Logo Design" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="logo-design-status">Loading...</p>
+    </div>
+
+    <div class="image-test">
+        <h3>Billboard Campaign PNG</h3>
+        <img src="assets/billboard.png" alt="LifeLas Billboard Campaign" onload="showStatus(this, true)" onerror="showStatus(this, false)">
+        <p id="billboard-status">Loading...</p>
+    </div>
+
+    <script>
+        function showStatus(img, success) {
+            const alt = img.alt;
+            const statusId = alt.toLowerCase().replace(/\s+/g, '-').replace('screen', '').replace('png', 'png') + '-status';
+            const statusElement = document.getElementById(statusId);
+            
+            if (success) {
+                statusElement.textContent = '✅ Loaded successfully';
+                statusElement.className = 'success';
+            } else {
+                statusElement.textContent = '❌ Failed to load';
+                statusElement.className = 'error';
+            }
+        }
+        
+        // Check if files exist
+        function checkFileExists(url) {
+            return fetch(url, { method: 'HEAD' })
+                .then(response => response.ok)
+                .catch(() => false);
+        }
+        
+        // Test all files
+        const files = [
+            'assets/lifelas-home.svg',
+            'assets/lifelas-analytics.svg', 
+            'assets/lifelas-add-goal.svg',
+            'assets/lifelas-profile.svg',
+            'assets/lifelas-analytics.png'
+        ];
+        
+        console.log('Testing file accessibility...');
+        files.forEach(file => {
+            checkFileExists(file).then(exists => {
+                console.log(`${file}: ${exists ? 'EXISTS' : 'NOT FOUND'}`);
+            });
+        });
+    </script>
+</body>
+</html>

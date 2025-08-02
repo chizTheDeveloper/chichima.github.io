@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLas Demo - Interactive App Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/2539c47f52.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            color: #e2e8f0;
+        }
+
+        .phone-frame {
+            background: linear-gradient(145deg, #2d3748, #4a5568);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .screen {
+            background: #1a202c;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-tab.active {
+            background: #ed64a6;
+            color: white;
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: #374151;
+        }
+
+        .goal-card {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #ed64a6, #9f7aea);
+            transition: width 0.5s ease;
+        }
+
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .glassmorphism {
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .chart-bar {
+            transition: height 0.8s ease;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <!-- Demo Container -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">LifeLas</span> 
+                Interactive Demo
+            </h1>
+            <p class="text-slate-300 text-lg">Experience the future of financial planning</p>
+            <button onclick="window.history.back()" class="mt-4 px-6 py-2 bg-slate-700 hover:bg-slate-600 rounded-full transition-colors">
+                ← Back to Case Study
+            </button>
+        </div>
+
+        <!-- Phone Mockup -->
+        <div class="flex justify-center">
+            <div class="phone-frame rounded-[3rem] p-4 w-80">
+                <div class="screen rounded-[2.5rem] h-[640px] overflow-hidden relative">
+                    
+                    <!-- Status Bar -->
+                    <div class="flex justify-between items-center p-4 text-sm">
+                        <span class="font-semibold">LifeLas</span>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-bell text-slate-400"></i>
+                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-bold">S</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen Content -->
+                    <div id="screen-content" class="px-4 pb-20 h-full overflow-y-auto">
+                        <!-- Home Screen (Default) -->
+                        <div id="home-screen" class="screen-content fade-in">
+                            <div class="mb-6">
+                                <h2 class="text-2xl font-bold text-white">Good evening, Sarah</h2>
+                                <p class="text-slate-400">Your LifePath is evolving beautifully</p>
+                            </div>
+
+                            <!-- LifePath Roadmap -->
+                            <div class="bg-slate-800 rounded-2xl p-6 mb-6">
+                                <h3 class="text-lg font-semibold mb-4">LifePath Roadmap</h3>
+                                <div class="relative h-16 mb-4">
+                                    <svg class="w-full h-full" viewBox="0 0 280 60">
+                                        <path d="M20 30 Q80 10 140 30 T260 20" stroke="#ed64a6" stroke-width="3" fill="none"/>
+                                        <circle cx="20" cy="30" r="6" fill="#ed64a6" class="floating-animation"/>
+                                        <circle cx="100" cy="20" r="6" fill="#9f7aea"/>
+                                        <circle cx="180" cy="35" r="6" fill="#667eea"/>
+                                        <circle cx="260" cy="20" r="6" fill="#ed64a6"/>
+                                    </svg>
+                                </div>
+                                <div class="flex justify-between text-xs text-slate-400">
+                                    <span>Emergency</span>
+                                    <span>Career</span>
+                                    <span>Dream Home</span>
+                                </div>
+                            </div>
+
+                            <!-- Active Goals -->
+                            <h3 class="text-lg font-semibold mb-4">Active Goals</h3>
+                            <div class="space-y-4">
+                                <div class="goal-card rounded-xl p-4" onclick="updateGoalProgress(this, 35)">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-pink-500/20 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-home text-pink-400"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Condo Down Payment</h4>
+                                                <p class="text-xs text-slate-400">Target: Dec 2025</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-bold">$21,450</p>
+                                            <p class="text-xs text-slate-400">/ $75,000</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-700 rounded-full h-2">
+                                        <div class="progress-bar h-2 rounded-full" style="width: 28%"></div>
+                                    </div>
+                                    <p class="text-xs text-green-400 mt-1">28% complete</p>
+                                </div>
+
+                                <div class="goal-card rounded-xl p-4" onclick="updateGoalProgress(this, 60)">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-graduation-cap text-blue-400"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Career Pivot Fund</h4>
+                                                <p class="text-xs text-slate-400">Learn Python & AI</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-bold">$8,500</p>
+                                            <p class="text-xs text-slate-400">/ $17,000</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-700 rounded-full h-2">
+                                        <div class="progress-bar h-2 rounded-full" style="width: 50%"></div>
+                                    </div>
+                                    <p class="text-xs text-green-400 mt-1">50% complete</p>
+                                </div>
+
+                                <div class="goal-card rounded-xl p-4" onclick="updateGoalProgress(this, 70)">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-plane text-red-400"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">Travel to Japan</h4>
+                                                <p class="text-xs text-slate-400">Spring 2025</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-bold">$4,800</p>
+                                            <p class="text-xs text-slate-400">/ $8,000</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-700 rounded-full h-2">
+                                        <div class="progress-bar h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <p class="text-xs text-green-400 mt-1">60% complete</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Analytics Screen -->
+                        <div id="analytics-screen" class="screen-content hidden">
+                            <div class="mb-6">
+                                <h2 class="text-2xl font-bold text-white">Analytics</h2>
+                            </div>
+
+                            <!-- Net Worth Card -->
+                            <div class="bg-slate-800 rounded-2xl p-6 mb-6">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-slate-400">Net Worth</span>
+                                    <span class="text-slate-400 text-sm">6M ▼</span>
+                                </div>
+                                <h3 class="text-3xl font-bold text-white mb-2">$43,890</h3>
+                                <p class="text-green-400 text-sm">↗ $1,240 this month</p>
+
+                                <!-- Mini Chart -->
+                                <div class="mt-4 h-16 relative">
+                                    <svg class="w-full h-full" viewBox="0 0 280 60">
+                                        <path d="M20 40 Q80 35 140 30 Q200 25 260 20" stroke="#667eea" stroke-width="3" fill="none"/>
+                                        <path d="M20 40 Q80 35 140 30 Q200 25 260 20 L260 60 L20 60 Z" fill="url(#gradient)" opacity="0.3"/>
+                                        <defs>
+                                            <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1"/>
+                                                <stop offset="100%" style="stop-color:#667eea;stop-opacity:0"/>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Cash Flow -->
+                            <div class="bg-slate-800 rounded-2xl p-6 mb-6">
+                                <h3 class="text-lg font-semibold mb-2">Cash Flow</h3>
+                                <p class="text-slate-400 text-sm mb-4">August 2025</p>
+
+                                <div class="flex items-end justify-between h-24 mb-2">
+                                    <div class="flex flex-col items-center">
+                                        <div class="chart-bar bg-pink-500 w-4 rounded-t" style="height: 40%"></div>
+                                        <div class="chart-bar bg-blue-500 w-4 rounded-t mt-1" style="height: 60%"></div>
+                                        <span class="text-xs text-slate-400 mt-1">W1</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="chart-bar bg-pink-500 w-4 rounded-t" style="height: 50%"></div>
+                                        <div class="chart-bar bg-blue-500 w-4 rounded-t mt-1" style="height: 80%"></div>
+                                        <span class="text-xs text-slate-400 mt-1">W2</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="chart-bar bg-blue-500 w-4 rounded-t" style="height: 100%"></div>
+                                        <div class="chart-bar bg-pink-500 w-4 rounded-t mt-1" style="height: 40%"></div>
+                                        <span class="text-xs text-slate-400 mt-1">W3</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="chart-bar bg-pink-500 w-4 rounded-t" style="height: 30%"></div>
+                                        <div class="chart-bar bg-pink-500 w-4 rounded-t mt-1" style="height: 20%"></div>
+                                        <span class="text-xs text-slate-400 mt-1">W4</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Spending Categories -->
+                            <h3 class="text-lg font-semibold mb-4">Spending by Category</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between bg-slate-800 rounded-lg p-3">
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 bg-blue-500 rounded mr-3"></div>
+                                        <span>Groceries</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="font-semibold">$380</span>
+                                        <span class="text-slate-400 text-sm">/ $500</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between bg-slate-800 rounded-lg p-3">
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 bg-purple-500 rounded mr-3"></div>
+                                        <span>Entertainment</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="font-semibold">$240</span>
+                                        <span class="text-slate-400 text-sm">/ $300</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Goal Screen -->
+                        <div id="add-goal-screen" class="screen-content hidden">
+                            <div class="mb-6">
+                                <h2 class="text-2xl font-bold text-white">Add New Goal</h2>
+                            </div>
+
+                            <form onsubmit="createGoal(event)" class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Goal Name</label>
+                                    <input type="text" id="goal-name" placeholder="e.g., European Vacation"
+                                           class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">How much do you need?</label>
+                                    <input type="number" id="goal-amount" placeholder="10000"
+                                           class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">When do you need it by?</label>
+                                    <input type="date" id="goal-date"
+                                           class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Choose a category</label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="category-option bg-slate-800 border border-slate-600 rounded-lg p-4 text-center cursor-pointer hover:border-pink-500 transition-colors" onclick="selectCategory(this, 'travel')">
+                                            <i class="fas fa-plane text-2xl mb-2 text-blue-400"></i>
+                                            <p class="font-medium">Travel</p>
+                                        </div>
+                                        <div class="category-option bg-slate-800 border border-slate-600 rounded-lg p-4 text-center cursor-pointer hover:border-pink-500 transition-colors" onclick="selectCategory(this, 'home')">
+                                            <i class="fas fa-home text-2xl mb-2 text-pink-400"></i>
+                                            <p class="font-medium">Home</p>
+                                        </div>
+                                        <div class="category-option bg-slate-800 border border-slate-600 rounded-lg p-4 text-center cursor-pointer hover:border-pink-500 transition-colors" onclick="selectCategory(this, 'education')">
+                                            <i class="fas fa-graduation-cap text-2xl mb-2 text-green-400"></i>
+                                            <p class="font-medium">Education</p>
+                                        </div>
+                                        <div class="category-option bg-slate-800 border border-slate-600 rounded-lg p-4 text-center cursor-pointer hover:border-pink-500 transition-colors" onclick="selectCategory(this, 'other')">
+                                            <i class="fas fa-ellipsis-h text-2xl mb-2 text-purple-400"></i>
+                                            <p class="font-medium">Other</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold py-3 rounded-full transition-all transform hover:scale-105">
+                                    Create Goal
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Profile Screen -->
+                        <div id="profile-screen" class="screen-content hidden">
+                            <div class="text-center mb-8">
+                                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                    <span class="text-2xl font-bold text-white">S</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-white">Sarah Collins</h2>
+                                <p class="text-slate-400">sarah.collins@email.com</p>
+                            </div>
+
+                            <div class="space-y-3">
+                                <div class="bg-slate-800 rounded-lg p-4 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-user text-slate-400 mr-3"></i>
+                                        <span>Personal Information</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                                <div class="bg-slate-800 rounded-lg p-4 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-bell text-slate-400 mr-3"></i>
+                                        <span>Notifications</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                                <div class="bg-slate-800 rounded-lg p-4 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-shield-alt text-slate-400 mr-3"></i>
+                                        <span>Security</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                                <div class="bg-slate-800 rounded-lg p-4 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-question-circle text-slate-400 mr-3"></i>
+                                        <span>Help & Support</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                                <div class="bg-slate-800 rounded-lg p-4 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-info-circle text-slate-400 mr-3"></i>
+                                        <span>About LifeLas</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-red-900/50 border border-red-500 text-red-300 font-semibold py-3 rounded-lg mt-6 hover:bg-red-900/70 transition-colors">
+                                Log Out
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="absolute bottom-0 left-0 right-0 bg-slate-900 p-4">
+                        <div class="flex justify-around">
+                            <div class="nav-tab active rounded-lg px-3 py-2 text-center" onclick="showScreen('home', this)">
+                                <i class="fas fa-home block mb-1"></i>
+                                <span class="text-xs">Home</span>
+                            </div>
+                            <div class="nav-tab rounded-lg px-3 py-2 text-center" onclick="showScreen('analytics', this)">
+                                <i class="fas fa-chart-bar block mb-1"></i>
+                                <span class="text-xs">Analytics</span>
+                            </div>
+                            <div class="nav-tab rounded-lg px-3 py-2 text-center" onclick="showScreen('add-goal', this)">
+                                <i class="fas fa-plus block mb-1"></i>
+                                <span class="text-xs">Add Goal</span>
+                            </div>
+                            <div class="nav-tab rounded-lg px-3 py-2 text-center" onclick="showScreen('profile', this)">
+                                <i class="fas fa-user block mb-1"></i>
+                                <span class="text-xs">Profile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="text-center mt-8 glassmorphism rounded-2xl p-6 max-w-2xl mx-auto">
+            <h3 class="text-xl font-bold mb-4">Try the Interactive Demo</h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-300">
+                <div>
+                    <i class="fas fa-mouse-pointer text-blue-400 mr-2"></i>
+                    <strong>Click goal cards</strong> to see progress updates
+                </div>
+                <div>
+                    <i class="fas fa-mobile-alt text-purple-400 mr-2"></i>
+                    <strong>Navigate tabs</strong> to explore different screens
+                </div>
+                <div>
+                    <i class="fas fa-chart-line text-green-400 mr-2"></i>
+                    <strong>View analytics</strong> for financial insights
+                </div>
+                <div>
+                    <i class="fas fa-plus text-pink-400 mr-2"></i>
+                    <strong>Create goals</strong> with the add goal feature
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedCategory = null;
+
+        // Screen Navigation
+        function showScreen(screenName, clickedElement) {
+            // Hide all screens
+            document.querySelectorAll('.screen-content').forEach(screen => {
+                screen.classList.add('hidden');
+            });
+
+            // Show selected screen
+            document.getElementById(screenName + '-screen').classList.remove('hidden');
+            document.getElementById(screenName + '-screen').classList.add('fade-in');
+
+            // Update navigation tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Find the clicked tab and make it active
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            } else {
+                // Fallback: find tab by screen name
+                const targetTab = document.querySelector(`.nav-tab[onclick*="${screenName}"]`);
+                if (targetTab) targetTab.classList.add('active');
+            }
+        }
+
+        // Goal Progress Update
+        function updateGoalProgress(goalCard, newProgress) {
+            const progressBar = goalCard.querySelector('.progress-bar');
+            const progressText = goalCard.querySelector('.text-green-400');
+
+            // Animate progress bar
+            progressBar.style.width = newProgress + '%';
+            progressText.textContent = newProgress + '% complete';
+
+            // Add visual feedback
+            goalCard.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                goalCard.style.transform = 'scale(1)';
+            }, 200);
+
+            // Show success message
+            showNotification('Goal progress updated! 🎉');
+        }
+
+        // Category Selection
+        function selectCategory(element, category) {
+            // Remove previous selection
+            document.querySelectorAll('.category-option').forEach(option => {
+                option.classList.remove('border-pink-500', 'bg-pink-500/20');
+            });
+
+            // Add selection to clicked element
+            element.classList.add('border-pink-500', 'bg-pink-500/20');
+            selectedCategory = category;
+        }
+
+        // Goal Creation
+        function createGoal(event) {
+            event.preventDefault();
+
+            const goalName = document.getElementById('goal-name').value;
+            const goalAmount = document.getElementById('goal-amount').value;
+            const goalDate = document.getElementById('goal-date').value;
+
+            if (!goalName || !goalAmount || !goalDate || !selectedCategory) {
+                showNotification('Please fill in all fields and select a category', 'error');
+                return;
+            }
+
+            // Simulate goal creation
+            showNotification('Goal created successfully! 🎯');
+
+            // Reset form
+            document.getElementById('goal-name').value = '';
+            document.getElementById('goal-amount').value = '';
+            document.getElementById('goal-date').value = '';
+
+            // Remove category selection
+            document.querySelectorAll('.category-option').forEach(option => {
+                option.classList.remove('border-pink-500', 'bg-pink-500/20');
+            });
+            selectedCategory = null;
+
+            // Switch to home screen after 1 second
+            setTimeout(() => {
+                showScreen('home');
+                // Update navigation manually since we're calling programmatically
+                document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelector('.nav-tab[onclick="showScreen(\'home\')"]').classList.add('active');
+            }, 1000);
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg text-white font-medium transition-all transform translate-x-full ${
+                type === 'error' ? 'bg-red-500' : 'bg-green-500'
+            }`;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to 6 months from now
+            const futureDate = new Date();
+            futureDate.setMonth(futureDate.getMonth() + 6);
+            document.getElementById('goal-date').value = futureDate.toISOString().split('T')[0];
+
+            // Add some interactive animations
+            setTimeout(() => {
+                showNotification('Welcome to LifeLas! Try clicking on the goal cards 👆');
+            }, 1000);
+        });
+
+        // Add hover effects to charts
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartBars = document.querySelectorAll('.chart-bar');
+            chartBars.forEach(bar => {
+                bar.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scaleY(1.1)';
+                });
+                bar.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scaleY(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
