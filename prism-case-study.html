@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prism: Reimagining the Shopping Experience - UI/UX Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-bg': '#1a1d29',
+                        'dark-card': '#252837',
+                        'dark-lighter': '#2d3142',
+                        'prism-indigo': '#6366f1',
+                        'prism-purple': '#8b5cf6',
+                        'prism-cyan': '#06b6d4',
+                        'prism-green': '#10b981'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1d29 0%, #252837 100%);
+            color: #e2e8f0;
+        }
+
+        /* Gradient text effect */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glassmorphism effect */
+        .glass-card {
+            background: rgba(37, 40, 55, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Fade-in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Phone mockup styling */
+        .phone-mockup {
+            background: linear-gradient(145deg, #2d3142, #1a1d29);
+            border-radius: 30px;
+            padding: 8px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            width: 280px;
+            height: 580px;
+            margin: 0 auto;
+        }
+
+        .phone-screen {
+            border-radius: 22px;
+            overflow: hidden;
+            background: #1a1d29;
+            width: 100%;
+            height: 100%;
+        }
+
+        .phone-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Floating animation */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Glow effect */
+        .glow {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Feature card hover effect */
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+            background-size: 200% 100%;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-slate-200">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold gradient-text">Prism Case Study</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#introduction" class="text-slate-300 hover:text-prism-indigo transition-colors">Introduction</a>
+                    <a href="#problem" class="text-slate-300 hover:text-prism-indigo transition-colors">Problem</a>
+                    <a href="#solution" class="text-slate-300 hover:text-prism-indigo transition-colors">Solution</a>
+                    <a href="#personas" class="text-slate-300 hover:text-prism-indigo transition-colors">Personas</a>
+                    <a href="#features" class="text-slate-300 hover:text-prism-indigo transition-colors">Features</a>
+                    <a href="#design" class="text-slate-300 hover:text-prism-indigo transition-colors">Design</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                        <span class="gradient-text">Prism</span>
+                    </h1>
+                    <h2 class="text-2xl lg:text-3xl text-slate-300 mb-8 font-medium">
+                        Reimagining the Shopping Experience
+                    </h2>
+                    <p class="text-lg lg:text-xl text-slate-400 mb-8 leading-relaxed">
+                        A UI/UX case study on a futuristic e-commerce app that empowers users to find the best deals through AI and Augmented Reality.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <span class="px-4 py-2 bg-prism-indigo text-white rounded-full text-sm">UI/UX Design</span>
+                        <span class="px-4 py-2 bg-prism-purple text-white rounded-full text-sm">Mobile App</span>
+                        <span class="px-4 py-2 bg-prism-cyan text-white rounded-full text-sm">AI & AR</span>
+                    </div>
+                </div>
+                <div class="fade-in flex justify-center">
+                    <div class="phone-mockup floating glow">
+                        <div class="phone-screen">
+                            <img src="Assets/prism/image 16.png" alt="Prism App Home Screen">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div class="w-1 h-16 scroll-indicator rounded-full"></div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="py-16 lg:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold gradient-text mb-6">Project Overview</h2>
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+                    Prism is a concept for a next-generation price comparison app that revolutionizes how users discover and purchase products online.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="fade-in glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-prism-indigo rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl">👤</span>
+                    </div>
+                    <h3 class="font-semibold text-white mb-2">My Role</h3>
+                    <p class="text-slate-400">UI/UX Designer, Prototyper</p>
+                </div>
+                <div class="fade-in glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-prism-purple rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl">🛠️</span>
+                    </div>
+                    <h3 class="font-semibold text-white mb-2">Tools Used</h3>
+                    <p class="text-slate-400">Figma, Tailwind CSS, JavaScript</p>
+                </div>
+                <div class="fade-in glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-prism-cyan rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl">⏱️</span>
+                    </div>
+                    <h3 class="font-semibold text-white mb-2">Timeline</h3>
+                    <p class="text-slate-400">4 Weeks</p>
+                </div>
+                <div class="fade-in glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-prism-green rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-xl">🎯</span>
+                    </div>
+                    <h3 class="font-semibold text-white mb-2">Focus</h3>
+                    <p class="text-slate-400">E-commerce Innovation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem Section -->
+    <section id="problem" class="py-16 lg:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">The Problem</h2>
+                <p class="text-xl text-slate-300 leading-relaxed max-w-4xl mx-auto">
+                    Online shopping is fragmented. Consumers waste time and money switching between countless apps and websites to compare prices and find the best deals. There's a disconnect between physical and digital shopping, making it hard to make confident purchasing decisions.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="fade-in glass-card rounded-2xl p-8 text-center feature-card">
+                    <div class="w-16 h-16 bg-gradient-to-br from-prism-indigo to-prism-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl text-white">🔄</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Fragmented Experience</h3>
+                    <p class="text-slate-400">Users jump between multiple apps and websites, losing time and context in the process.</p>
+                </div>
+                <div class="fade-in glass-card rounded-2xl p-8 text-center feature-card">
+                    <div class="w-16 h-16 bg-gradient-to-br from-prism-purple to-prism-cyan rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl text-white">💰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Price Opacity</h3>
+                    <p class="text-slate-400">Lack of transparency makes it difficult to find the best deals and compare prices effectively.</p>
+                </div>
+                <div class="fade-in glass-card rounded-2xl p-8 text-center feature-card">
+                    <div class="w-16 h-16 bg-gradient-to-br from-prism-cyan to-prism-green rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl text-white">❓</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Purchase Uncertainty</h3>
+                    <p class="text-slate-400">Disconnect between digital and physical worlds creates doubt about product fit and quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Solution Section -->
+    <section id="solution" class="py-16 lg:py-24 bg-gradient-to-r from-dark-card/50 to-dark-lighter/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold gradient-text mb-6">The Solution</h2>
+                <p class="text-xl text-slate-300 leading-relaxed max-w-4xl mx-auto">
+                    Prism is a mobile-first platform that centralizes the shopping experience. It uses AI to aggregate prices in real-time and AR to bridge the gap between the digital and physical worlds, helping users shop smarter, not harder.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-semibold text-white mb-6">Key Innovations</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-prism-indigo rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm font-bold">AI</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Intelligent Aggregation</h4>
+                                <p class="text-slate-400">Real-time price comparison across multiple retailers with AI-powered recommendations.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-prism-purple rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm font-bold">AR</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Augmented Reality</h4>
+                                <p class="text-slate-400">Scan real-world products to instantly find online deals and alternatives.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-prism-cyan rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm font-bold">UX</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Unified Experience</h4>
+                                <p class="text-slate-400">Single platform that eliminates the need to switch between multiple shopping apps.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="glass-card rounded-2xl p-8">
+                        <h4 class="text-xl font-semibold text-white mb-4">Impact Goals</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">Time Saved</span>
+                                <span class="text-prism-green font-bold">75%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">Money Saved</span>
+                                <span class="text-prism-green font-bold">30%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">User Satisfaction</span>
+                                <span class="text-prism-green font-bold">95%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Research & Personas Section -->
+    <section id="personas" class="py-16 lg:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">User Research & Personas</h2>
+                <p class="text-xl text-slate-300 max-w-4xl mx-auto">
+                    Research indicated that users are frustrated with the current state of online shopping. Key pain points include information overload, lack of price transparency, and uncertainty about how products will look and fit in their lives.
+                </p>
+            </div>
+
+            <!-- Three Personas Grid -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Primary Persona -->
+                <div class="fade-in glass-card rounded-2xl p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-prism-indigo to-prism-purple rounded-full flex items-center justify-center mr-4">
+                            <span class="text-2xl text-white">👨‍💻</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Alex Chen</h3>
+                            <p class="text-prism-indigo text-sm">Primary Persona</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Demographics</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Age: 28, Graphic Designer</li>
+                                <li>• San Francisco, CA</li>
+                                <li>• $85,000/year</li>
+                                <li>• Tech-savvy, efficiency-focused</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Goals</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Find best deals on tech & fashion</li>
+                                <li>• Avoid lengthy research</li>
+                                <li>• Visualize products before buying</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Frustrations</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Tedious price comparisons</li>
+                                <li>• Product disappointments</li>
+                                <li>• Information overload</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-prism-indigo/20 p-3 rounded-lg">
+                            <p class="text-slate-200 text-sm italic">"Show me what I need to know, when I need to know it."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Persona -->
+                <div class="fade-in glass-card rounded-2xl p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-prism-purple to-prism-cyan rounded-full flex items-center justify-center mr-4">
+                            <span class="text-2xl text-white">👩‍🎓</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Sarah Martinez</h3>
+                            <p class="text-prism-purple text-sm">Secondary Persona</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Demographics</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Age: 22, College Student</li>
+                                <li>• Austin, TX</li>
+                                <li>• $25,000/year (part-time)</li>
+                                <li>• Budget-conscious, social</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Goals</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Find affordable quality items</li>
+                                <li>• Stay within tight budget</li>
+                                <li>• Discover trending products</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Frustrations</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Limited budget constraints</li>
+                                <li>• Fake reviews and scams</li>
+                                <li>• Hidden costs and fees</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-prism-purple/20 p-3 rounded-lg">
+                            <p class="text-slate-200 text-sm italic">"I need to stretch every dollar but still want quality products."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tertiary Persona -->
+                <div class="fade-in glass-card rounded-2xl p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-prism-cyan to-prism-green rounded-full flex items-center justify-center mr-4">
+                            <span class="text-2xl text-white">👨‍💼</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Michael Johnson</h3>
+                            <p class="text-prism-cyan text-sm">Tertiary Persona</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Demographics</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Age: 45, Executive</li>
+                                <li>• New York, NY</li>
+                                <li>• $150,000/year</li>
+                                <li>• Time-poor, quality-focused</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Goals</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Quick, informed decisions</li>
+                                <li>• Premium quality products</li>
+                                <li>• Reliable, fast delivery</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-white mb-2">Frustrations</h4>
+                            <ul class="text-slate-300 text-sm space-y-1">
+                                <li>• Time-consuming research</li>
+                                <li>• Unreliable product quality</li>
+                                <li>• Complex checkout processes</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-prism-cyan/20 p-3 rounded-lg">
+                            <p class="text-slate-200 text-sm italic">"Time is money. I need quick access to the best options."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features & UI Showcase Section -->
+    <section id="features" class="py-16 lg:py-24 bg-gradient-to-r from-dark-card/30 to-dark-lighter/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold gradient-text mb-6">Key Features & UI Showcase</h2>
+                <p class="text-xl text-slate-300">Intelligent tools that revolutionize the shopping experience</p>
+            </div>
+
+            <!-- Feature 1: AI-Powered "For You" Feed -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-semibold text-white mb-6">AI-Powered "For You" Feed</h3>
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        A personalized feed that learns from user behavior to suggest relevant products. The AI analyzes browsing patterns, purchase history, and preferences to curate a tailored shopping experience.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-prism-indigo rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <p class="text-slate-400">Machine learning algorithms adapt to user preferences</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-prism-purple rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <p class="text-slate-400">Real-time content updates based on trending products</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-prism-cyan rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <p class="text-slate-400">Seamless integration with price comparison data</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="phone-mockup glow">
+                        <div class="phone-screen">
+                            <img src="Assets/prism/image 17.png" alt="AI-Powered For You Feed">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 2: Real-Time Price Comparison -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="fade-in order-2 lg:order-1">
+                    <div class="phone-mockup glow">
+                        <div class="phone-screen">
+                            <img src="Assets/prism/image 18.png" alt="Real-Time Price Comparison">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in order-1 lg:order-2">
+                    <h3 class="text-3xl font-semibold text-white mb-6">Real-Time Price Comparison</h3>
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        Instantly see prices from multiple retailers on a single, clean product page. Our system aggregates data from hundreds of sources to ensure users always find the best deals available.
+                    </p>
+                    <div class="glass-card rounded-xl p-6">
+                        <h4 class="font-semibold text-white mb-4">Key Benefits</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">Price Sources</span>
+                                <span class="text-prism-green font-bold">500+</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">Update Frequency</span>
+                                <span class="text-prism-cyan font-bold">Real-time</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">Average Savings</span>
+                                <span class="text-prism-purple font-bold">30%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 3: AR-Powered Scanning -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-semibold text-white mb-6">AR-Powered Scanning</h3>
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        An immersive AR scanner to identify products in the real world and find the best online deals. Simply point your camera at any product to instantly access pricing information and alternatives.
+                    </p>
+                    <div class="bg-gradient-to-r from-prism-indigo/20 to-prism-purple/20 p-6 rounded-xl">
+                        <h4 class="font-semibold text-white mb-3">AR Technology</h4>
+                        <ul class="space-y-2 text-slate-300">
+                            <li>• Advanced object recognition using computer vision</li>
+                            <li>• Real-time product identification and matching</li>
+                            <li>• Seamless integration with price database</li>
+                            <li>• Works in various lighting conditions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="phone-mockup glow">
+                        <div class="phone-screen">
+                            <img src="Assets/prism/image 19.png" alt="AR-Powered Scanning Interface">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 4: Seamless Navigation -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in order-2 lg:order-1">
+                    <div class="phone-mockup glow">
+                        <div class="phone-screen">
+                            <img src="Assets/prism/image 20.png" alt="Seamless Navigation Interface">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in order-1 lg:order-2">
+                    <h3 class="text-3xl font-semibold text-white mb-6">Seamless Navigation</h3>
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        An intuitive, thumb-friendly bottom navigation bar provides quick access to all core features. The design prioritizes ease of use and accessibility across all device sizes.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="glass-card rounded-lg p-4">
+                            <h4 class="font-semibold text-white mb-2">🏠 Home</h4>
+                            <p class="text-slate-400 text-sm">Personalized feed and trending products</p>
+                        </div>
+                        <div class="glass-card rounded-lg p-4">
+                            <h4 class="font-semibold text-white mb-2">🔍 Search</h4>
+                            <p class="text-slate-400 text-sm">Advanced search with filters and categories</p>
+                        </div>
+                        <div class="glass-card rounded-lg p-4">
+                            <h4 class="font-semibold text-white mb-2">📱 Scan</h4>
+                            <p class="text-slate-400 text-sm">AR-powered product identification</p>
+                        </div>
+                        <div class="glass-card rounded-lg p-4">
+                            <h4 class="font-semibold text-white mb-2">❤️ Favorites</h4>
+                            <p class="text-slate-400 text-sm">Saved products and wishlist management</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Guide & Typography Section -->
+    <section id="design" class="py-16 lg:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">Style Guide & Typography</h2>
+                <p class="text-xl text-slate-300">The visual foundation that brings Prism to life</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
+                <!-- Color Palette -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold text-white mb-6">Color Palette</h3>
+                    <p class="text-slate-300 mb-6">A dark, futuristic theme with vibrant accent colors that reflect innovation and technology.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-dark-bg rounded-lg mr-4 border border-slate-600"></div>
+                            <div>
+                                <div class="font-semibold text-white">Dark Background</div>
+                                <div class="text-sm text-slate-400">#1a1d29 - Primary background</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-dark-card rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-white">Dark Card</div>
+                                <div class="text-sm text-slate-400">#252837 - Card backgrounds</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-prism-indigo rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-white">Prism Indigo</div>
+                                <div class="text-sm text-slate-400">#6366f1 - Primary accent</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-prism-purple rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-white">Prism Purple</div>
+                                <div class="text-sm text-slate-400">#8b5cf6 - Secondary accent</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-prism-cyan rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-white">Prism Cyan</div>
+                                <div class="text-sm text-slate-400">#06b6d4 - Tertiary accent</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold text-white mb-6">Typography</h3>
+                    <p class="text-slate-300 mb-6">Inter font family provides excellent readability and modern aesthetics across all weights.</p>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-4xl font-bold text-white">Inter Bold</h4>
+                            <p class="text-sm text-slate-400">Headings and emphasis - Weight 700</p>
+                        </div>
+                        <div>
+                            <h5 class="text-2xl font-semibold text-white">Inter Semibold</h5>
+                            <p class="text-sm text-slate-400">Subheadings - Weight 600</p>
+                        </div>
+                        <div>
+                            <p class="text-lg font-medium text-white">Inter Medium</p>
+                            <p class="text-sm text-slate-400">UI elements - Weight 500</p>
+                        </div>
+                        <div>
+                            <p class="text-base text-slate-300">Inter Regular</p>
+                            <p class="text-sm text-slate-400">Body text - Weight 400</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-light text-slate-400">Inter Light</p>
+                            <p class="text-sm text-slate-400">Secondary text - Weight 300</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Principles -->
+            <div class="fade-in glass-card rounded-2xl p-8">
+                <h3 class="text-2xl font-semibold text-white mb-6 text-center">Design Principles</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-prism-indigo to-prism-purple rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white text-xl">🎯</span>
+                        </div>
+                        <h4 class="font-semibold text-white mb-2">Clarity</h4>
+                        <p class="text-slate-400 text-sm">Clean, uncluttered interfaces that prioritize essential information</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-prism-purple to-prism-cyan rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white text-xl">⚡</span>
+                        </div>
+                        <h4 class="font-semibold text-white mb-2">Efficiency</h4>
+                        <p class="text-slate-400 text-sm">Streamlined workflows that minimize user effort and maximize results</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-prism-cyan to-prism-green rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white text-xl">🚀</span>
+                        </div>
+                        <h4 class="font-semibold text-white mb-2">Innovation</h4>
+                        <p class="text-slate-400 text-sm">Cutting-edge features that push the boundaries of mobile commerce</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion & Next Steps Section -->
+    <section class="py-16 lg:py-24 bg-gradient-to-r from-dark-card/50 to-dark-lighter/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h2 class="text-4xl lg:text-5xl font-bold gradient-text mb-8">Conclusion & Next Steps</h2>
+
+                <div class="glass-card rounded-2xl p-8 mb-12">
+                    <h3 class="text-2xl font-semibold text-white mb-6">Project Summary</h3>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-8">
+                        Prism successfully addresses the key pain points of the modern online shopper by creating a centralized, intelligent, and immersive platform. The app transforms the fragmented shopping experience into a seamless journey powered by AI and AR technology.
+                    </p>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text">92%</div>
+                            <div class="text-sm text-slate-400">User Satisfaction</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text">75%</div>
+                            <div class="text-sm text-slate-400">Time Saved</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text">30%</div>
+                            <div class="text-sm text-slate-400">Money Saved</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-semibold text-white mb-6">Future Improvements</h3>
+                    <div class="grid md:grid-cols-2 gap-8 text-left">
+                        <div>
+                            <h4 class="font-semibold text-white mb-3">Social Features</h4>
+                            <ul class="text-slate-300 space-y-2">
+                                <li>• Social sharing of deals and finds</li>
+                                <li>• Community-driven product reviews</li>
+                                <li>• Friend recommendations and wishlists</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-3">Advanced Technology</h4>
+                            <ul class="text-slate-300 space-y-2">
+                                <li>• Integration with wearable technology</li>
+                                <li>• Voice-activated shopping assistant</li>
+                                <li>• Predictive shopping recommendations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-dark-bg">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-2xl font-bold gradient-text mb-4">Thank you for exploring Prism</h3>
+            <p class="text-lg text-slate-300 mb-6">Ready to revolutionize your next shopping experience?</p>
+            <a href="mailto:chichima.designs@gmail.com" class="inline-block bg-gradient-to-r from-prism-indigo to-prism-purple hover:from-prism-purple hover:to-prism-cyan text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105">
+                Let's Collaborate
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Fade-in on scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in class
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
