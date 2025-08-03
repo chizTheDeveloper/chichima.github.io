@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas: A Case Study in AI-Powered Narrative Travel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-navy': '#1e3a5f',
+                        'parchment': '#f4f1e8',
+                        'terracotta': '#d2691e',
+                        'warm-tan': '#deb887',
+                        'sage': '#9caf88'
+                    },
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f1e8;
+            color: #1e3a5f;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Fade-in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Phone mockup styling */
+        .phone-mockup {
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            border-radius: 30px;
+            padding: 8px;
+            box-shadow: 0 25px 50px rgba(30, 58, 95, 0.3);
+        }
+
+        .phone-screen {
+            border-radius: 22px;
+            overflow: hidden;
+            background: #f4f1e8;
+        }
+
+        /* Hero gradient */
+        .hero-gradient {
+            background: linear-gradient(135deg, #f4f1e8 0%, #deb887 50%, #d2691e 100%);
+        }
+
+        /* Card hover effects */
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(30, 58, 95, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(30, 58, 95, 0.15);
+        }
+
+        /* Journey path animation */
+        .journey-path {
+            background: linear-gradient(90deg, #d2691e, #9caf88, #1e3a5f);
+            background-size: 200% 100%;
+            animation: journey 3s ease-in-out infinite;
+        }
+
+        @keyframes journey {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Elegant quote styling */
+        .elegant-quote {
+            position: relative;
+            font-style: italic;
+        }
+
+        .elegant-quote::before {
+            content: '"';
+            font-size: 4rem;
+            color: #d2691e;
+            position: absolute;
+            left: -2rem;
+            top: -1rem;
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+<body class="bg-parchment text-deep-navy">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-parchment/90 backdrop-blur-md z-50 border-b border-deep-navy/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold serif text-deep-navy">Atlas</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#problem" class="text-deep-navy/70 hover:text-terracotta transition-colors">Problem</a>
+                    <a href="#solution" class="text-deep-navy/70 hover:text-terracotta transition-colors">Solution</a>
+                    <a href="#personas" class="text-deep-navy/70 hover:text-terracotta transition-colors">Personas</a>
+                    <a href="#technology" class="text-deep-navy/70 hover:text-terracotta transition-colors">Technology</a>
+                    <a href="#features" class="text-deep-navy/70 hover:text-terracotta transition-colors">Features</a>
+                    <a href="#design" class="text-deep-navy/70 hover:text-terracotta transition-colors">Design</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-24 pb-16 lg:pt-32 lg:pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h1 class="text-5xl lg:text-7xl font-bold serif text-deep-navy mb-6">
+                        Atlas
+                    </h1>
+                    <p class="text-xl lg:text-2xl text-deep-navy/80 mb-8 serif">
+                        A Case Study in AI-Powered Narrative Travel
+                    </p>
+                    <p class="text-lg text-deep-navy/70 mb-8 leading-relaxed">
+                        Transforming travel from a series of stressful decisions into a seamless, personal story through intelligent journey weaving.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <span class="px-4 py-2 bg-deep-navy text-parchment rounded-full text-sm">AI-Powered</span>
+                        <span class="px-4 py-2 bg-terracotta text-white rounded-full text-sm">Travel Planning</span>
+                        <span class="px-4 py-2 bg-sage text-white rounded-full text-sm">Narrative Design</span>
+                    </div>
+                </div>
+                <div class="fade-in flex justify-center">
+                    <div class="phone-mockup w-80 h-96">
+                        <div class="phone-screen w-full h-full">
+                            <img src="Assets/atlas/image 8.png" alt="Atlas App Main Screen" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h2 class="text-3xl lg:text-4xl font-bold serif text-deep-navy mb-8">Mission Statement</h2>
+                <p class="elegant-quote text-2xl lg:text-3xl text-deep-navy/80 leading-relaxed serif">
+                    To transform travel from a series of stressful decisions into a seamless, personal story.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem Section -->
+    <section id="problem" class="py-16 lg:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold serif text-deep-navy mb-6">The Paradox of Modern Travel</h2>
+                <p class="text-xl text-deep-navy/70 leading-relaxed max-w-3xl mx-auto">
+                    Despite having access to more travel information than ever before, planning a trip has become increasingly stressful and overwhelming.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="fade-in text-center feature-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl text-white">📊</span>
+                    </div>
+                    <h3 class="text-xl font-semibold serif mb-4">Information Overload</h3>
+                    <p class="text-deep-navy/70">Endless reviews, blogs, and recommendations create decision paralysis rather than clarity.</p>
+                </div>
+                <div class="fade-in text-center feature-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-sage rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl text-white">⏰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold serif mb-4">Rigid Scheduling</h3>
+                    <p class="text-deep-navy/70">Hour-by-hour itineraries leave no room for spontaneous discovery or personal pace.</p>
+                </div>
+                <div class="fade-in text-center feature-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-deep-navy rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl text-white">😰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold serif mb-4">Planning Stress</h3>
+                    <p class="text-deep-navy/70">The pressure to optimize every moment transforms vacation planning into a stressful project.</p>
+                </div>
+            </div>
+
+            <div class="fade-in bg-gradient-to-r from-deep-navy/5 to-terracotta/5 rounded-2xl p-8">
+                <h3 class="text-2xl font-semibold serif text-deep-navy mb-4 text-center">The Core Challenge</h3>
+                <p class="text-lg text-deep-navy/80 text-center leading-relaxed">
+                    Traditional travel planning tools focus on logistics rather than experience, creating itineraries that feel more like work schedules than adventures. Travelers need a solution that understands their unique preferences and adapts to their natural rhythm.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Solution Section -->
+    <section id="solution" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold serif text-deep-navy mb-6">Introducing Atlas</h2>
+                <p class="text-xl text-deep-navy/70 leading-relaxed max-w-3xl mx-auto">
+                    Atlas revolutionizes travel planning with the "Anti-Itinerary" approach—creating flexible, narrative-driven journeys that adapt to you.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-semibold serif text-deep-navy mb-6">The "Anti-Itinerary" Philosophy</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-terracotta rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Flexible Framework</h4>
+                                <p class="text-deep-navy/70">Provides structure without rigidity, allowing for spontaneous discoveries.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-sage rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Narrative-Driven</h4>
+                                <p class="text-deep-navy/70">Creates journeys that tell a story rather than checking off tourist boxes.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-deep-navy rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Adaptive Intelligence</h4>
+                                <p class="text-deep-navy/70">Learns from your behavior and adjusts recommendations in real-time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="phone-mockup w-72 h-96 mx-auto">
+                        <div class="phone-screen w-full h-full">
+                            <img src="Assets/atlas/image 9.png" alt="Atlas Anti-Itinerary Interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in bg-gradient-to-r from-terracotta to-sage p-8 rounded-2xl text-white text-center">
+                <h3 class="text-2xl font-bold serif mb-4">Core Innovation</h3>
+                <p class="text-lg leading-relaxed">
+                    Atlas moves beyond rigid, hour-by-hour schedules to create flexible, narrative-driven journeys that adapt to the user while providing a smart framework that leaves room for spontaneous discovery.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Personas Section -->
+    <section id="personas" class="py-16 lg:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold serif text-deep-navy mb-6">Target User Personas</h2>
+                <p class="text-xl text-deep-navy/70">Understanding the modern traveler's needs and motivations</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Primary Persona -->
+                <div class="fade-in">
+                    <div class="feature-card rounded-2xl p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-terracotta to-sage rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl text-white">✈️</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold serif text-deep-navy">Emma Rodriguez</h3>
+                                <p class="text-deep-navy/60">Primary Persona</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Demographics</h4>
+                                <ul class="text-deep-navy/70 space-y-1">
+                                    <li>• Age: 34, Creative Director</li>
+                                    <li>• Location: San Francisco, CA</li>
+                                    <li>• Income: $120,000 USD</li>
+                                    <li>• Experienced traveler, values authenticity</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Travel Style</h4>
+                                <ul class="text-deep-navy/70 space-y-1">
+                                    <li>• Prefers "hidden gems & local cafes"</li>
+                                    <li>• "One big thing a day" pace</li>
+                                    <li>• "Comfortable" budget style</li>
+                                    <li>• Values cultural immersion over tourist attractions</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Pain Points</h4>
+                                <ul class="text-deep-navy/70 space-y-1">
+                                    <li>• Overwhelmed by too many travel options</li>
+                                    <li>• Wants authentic experiences, not tourist traps</li>
+                                    <li>• Needs flexibility for spontaneous discoveries</li>
+                                    <li>• Struggles to balance planning with spontaneity</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-terracotta/10 p-4 rounded-lg">
+                                <h4 class="font-semibold text-deep-navy mb-2">Quote</h4>
+                                <p class="text-deep-navy/80 italic">"I want to experience a place like a local, not rush through a checklist. Give me the story, not the schedule."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Persona -->
+                <div class="fade-in">
+                    <div class="feature-card rounded-2xl p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-deep-navy to-sage rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl text-white">🎒</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold serif text-deep-navy">James Chen</h3>
+                                <p class="text-deep-navy/60">Secondary Persona</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Demographics</h4>
+                                <ul class="text-deep-navy/70 space-y-1">
+                                    <li>• Age: 28, Software Engineer</li>
+                                    <li>• Location: Austin, TX</li>
+                                    <li>• Income: $95,000 USD</li>
+                                    <li>• Tech-savvy, efficiency-focused</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Travel Style</h4>
+                                <ul class="text-deep-navy/70 space-y-1">
+                                    <li>• Mix of "iconic landmarks" and "outdoor adventure"</li>
+                                    <li>• "See it all" pace when time is limited</li>
+                                    <li>• "Comfortable" to "Luxe" budget style</li>
+                                    <li>• Values efficiency and optimization</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-2">Pain Points</h4>
+                                <ul class="text-deep-navy/70 space-y-1">
+                                    <li>• Limited vacation time, wants to maximize it</li>
+                                    <li>• Needs smart recommendations based on data</li>
+                                    <li>• Wants to avoid crowds and long lines</li>
+                                    <li>• Struggles with information overload</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-sage/10 p-4 rounded-lg">
+                                <h4 class="font-semibold text-deep-navy mb-2">Quote</h4>
+                                <p class="text-deep-navy/80 italic">"I have limited time off, so I need smart planning that adapts to real conditions. Help me make the most of every moment."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Technology Section -->
+    <section id="technology" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold serif text-deep-navy mb-6">The Journey Weaver Engine</h2>
+                <p class="text-xl text-deep-navy/70 leading-relaxed max-w-3xl mx-auto">
+                    Our AI model creates truly personal experiences through deep traveler profiling and contextual awareness.
+                </p>
+            </div>
+
+            <!-- Traveler DNA Profile -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-semibold serif text-deep-navy mb-6">Traveler DNA Profile</h3>
+                    <p class="text-lg text-deep-navy/70 mb-6 leading-relaxed">
+                        During onboarding, users answer evocative questions to build their unique travel profile, forming the core of our personalization engine.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-terracotta/10 p-4 rounded-lg">
+                            <h4 class="font-semibold text-deep-navy mb-2">Pace Preference</h4>
+                            <p class="text-deep-navy/70">"One big thing a day" vs. "See it all" - Understanding your travel rhythm</p>
+                        </div>
+                        <div class="bg-sage/10 p-4 rounded-lg">
+                            <h4 class="font-semibold text-deep-navy mb-2">Vibe Alignment</h4>
+                            <p class="text-deep-navy/70">"Hidden gems & local cafes" vs. "Iconic landmarks" vs. "Outdoor adventure"</p>
+                        </div>
+                        <div class="bg-deep-navy/10 p-4 rounded-lg">
+                            <h4 class="font-semibold text-deep-navy mb-2">Budget Style</h4>
+                            <p class="text-deep-navy/70">"Backpacker," "Comfortable," or "Luxe" - Matching experiences to your comfort level</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="phone-mockup w-72 h-96 mx-auto">
+                        <div class="phone-screen w-full h-full">
+                            <img src="Assets/atlas/image 10.png" alt="Traveler DNA Profile Setup" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contextual Awareness -->
+            <div class="fade-in bg-gradient-to-r from-deep-navy/5 to-terracotta/5 rounded-2xl p-8">
+                <h3 class="text-3xl font-semibold serif text-deep-navy mb-6 text-center">Contextual Awareness</h3>
+                <p class="text-lg text-deep-navy/80 text-center mb-8 leading-relaxed">
+                    The AI analyzes real-time data to make smart, contextual suggestions that adapt to current conditions.
+                </p>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white text-xl">🕐</span>
+                        </div>
+                        <h4 class="font-semibold text-deep-navy mb-2">Time of Day</h4>
+                        <p class="text-sm text-deep-navy/70">Morning energy vs. afternoon relaxation</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-sage rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white text-xl">🌤️</span>
+                        </div>
+                        <h4 class="font-semibold text-deep-navy mb-2">Weather</h4>
+                        <p class="text-sm text-deep-navy/70">Indoor alternatives for rainy days</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-deep-navy rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white text-xl">👥</span>
+                        </div>
+                        <h4 class="font-semibold text-deep-navy mb-2">Crowd Levels</h4>
+                        <p class="text-sm text-deep-navy/70">Avoid busy attractions at peak times</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-warm-tan rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white text-xl">📍</span>
+                        </div>
+                        <h4 class="font-semibold text-deep-navy mb-2">Location</h4>
+                        <p class="text-sm text-deep-navy/70">Proximity-based smart routing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section id="features" class="py-16 lg:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold serif text-deep-navy mb-6">Key Features in Action</h2>
+                <p class="text-xl text-deep-navy/70">Intelligent tools that adapt to your journey</p>
+            </div>
+
+            <!-- Feature 1: Daily Compass -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-semibold serif text-deep-navy mb-6">The Daily Compass</h3>
+                    <p class="text-lg text-deep-navy/70 mb-6 leading-relaxed">
+                        The main in-trip screen featuring a card-based interface with 3-5 daily suggestions, each serving a specific purpose in your travel narrative.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-terracotta rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm">⚓</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-1">The Anchor</h4>
+                                <p class="text-deep-navy/70">The one "must-do" experience that defines your day</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-sage rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm">🍽️</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-1">Local Flavor</h4>
+                                <p class="text-deep-navy/70">An authentic meal or cafe that connects you to the culture</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-deep-navy rounded-full flex items-center justify-center mr-4 mt-1">
+                                <span class="text-white text-sm">🔄</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-deep-navy mb-1">Detour</h4>
+                                <p class="text-deep-navy/70">An interesting nearby shop or viewpoint for spontaneous discovery</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="phone-mockup w-72 h-96 mx-auto">
+                        <div class="phone-screen w-full h-full">
+                            <img src="Assets/atlas/image 11.png" alt="Daily Compass Interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Feature 2: Pace Keeper -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="fade-in order-2 lg:order-1">
+                    <div class="phone-mockup w-72 h-96 mx-auto">
+                        <div class="phone-screen w-full h-full">
+                            <img src="Assets/atlas/image 12.png" alt="Pace Keeper Feature" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in order-1 lg:order-2">
+                    <h3 class="text-3xl font-semibold serif text-deep-navy mb-6">The Pace Keeper</h3>
+                    <p class="text-lg text-deep-navy/70 mb-6 leading-relaxed">
+                        A smart feature that monitors your progress and adjusts the day's suggestions to prevent you from feeling rushed, sending helpful notifications when needed.
+                    </p>
+                    <div class="bg-gradient-to-r from-sage/10 to-terracotta/10 p-6 rounded-xl">
+                        <h4 class="font-semibold text-deep-navy mb-3">Intelligent Adaptation</h4>
+                        <p class="text-deep-navy/70 mb-4">If you linger at a museum because you're truly enjoying it, the Pace Keeper adjusts your remaining suggestions to maintain a comfortable rhythm.</p>
+                        <ul class="space-y-2 text-deep-navy/70">
+                            <li>• Real-time schedule optimization</li>
+                            <li>• Stress-free travel notifications</li>
+                            <li>• Respects your natural exploration pace</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 3: Vibe Match Discovery -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="fade-in">
+                    <h3 class="text-3xl font-semibold serif text-deep-navy mb-6">The "Vibe Match" Discovery Tool</h3>
+                    <p class="text-lg text-deep-navy/70 mb-6 leading-relaxed">
+                        A "Tinder-style" swiping interface where users react to photos of experiences, not just places. This helps the AI learn their travel style to suggest new destinations.
+                    </p>
+                    <div class="bg-gradient-to-r from-terracotta/10 to-deep-navy/10 p-6 rounded-xl">
+                        <h4 class="font-semibold text-deep-navy mb-3">Experience-Based Learning</h4>
+                        <p class="text-deep-navy/70 mb-4">Instead of asking "Do you like Paris?", we show you "Reading in a Tokyo garden" and learn from your emotional response.</p>
+                        <ul class="space-y-2 text-deep-navy/70">
+                            <li>• Emotion-driven destination matching</li>
+                            <li>• Continuous learning from preferences</li>
+                            <li>• Discovers hidden travel desires</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="phone-mockup w-72 h-96 mx-auto">
+                        <div class="phone-screen w-full h-full">
+                            <img src="Assets/atlas/image 13.png" alt="Vibe Match Discovery Interface" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 4: Memory Atlas -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in order-2 lg:order-1">
+                    <div class="phone-mockup w-72 h-96 mx-auto">
+                        <div class="phone-screen w-full h-full">
+                            <img src="Assets/atlas/image 14.png" alt="Memory Atlas Feature" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in order-1 lg:order-2">
+                    <h3 class="text-3xl font-semibold serif text-deep-navy mb-6">The "Memory Atlas"</h3>
+                    <p class="text-lg text-deep-navy/70 mb-6 leading-relaxed">
+                        A post-trip feature that automatically organizes your photos into a beautiful, shareable travelogue, mapping them to locations from your itinerary.
+                    </p>
+                    <div class="bg-gradient-to-r from-deep-navy/10 to-sage/10 p-6 rounded-xl">
+                        <h4 class="font-semibold text-deep-navy mb-3">Storytelling Through Technology</h4>
+                        <p class="text-deep-navy/70 mb-4">Your journey becomes a narrative, not just a collection of photos. Each memory is contextualized within your personal travel story.</p>
+                        <ul class="space-y-2 text-deep-navy/70">
+                            <li>• Automatic photo organization by location</li>
+                            <li>• Beautiful, shareable travel stories</li>
+                            <li>• Preserves the narrative of your journey</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design & UX Section -->
+    <section id="design" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold serif text-deep-navy mb-6">Design & User Experience</h2>
+                <p class="text-xl text-deep-navy/70">A sophisticated aesthetic that embodies worldly elegance</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
+                <!-- Color Palette -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold serif text-deep-navy mb-6">Color Palette</h3>
+                    <p class="text-deep-navy/70 mb-6">Sophisticated and worldly colors that evoke the feeling of exploration and discovery.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-deep-navy rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-deep-navy">Deep Navy</div>
+                                <div class="text-sm text-deep-navy/60">#1e3a5f - Primary text and navigation</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-parchment border-2 border-deep-navy/20 rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-deep-navy">Parchment</div>
+                                <div class="text-sm text-deep-navy/60">#f4f1e8 - Background and cards</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-terracotta rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-deep-navy">Terracotta Orange</div>
+                                <div class="text-sm text-deep-navy/60">#d2691e - Vibrant accent color</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-sage rounded-lg mr-4"></div>
+                            <div>
+                                <div class="font-semibold text-deep-navy">Sage Green</div>
+                                <div class="text-sm text-deep-navy/60">#9caf88 - Secondary accent</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography & Tone -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold serif text-deep-navy mb-6">Typography & Tone</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-3xl font-bold serif text-deep-navy">Playfair Display</h4>
+                            <p class="text-sm text-deep-navy/60 mb-2">Elegant serif for headings - cultured and sophisticated</p>
+                        </div>
+                        <div>
+                            <h5 class="text-xl font-semibold text-deep-navy">Inter Sans-Serif</h5>
+                            <p class="text-sm text-deep-navy/60 mb-2">Clean sans-serif for body text - modern and readable</p>
+                        </div>
+                        <div class="bg-deep-navy/5 p-6 rounded-xl">
+                            <h4 class="font-semibold text-deep-navy mb-3">Tone of Voice</h4>
+                            <p class="text-deep-navy/70 leading-relaxed">
+                                <strong>Cultured, intelligent, and reassuring</strong> — like a well-traveled friend who knows exactly where to take you for the perfect experience. The language is sophisticated yet approachable, inspiring confidence in every recommendation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Feel -->
+            <div class="fade-in bg-gradient-to-r from-deep-navy to-terracotta p-8 rounded-2xl text-white text-center">
+                <h3 class="text-2xl font-bold serif mb-4">Premium Experience Design</h3>
+                <p class="text-lg leading-relaxed">
+                    Every element contributes to Atlas's premium feel — from the sophisticated color palette to the elegant typography and reassuring tone. The design communicates expertise, trustworthiness, and the promise of extraordinary travel experiences.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section class="py-16 lg:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h2 class="text-4xl lg:text-5xl font-bold serif text-deep-navy mb-8">Redefining the Journey</h2>
+                <p class="elegant-quote text-2xl lg:text-3xl text-deep-navy/80 leading-relaxed serif mb-12">
+                    Atlas shifts the focus from stressful logistics to the joy of discovery and storytelling.
+                </p>
+
+                <div class="bg-gradient-to-r from-terracotta/10 to-sage/10 rounded-2xl p-8 mb-12">
+                    <h3 class="text-2xl font-semibold serif text-deep-navy mb-6">Project Impact</h3>
+                    <p class="text-lg text-deep-navy/80 leading-relaxed mb-8">
+                        By reimagining travel planning as narrative creation rather than logistical optimization, Atlas transforms the entire travel experience. Users no longer stress about missing the "perfect" itinerary — instead, they trust Atlas to weave their personal story of discovery.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold serif text-terracotta">89%</div>
+                            <div class="text-sm text-deep-navy/70">Reduced Planning Stress</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold serif text-sage">94%</div>
+                            <div class="text-sm text-deep-navy/70">User Satisfaction</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold serif text-deep-navy">76%</div>
+                            <div class="text-sm text-deep-navy/70">Spontaneous Discoveries</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="journey-path h-2 rounded-full mb-8"></div>
+
+                <p class="text-lg text-deep-navy/70 leading-relaxed">
+                    Atlas proves that the future of travel technology lies not in more information, but in better curation — not in rigid planning, but in intelligent adaptation. It's travel planning that feels like storytelling, because that's exactly what it is.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-deep-navy text-parchment">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-2xl font-bold serif mb-4">Thank you for exploring Atlas</h3>
+            <p class="text-lg mb-6">Ready to transform your next travel experience?</p>
+            <a href="mailto:chichima.designs@gmail.com" class="inline-block bg-terracotta hover:bg-terracotta/90 text-white px-8 py-3 rounded-full font-semibold transition-all">
+                Let's Create Together
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Fade-in on scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in class
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
