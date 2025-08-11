@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt Engineering Gallery | Chimezie Chima</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/2539c47f52.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a;
+        color: #cbd5e1;
+      }
+
+      /* Flashcard Styles */
+      .flashcard {
+        perspective: 1000px;
+        width: 100%;
+        height: 300px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .flashcard:hover {
+        transform: scale(1.02);
+      }
+
+      .flashcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .flashcard.flipped .flashcard-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flashcard-front,
+      .flashcard-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+
+      .flashcard-front {
+        background: linear-gradient(135deg, #1e293b, #334155);
+        border: 1px solid #475569;
+      }
+
+      .flashcard-back {
+        background: linear-gradient(135deg, #374151, #4b5563);
+        transform: rotateY(180deg);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: 1px solid #6b7280;
+      }
+
+      .flashcard-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        background: #1e293b;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-image {
+        width: 100%;
+        height: auto;
+        max-height: 70vh;
+        object-fit: contain;
+      }
+
+      .modal-prompt {
+        padding: 2rem;
+        background: linear-gradient(135deg, #374151, #4b5563);
+        color: #e5e7eb;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+        z-index: 1001;
+      }
+
+      .close-btn:hover {
+        background: rgba(0, 0, 0, 0.9);
+      }
+
+      /* Back button */
+      .back-btn {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 100;
+        background: rgba(30, 41, 59, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid #475569;
+        color: #cbd5e1;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .back-btn:hover {
+        background: rgba(51, 65, 85, 0.9);
+        transform: translateX(-5px);
+      }
+
+      /* Responsive grid */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .gallery-grid {
+          grid-template-columns: 1fr;
+          padding: 1rem;
+        }
+
+        .flashcard {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left mr-2"></i>
+      Back to Portfolio
+    </a>
+
+    <!-- Header -->
+    <header class="text-center py-16">
+      <h1 class="text-5xl font-bold text-white mb-4">
+        Prompt Engineering Gallery
+      </h1>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+        Explore AI-generated artwork and the creative prompts behind them. Click
+        cards to reveal prompts, double-click to view in detail.
+      </p>
+    </header>
+
+    <!-- Gallery -->
+    <main class="gallery-grid max-w-7xl mx-auto">
+      <!-- LV Bag -->
+      <div
+        class="flashcard"
+        data-prompt="Luxury Louis Vuitton handbag with iconic monogram pattern, premium leather texture, golden hardware details, studio lighting, high-end fashion photography, commercial product shot"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/LV_bag.png"
+              alt="Luxury LV Handbag"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Luxury Louis Vuitton handbag with iconic monogram pattern, premium
+              leather texture, golden hardware details, studio lighting,
+              high-end fashion photography, commercial product shot
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bratz Doll -->
+      <div
+        class="flashcard"
+        data-prompt="Stylish Bratz doll with oversized eyes, glossy lips, trendy streetwear outfit, colorful hair, fashion doll aesthetic, Y2K nostalgia, vibrant colors, toy photography"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/bratz_doll.png"
+              alt="Bratz Doll"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Stylish Bratz doll with oversized eyes, glossy lips, trendy
+              streetwear outfit, colorful hair, fashion doll aesthetic, Y2K
+              nostalgia, vibrant colors, toy photography
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Capsule Fruit -->
+      <div
+        class="flashcard"
+        data-prompt="Futuristic fruit capsule with transparent shell, glowing inner contents, sci-fi food concept, bioluminescent details, modern minimalist design, clean white background, product visualization"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/capsule_fruit.png"
+              alt="Capsule Fruit"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Futuristic fruit capsule with transparent shell, glowing inner
+              contents, sci-fi food concept, bioluminescent details, modern
+              minimalist design, clean white background, product visualization
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flying Car -->
+      <div
+        class="flashcard"
+        data-prompt="Sleek flying car soaring through futuristic cityscape, anti-gravity technology, neon-lit urban environment, cyberpunk aesthetic, dynamic motion blur, sci-fi transportation concept, digital art"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/car_flying.png"
+              alt="Flying Car"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Sleek flying car soaring through futuristic cityscape,
+              anti-gravity technology, neon-lit urban environment, cyberpunk
+              aesthetic, dynamic motion blur, sci-fi transportation concept,
+              digital art
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cat Drip -->
+      <div
+        class="flashcard"
+        data-prompt="Stylish cat wearing designer streetwear, gold chains and sunglasses, urban hip-hop aesthetic, confident pose, street photography style, cool attitude, anthropomorphic animal art"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/cat_drip.png"
+              alt="Stylish Cat"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Stylish cat wearing designer streetwear, gold chains and
+              sunglasses, urban hip-hop aesthetic, confident pose, street
+              photography style, cool attitude, anthropomorphic animal art
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coco Capsule -->
+      <div
+        class="flashcard"
+        data-prompt="Elegant coconut-inspired capsule design, tropical minimalism, natural textures with modern twist, sustainable packaging concept, earth tones, eco-friendly aesthetic, product design visualization"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/coco_capsule.png"
+              alt="Coconut Capsule"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Elegant coconut-inspired capsule design, tropical minimalism,
+              natural textures with modern twist, sustainable packaging concept,
+              earth tones, eco-friendly aesthetic, product design visualization
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Faithful Church -->
+      <div
+        class="flashcard"
+        data-prompt="Majestic gothic cathedral with soaring spires, stained glass windows casting colorful light, spiritual atmosphere, architectural grandeur, divine rays of sunlight, religious art, sacred space"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/faithful_church.png"
+              alt="Gothic Cathedral"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Majestic gothic cathedral with soaring spires, stained glass
+              windows casting colorful light, spiritual atmosphere,
+              architectural grandeur, divine rays of sunlight, religious art,
+              sacred space
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glass Nike Heels -->
+      <div
+        class="flashcard"
+        data-prompt="Transparent glass high heels with Nike swoosh logo, crystal clear material, luxury fashion fusion, avant-garde footwear design, studio lighting, fashion photography, innovative materials"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/glass_nike_heels.png"
+              alt="Glass Nike Heels"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Transparent glass high heels with Nike swoosh logo, crystal clear
+              material, luxury fashion fusion, avant-garde footwear design,
+              studio lighting, fashion photography, innovative materials
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glass Timber -->
+      <div
+        class="flashcard"
+        data-prompt="Transparent glass logs with wood grain texture visible inside, surreal material fusion, artistic concept, modern sculpture, minimalist design, studio photography, conceptual art piece"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/glass_timber.png"
+              alt="Glass Timber"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Transparent glass logs with wood grain texture visible inside,
+              surreal material fusion, artistic concept, modern sculpture,
+              minimalist design, studio photography, conceptual art piece
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grills Lips -->
+      <div
+        class="flashcard"
+        data-prompt="Close-up of glossy lips with diamond-encrusted gold grillz, luxury hip-hop jewelry, glamorous makeup, high-fashion portrait, metallic shine, urban luxury aesthetic, beauty photography"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/grills_lips.png"
+              alt="Diamond Grillz"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Close-up of glossy lips with diamond-encrusted gold grillz, luxury
+              hip-hop jewelry, glamorous makeup, high-fashion portrait, metallic
+              shine, urban luxury aesthetic, beauty photography
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grills Show -->
+      <div
+        class="flashcard"
+        data-prompt="Person showing off elaborate gold and diamond grillz, confident smile, luxury dental jewelry, hip-hop culture, street style portrait, urban fashion, bling aesthetic, lifestyle photography"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/grills_show.png"
+              alt="Showing Grillz"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Person showing off elaborate gold and diamond grillz, confident
+              smile, luxury dental jewelry, hip-hop culture, street style
+              portrait, urban fashion, bling aesthetic, lifestyle photography
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gummy Drip -->
+      <div
+        class="flashcard"
+        data-prompt="Colorful gummy bears with glossy dripping effect, candy aesthetic, vibrant rainbow colors, sweet treats, macro photography, playful food art, translucent textures"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/gummy_drip.png"
+              alt="Gummy Drip"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Colorful gummy bears with glossy dripping effect, candy aesthetic,
+              vibrant rainbow colors, sweet treats, macro photography, playful
+              food art, translucent textures
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lips Grill Girl -->
+      <div
+        class="flashcard"
+        data-prompt="Portrait of confident woman with gold grillz and glossy lips, urban fashion style, street culture, bold makeup, hip-hop aesthetic, fashion photography, empowered expression"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/lips_grill_girl.png"
+              alt="Girl with Grillz"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Portrait of confident woman with gold grillz and glossy lips,
+              urban fashion style, street culture, bold makeup, hip-hop
+              aesthetic, fashion photography, empowered expression
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Praying Jesus -->
+      <div
+        class="flashcard"
+        data-prompt="Serene portrait of Jesus Christ in prayer, divine light, spiritual atmosphere, religious art, peaceful expression, sacred imagery, heavenly glow, classical religious painting style"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/praying_jesus.png"
+              alt="Praying Jesus"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Serene portrait of Jesus Christ in prayer, divine light, spiritual
+              atmosphere, religious art, peaceful expression, sacred imagery,
+              heavenly glow, classical religious painting style
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Display -->
+      <div
+        class="flashcard"
+        data-prompt="Modern product display showcase with minimalist design, clean lighting, professional presentation, commercial photography, sleek podium, contemporary retail aesthetic"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/produc_display.png"
+              alt="Product Display"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Modern product display showcase with minimalist design, clean
+              lighting, professional presentation, commercial photography, sleek
+              podium, contemporary retail aesthetic
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Puma Photo -->
+      <div
+        class="flashcard"
+        data-prompt="Stylish Puma sneakers with dynamic lighting, athletic footwear photography, sports brand aesthetic, modern design, performance shoes, commercial product shot, urban style"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/puma_photo.png"
+              alt="Puma Sneakers"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Stylish Puma sneakers with dynamic lighting, athletic footwear
+              photography, sports brand aesthetic, modern design, performance
+              shoes, commercial product shot, urban style
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sandwich Glass -->
+      <div
+        class="flashcard"
+        data-prompt="Transparent glass sandwich with visible layers, surreal food concept, artistic culinary visualization, modern gastronomy, conceptual food art, minimalist presentation, innovative design"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/sandwich_glass.png"
+              alt="Glass Sandwich"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Transparent glass sandwich with visible layers, surreal food
+              concept, artistic culinary visualization, modern gastronomy,
+              conceptual food art, minimalist presentation, innovative design
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seduce -->
+      <div
+        class="flashcard"
+        data-prompt="Alluring portrait with dramatic lighting, seductive gaze, fashion photography, glamour aesthetic, sophisticated styling, artistic portrait, moody atmosphere, high-fashion editorial"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/seduce.png"
+              alt="Seductive Portrait"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Alluring portrait with dramatic lighting, seductive gaze, fashion
+              photography, glamour aesthetic, sophisticated styling, artistic
+              portrait, moody atmosphere, high-fashion editorial
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strawberry Shoe -->
+      <div
+        class="flashcard"
+        data-prompt="Creative shoe design inspired by strawberry fruit, organic textures, food-fashion fusion, innovative footwear concept, artistic design, nature-inspired fashion, conceptual product design"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/strawberry_shoe.png"
+              alt="Strawberry Shoe"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Creative shoe design inspired by strawberry fruit, organic
+              textures, food-fashion fusion, innovative footwear concept,
+              artistic design, nature-inspired fashion, conceptual product
+              design
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Savior -->
+      <div
+        class="flashcard"
+        data-prompt="Majestic depiction of Christ as savior, divine radiance, spiritual artwork, religious iconography, heavenly light, sacred art, inspirational imagery, classical religious style"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/the_savior.png"
+              alt="The Savior"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Majestic depiction of Christ as savior, divine radiance, spiritual
+              artwork, religious iconography, heavenly light, sacred art,
+              inspirational imagery, classical religious style
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thunder Drink -->
+      <div
+        class="flashcard"
+        data-prompt="Energy drink with electric lightning effects, dynamic beverage photography, powerful branding, energetic aesthetic, commercial product shot, vibrant colors, action-packed design"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/thunder_drink.png"
+              alt="Thunder Energy Drink"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Energy drink with electric lightning effects, dynamic beverage
+              photography, powerful branding, energetic aesthetic, commercial
+              product shot, vibrant colors, action-packed design
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Watermelon Shoe -->
+      <div
+        class="flashcard"
+        data-prompt="Innovative shoe design with watermelon-inspired aesthetics, fruit-fashion fusion, summer vibes, creative footwear concept, organic patterns, nature-inspired design, artistic product visualization"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <img
+              src="Assets/ai_images/watermelon_shoe.png"
+              alt="Watermelon Shoe"
+              class="flashcard-image"
+            />
+          </div>
+          <div class="flashcard-back">
+            <h3 class="text-xl font-bold text-white mb-4">Prompt:</h3>
+            <p class="text-slate-300 leading-relaxed">
+              Innovative shoe design with watermelon-inspired aesthetics,
+              fruit-fashion fusion, summer vibes, creative footwear concept,
+              organic patterns, nature-inspired design, artistic product
+              visualization
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal for enlarged view -->
+    <div id="imageModal" class="modal">
+      <button class="close-btn" onclick="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-content">
+        <img id="modalImage" src="" alt="Enlarged view" class="modal-image" />
+        <div class="modal-prompt">
+          <h3 class="text-2xl font-bold text-white mb-4">Prompt:</h3>
+          <p
+            id="modalPrompt"
+            class="text-slate-300 text-lg leading-relaxed"
+          ></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Flashcard flip functionality
+      document.querySelectorAll(".flashcard").forEach((card) => {
+        let clickTimeout;
+
+        card.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Clear any existing timeout
+          clearTimeout(clickTimeout);
+
+          // Set a timeout to handle single click
+          clickTimeout = setTimeout(() => {
+            this.classList.toggle("flipped");
+          }, 200);
+        });
+
+        // Double click to open modal
+        card.addEventListener("dblclick", function (e) {
+          e.preventDefault();
+
+          // Clear the single click timeout
+          clearTimeout(clickTimeout);
+
+          const img = this.querySelector(".flashcard-image");
+          const prompt = this.getAttribute("data-prompt");
+
+          document.getElementById("modalImage").src = img.src;
+          document.getElementById("modalPrompt").textContent = prompt;
+          document.getElementById("imageModal").classList.add("active");
+        });
+      });
+
+      // Modal close functionality
+      function closeModal() {
+        document.getElementById("imageModal").classList.remove("active");
+      }
+
+      // Close modal when clicking outside
+      document
+        .getElementById("imageModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeModal();
+          }
+        });
+
+      // Close modal with Escape key
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>
