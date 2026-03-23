@@ -1,272 +1,466 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chimezie Chima | Developer & Designer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/2539c47f52.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/2539c47f52.js"
+      crossorigin="anonymous"
+    ></script>
     <style>
-        /* Base styling and color palette */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* slate-900 */
-            color: #cbd5e1; /* slate-300 */
-        }
+      /* Base styling and color palette */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #cbd5e1; /* slate-300 */
+      }
 
-        /* Gradient text for the hero section */
-        .gradient-text {
-            background: linear-gradient(to right, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        /* NEW: Interactive Skill Card styling */
-        .skill-card {
-            background: #1e293b; /* slate-800 */
-            border: 1px solid #334155; /* slate-700 */
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+      /* Gradient text for the hero section */
+      .gradient-text {
+        background: linear-gradient(to right, #38bdf8, #818cf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
 
-        .skill-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.05), transparent 40%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+      /* NEW: Interactive Skill Card styling */
+      .skill-card {
+        background: #1e293b; /* slate-800 */
+        border: 1px solid #334155; /* slate-700 */
+        transition: transform 0.3s ease, background-color 0.3s ease,
+          box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
 
-        .skill-card:hover:before {
-            opacity: 1;
-        }
+      .skill-card:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at var(--x, 50%) var(--y, 50%),
+          rgba(255, 255, 255, 0.05),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
 
-        .skill-card:hover {
-            transform: translateY(-10px);
-            background-color: #334155; /* slate-700 */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        .skill-card .icon {
-            transition: transform 0.3s ease;
-        }
-        
-        .skill-card:hover .icon {
-            transform: scale(1.1);
-        }
+      .skill-card:hover:before {
+        opacity: 1;
+      }
 
-        .skill-card .arrow {
-            transition: transform 0.3s ease;
-            opacity: 0;
-        }
+      .skill-card:hover {
+        transform: translateY(-10px);
+        background-color: #334155; /* slate-700 */
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
 
-        .skill-card:hover .arrow {
-            transform: translateX(5px);
-            opacity: 1;
-        }
-        
-        /* Scroll-triggered animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
+      .skill-card .icon {
+        transition: transform 0.3s ease;
+      }
 
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      .skill-card:hover .icon {
+        transform: scale(1.1);
+      }
 
-        /* Active nav link styling */
-        .nav-link.active {
-            color: #38bdf8; /* sky-500 */
-        }
+      .skill-card .arrow {
+        transition: transform 0.3s ease;
+        opacity: 0;
+      }
+
+      .skill-card:hover .arrow {
+        transform: translateX(5px);
+        opacity: 1;
+      }
+
+      /* Scroll-triggered animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Active nav link styling */
+      .nav-link.active {
+        color: #38bdf8; /* sky-500 */
+      }
     </style>
-</head>
-<body class="w-full">
-
+  </head>
+  <body class="w-full">
     <!-- Header -->
-    <header class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-800">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="text-2xl font-bold text-white">
-                    <a href="#">Chimezie Chima</a>
-                </div>
-                <nav class="hidden md:flex space-x-8 text-lg">
-                    <a href="#about" class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300">About</a>
-                    <a href="#projects" class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300">Skills</a>
-                    <a href="#contact" class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300">Contact</a>
-                </nav>
-                <div class="md:hidden">
-                    <!-- Mobile menu button can be added here -->
-                </div>
-            </div>
+    <header
+      class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-800"
+    >
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="text-2xl font-bold text-white">
+            <a href="#">Chimezie Chima</a>
+          </div>
+          <nav class="hidden md:flex space-x-8 text-lg">
+            <a
+              href="#about"
+              class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300"
+              >About</a
+            >
+            <a
+              href="#projects"
+              class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300"
+              >Skills</a
+            >
+            <a
+              href="#contact"
+              class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300"
+              >Contact</a
+            >
+          </nav>
+          <div class="md:hidden">
+            <!-- Mobile menu button can be added here -->
+          </div>
         </div>
+      </div>
     </header>
 
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <!-- Hero Section -->
+      <section
+        id="home"
+        class="text-center min-h-[60vh] flex flex-col justify-center items-center reveal"
+      >
+        <span class="text-sky-400 text-lg font-medium"
+          >Hello, I'm Chimezie Chima.</span
+        >
+        <h1
+          class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white mt-4"
+        >
+          I Design, Build & Deploy
+        </h1>
+        <h1
+          class="text-4xl sm:text-6xl lg:text-7xl font-extrabold gradient-text mt-2"
+        >
+          <span class="multiText"></span>
+        </h1>
+        <p class="max-w-2xl mx-auto mt-6 text-lg text-slate-400">
+          A multidisciplinary developer based in Ottawa, Canada, with a passion
+          for AI, web development, and creating intuitive user experiences.
+        </p>
+        <a
+          href="#projects"
+          class="mt-8 px-8 py-3 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-all duration-300 transform hover:scale-105"
+        >
+          View My Skills
+        </a>
+      </section>
 
-        <!-- Hero Section -->
-        <section id="home" class="text-center min-h-[60vh] flex flex-col justify-center items-center reveal">
-            <span class="text-sky-400 text-lg font-medium">Hello, I'm Chimezie Chima.</span>
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white mt-4">I Design, Build & Deploy</h1>
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold gradient-text mt-2">
-                <span class="multiText"></span>
-            </h1>
-            <p class="max-w-2xl mx-auto mt-6 text-lg text-slate-400">
-                A multidisciplinary developer based in Ottawa, Canada, with a passion for AI, web development, and creating intuitive user experiences.
+      <!-- About & Skills Section -->
+      <section id="about" class="py-24 reveal">
+        <h2 class="text-4xl font-bold text-center text-white mb-12">
+          About Me
+        </h2>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="space-y-4 text-lg text-slate-300">
+            <p>
+              I'm passionate about learning new technologies and diversifying my
+              capabilities, which makes me a proactive and resourceful team
+              member. I thrive in challenging, fast-paced environments and adapt
+              quickly to new methods and workflows.
             </p>
-            <a href="#projects" class="mt-8 px-8 py-3 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-all duration-300 transform hover:scale-105">
-                View My Skills
-            </a>
-        </section>
-
-        <!-- About & Skills Section -->
-        <section id="about" class="py-24 reveal">
-            <h2 class="text-4xl font-bold text-center text-white mb-12">About Me</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-4 text-lg text-slate-300">
-                    <p>I'm passionate about learning new technologies and diversifying my capabilities, which makes me a proactive and resourceful team member. I thrive in challenging, fast-paced environments and adapt quickly to new methods and workflows.</p>
-                    <p>My background in Information Technology and AI Software Development, combined with a certification in UX Design, gives me a unique perspective on building products that are both technically robust and user-centric.</p>
-                </div>
-                <div class="space-y-6">
-                    <div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Education</h3>
-                        <div class="space-y-3">
-                            <p><span class="font-bold text-sky-400">AI Software Development</span><br>Algonquin College</p>
-                            <p><span class="font-bold text-sky-400">Bachelor of Information Technology</span><br>Carleton University</p>
-                        </div>
-                    </div>
-                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Core Skills</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="skill-badge">Python</span><span class="skill-badge">JavaScript</span><span class="skill-badge">HTML/CSS</span><span class="skill-badge">React.js</span><span class="skill-badge">Node.js</span><span class="skill-badge">SQL</span><span class="skill-badge">PyTorch</span><span class="skill-badge">Figma</span><span class="skill-badge">Docker</span>
-                        </div>
-                    </div>
-                </div>
+            <p>
+              My background in Information Technology and AI Software
+              Development, combined with a certification in UX Design, gives me
+              a unique perspective on building products that are both
+              technically robust and user-centric.
+            </p>
+          </div>
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-2xl font-bold text-white mb-4">Education</h3>
+              <div class="space-y-3">
+                <p>
+                  <span class="font-bold text-sky-400"
+                    >AI Software Development</span
+                  ><br />Algonquin College
+                </p>
+                <p>
+                  <span class="font-bold text-sky-400"
+                    >Bachelor of Information Technology</span
+                  ><br />Carleton University
+                </p>
+              </div>
             </div>
-        </section>
-
-        <!-- NEW Skills Showcase Section -->
-        <section id="projects" class="py-24">
-            <h2 class="text-4xl font-bold text-center text-white mb-16 reveal">My Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- UI/UX Designer Card -->
-                <a href="ux_ui.html" class="skill-card block p-8 rounded-2xl text-left reveal">
-                    <div class="icon bg-violet-500/10 text-violet-400 rounded-lg w-12 h-12 flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white">UI/UX Designer</h3>
-                    <p class="mt-2 text-slate-400">An interactive gallery of user-centric designs and application prototypes.</p>
-                    <div class="mt-6 font-semibold text-sky-400 flex items-center">
-                        <span>View Gallery</span>
-                        <span class="arrow ml-2">&rarr;</span>
-                    </div>
-                </a>
-
-                <!-- Web Developer Card -->
-                <a href="web_dev.html" class="skill-card block p-8 rounded-2xl text-left reveal" style="transition-delay: 100ms;">
-                    <div class="icon bg-sky-500/10 text-sky-400 rounded-lg w-12 h-12 flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white">Web Developer</h3>
-                    <p class="mt-2 text-slate-400">Search through a collection of my full-stack projects and web applications.</p>
-                     <div class="mt-6 font-semibold text-sky-400 flex items-center">
-                        <span>Start Searching</span>
-                        <span class="arrow ml-2">&rarr;</span>
-                    </div>
-                </a>
-
-                <!-- AI Developer Card -->
-                <a href="ai_dev.html" class="skill-card block p-8 rounded-2xl text-left reveal" style="transition-delay: 200ms;">
-                    <div class="icon bg-emerald-500/10 text-emerald-400 rounded-lg w-12 h-12 flex items-center justify-center mb-6">
-                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white">AI Developer</h3>
-                    <p class="mt-2 text-slate-400">A command-line interface to explore my machine learning and AI projects.</p>
-                     <div class="mt-6 font-semibold text-sky-400 flex items-center">
-                        <span>Initiate Terminal</span>
-                        <span class="arrow ml-2">&rarr;</span>
-                    </div>
-                </a>
+            <div>
+              <h3 class="text-2xl font-bold text-white mb-4">Core Skills</h3>
+              <div class="flex flex-wrap gap-3">
+                <span class="skill-badge">Python</span
+                ><span class="skill-badge">JavaScript</span
+                ><span class="skill-badge">HTML/CSS</span
+                ><span class="skill-badge">React.js</span
+                ><span class="skill-badge">Node.js</span
+                ><span class="skill-badge">SQL</span
+                ><span class="skill-badge">PyTorch</span
+                ><span class="skill-badge">Figma</span
+                ><span class="skill-badge">Docker</span>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
+      <!-- NEW Skills Showcase Section -->
+      <section id="projects" class="py-24">
+        <h2 class="text-4xl font-bold text-center text-white mb-16 reveal">
+          My Skills
+        </h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+        >
+          <!-- UI/UX Designer Card -->
+          <a
+            href="ux_ui.html"
+            class="skill-card block p-8 rounded-2xl text-left reveal"
+          >
+            <div
+              class="icon bg-violet-500/10 text-violet-400 rounded-lg w-12 h-12 flex items-center justify-center mb-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white">UI/UX Designer</h3>
+            <p class="mt-2 text-slate-400">
+              An interactive gallery of user-centric designs and application
+              prototypes.
+            </p>
+            <div class="mt-6 font-semibold text-sky-400 flex items-center">
+              <span>View Gallery</span>
+              <span class="arrow ml-2">&rarr;</span>
+            </div>
+          </a>
+
+          <!-- Web Developer Card -->
+          <a
+            href="web_dev.html"
+            class="skill-card block p-8 rounded-2xl text-left reveal"
+            style="transition-delay: 100ms"
+          >
+            <div
+              class="icon bg-sky-500/10 text-sky-400 rounded-lg w-12 h-12 flex items-center justify-center mb-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white">Web Developer</h3>
+            <p class="mt-2 text-slate-400">
+              Search through a collection of my full-stack projects and web
+              applications.
+            </p>
+            <div class="mt-6 font-semibold text-sky-400 flex items-center">
+              <span>Start Searching</span>
+              <span class="arrow ml-2">&rarr;</span>
+            </div>
+          </a>
+
+          <!-- AI Developer Card -->
+          <a
+            href="ai_dev.html"
+            class="skill-card block p-8 rounded-2xl text-left reveal"
+            style="transition-delay: 200ms"
+          >
+            <div
+              class="icon bg-emerald-500/10 text-emerald-400 rounded-lg w-12 h-12 flex items-center justify-center mb-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white">AI Developer</h3>
+            <p class="mt-2 text-slate-400">
+              A command-line interface to explore my machine learning and AI
+              projects.
+            </p>
+            <div class="mt-6 font-semibold text-sky-400 flex items-center">
+              <span>Initiate Terminal</span>
+              <span class="arrow ml-2">&rarr;</span>
+            </div>
+          </a>
+
+          <!-- Prompt Engineer Card -->
+          <a
+            href="promptEng.html"
+            class="skill-card block p-8 rounded-2xl text-left reveal"
+            style="transition-delay: 300ms"
+          >
+            <div
+              class="icon bg-pink-500/10 text-pink-400 rounded-lg w-12 h-12 flex items-center justify-center mb-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white">Prompt Engineer</h3>
+            <p class="mt-2 text-slate-400">
+              Interactive flashcards showcasing AI-generated images and their
+              creative prompts.
+            </p>
+            <div class="mt-6 font-semibold text-sky-400 flex items-center">
+              <span>View Gallery</span>
+              <span class="arrow ml-2">&rarr;</span>
+            </div>
+          </a>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <footer id="contact" class="border-t border-slate-800 py-12">
-        <div class="container mx-auto px-4 text-center">
-            <h3 class="text-3xl font-bold text-white">Get In Touch</h3>
-            <p class="text-slate-400 mt-4 max-w-md mx-auto">I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team.</p>
-            <a href="mailto:chichima.designs@gmail.com" class="inline-block mt-6 text-xl font-medium text-sky-400 hover:text-sky-300 transition-colors">
-                chichima.designs@gmail.com
-            </a>
-            <div class="flex justify-center space-x-6 mt-8">
-                <a href="https://github.com/chizTheDeveloper" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-github fa-2x"></i></a>
-                <a href="https://www.linkedin.com/in/chimezie-chima-uzoka-253762186/" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-linkedin fa-2x"></i></a>
-                <a href="https://www.behance.net/chimeziechima" target="_blank" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-behance fa-2x"></i></a>
-            </div>
+      <div class="container mx-auto px-4 text-center">
+        <h3 class="text-3xl font-bold text-white">Get In Touch</h3>
+        <p class="text-slate-400 mt-4 max-w-md mx-auto">
+          I'm always open to discussing new projects, creative ideas, or
+          opportunities to be part of an amazing team.
+        </p>
+        <a
+          href="mailto:chichima.designs@gmail.com"
+          class="inline-block mt-6 text-xl font-medium text-sky-400 hover:text-sky-300 transition-colors"
+        >
+          chichima.designs@gmail.com
+        </a>
+        <div class="flex justify-center space-x-6 mt-8">
+          <a
+            href="https://github.com/chizTheDeveloper"
+            target="_blank"
+            class="text-slate-400 hover:text-white transition-colors"
+            ><i class="fab fa-github fa-2x"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/in/chimezie-chima-uzoka-253762186/"
+            target="_blank"
+            class="text-slate-400 hover:text-white transition-colors"
+            ><i class="fab fa-linkedin fa-2x"></i
+          ></a>
+          <a
+            href="https://www.behance.net/chimeziechima"
+            target="_blank"
+            class="text-slate-400 hover:text-white transition-colors"
+            ><i class="fab fa-behance fa-2x"></i
+          ></a>
         </div>
+      </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
-        // Typing effect for the hero section
-        var typingEffect = new Typed(".multiText", {
-            strings: ["Web Apps", "AI Models", "User Experiences"],
-            loop: true,
-            typeSpeed: 100,
-            backSpeed: 80,
-            backDelay: 1500,
+      // Typing effect for the hero section
+      var typingEffect = new Typed(".multiText", {
+        strings: ["Web Apps", "AI Models", "User Experiences"],
+        loop: true,
+        typeSpeed: 100,
+        backSpeed: 80,
+        backDelay: 1500,
+      });
+
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+        }
+      );
+
+      const revealElements = document.querySelectorAll(".reveal");
+      revealElements.forEach((el) => observer.observe(el));
+
+      // Active nav link highlighting on scroll
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 70) {
+            // 70 is approx header height
+            current = section.getAttribute("id");
+          }
         });
 
-        // Intersection Observer for scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").includes(current)) {
+            link.classList.add("active");
+          }
         });
+      });
 
-        const revealElements = document.querySelectorAll('.reveal');
-        revealElements.forEach((el) => observer.observe(el));
-
-        // Active nav link highlighting on scroll
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 70) { // 70 is approx header height
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
-        // Custom style for skill badges
-        const style = document.createElement('style');
-        style.innerHTML = `
+      // Custom style for skill badges
+      const style = document.createElement("style");
+      style.innerHTML = `
             .skill-badge {
                 background-color: #1e293b; /* slate-800 */
                 color: #94a3b8; /* slate-400 */
@@ -277,19 +471,18 @@
                 border: 1px solid #334155; /* slate-700 */
             }
         `;
-        document.head.appendChild(style);
+      document.head.appendChild(style);
 
-        // NEW: JS for interactive skill card hover effect
-        document.querySelectorAll('.skill-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--x', `${x}px`);
-                card.style.setProperty('--y', `${y}px`);
-            });
+      // NEW: JS for interactive skill card hover effect
+      document.querySelectorAll(".skill-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty("--x", `${x}px`);
+          card.style.setProperty("--y", `${y}px`);
         });
-
+      });
     </script>
-</body>
+  </body>
 </html>
