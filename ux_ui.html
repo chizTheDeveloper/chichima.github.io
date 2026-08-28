@@ -14,8 +14,9 @@
     <style>
       body {
         font-family: "Inter", sans-serif;
-        background-color: #fdfdfd;
+        background-color: #fafaf9;
         color: #111827; /* Gray-900 */
+        overflow-x: hidden;
       }
 
       h1,
@@ -38,7 +39,267 @@
         transform: translateY(0);
       }
 
-      /* --- Project Item Hover Effect --- */
+      /* --- Underline effect on links --- */
+      .link-underline {
+        position: relative;
+        text-decoration: none;
+      }
+      .link-underline::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background-color: #111827;
+        transform-origin: bottom right;
+        transition: transform 0.3s ease-out;
+      }
+      .link-underline:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      /* --- Interactive Floating Bubble Arena Styles --- */
+      .bubble-arena {
+        position: relative;
+        width: 100%;
+        height: 820px;
+        border-radius: 2rem;
+        background: radial-gradient(circle at 50% 20%, #ffffff, #f1f5f9 85%);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+        overflow: hidden;
+        touch-action: none;
+        user-select: none;
+      }
+
+      @media (min-width: 1024px) {
+        .bubble-arena {
+          height: 880px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .bubble-arena {
+          height: 720px;
+        }
+      }
+
+      /* Ambient background micro-bubbles */
+      .ambient-bubble {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(224, 231, 255, 0.35) 60%, rgba(199, 210, 254, 0.15));
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8), 0 8px 24px rgba(99, 102, 241, 0.06);
+        animation: floatDrift 16s ease-in-out infinite alternate;
+      }
+
+      @keyframes floatDrift {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        50% { transform: translate(20px, -30px) rotate(180deg); }
+        100% { transform: translate(-20px, 20px) rotate(360deg); }
+      }
+
+      /* Floating Project Bubble Sphere */
+      .project-bubble {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        cursor: grab;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        will-change: transform, left, top;
+        z-index: 10;
+        user-select: none;
+      }
+
+      @media (max-width: 640px) {
+        .project-bubble {
+          width: 240px;
+          height: 240px;
+        }
+      }
+
+      .bubble-circle {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 
+          0 22px 50px -10px rgba(15, 23, 42, 0.18),
+          0 10px 24px -6px rgba(15, 23, 42, 0.1),
+          inset 0 3px 8px rgba(255, 255, 255, 0.8),
+          inset 0 -6px 16px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+      }
+
+      .project-bubble:active,
+      .project-bubble.is-dragging {
+        cursor: grabbing !important;
+        transform: scale(1.05);
+        z-index: 50 !important;
+      }
+
+      .project-bubble:active .bubble-circle,
+      .project-bubble.is-dragging .bubble-circle {
+        box-shadow: 
+          0 35px 70px -12px rgba(15, 23, 42, 0.3),
+          0 0 0 3px rgba(255, 255, 255, 0.95),
+          inset 0 4px 10px rgba(255, 255, 255, 0.9);
+      }
+
+      .project-bubble:hover:not(.is-dragging) {
+        transform: scale(1.06);
+        z-index: 40;
+      }
+
+      .project-bubble:hover:not(.is-dragging) .bubble-circle {
+        box-shadow: 
+          0 30px 65px -10px var(--bubble-glow, rgba(99, 102, 241, 0.45)),
+          0 0 0 2.5px rgba(255, 255, 255, 1),
+          inset 0 4px 12px rgba(255, 255, 255, 0.9);
+      }
+
+      .bubble-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+      }
+
+      .project-bubble:hover .bubble-image {
+        transform: scale(1.08);
+      }
+
+      .bubble-gloss-overlay {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.3) 0%, transparent 60%),
+                    radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.2) 0%, transparent 70%);
+        pointer-events: none;
+        mix-blend-mode: overlay;
+      }
+
+      .bubble-specular {
+        position: absolute;
+        top: 6%;
+        left: 14%;
+        width: 34%;
+        height: 20%;
+        border-radius: 50%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.05));
+        transform: rotate(-35deg);
+        pointer-events: none;
+      }
+
+      /* Title Badge Floating Beside Bubble */
+      .bubble-title-badge {
+        position: absolute;
+        left: 84%;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1.5px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 
+          0 16px 36px -8px rgba(15, 23, 42, 0.14),
+          0 6px 14px -4px rgba(15, 23, 42, 0.08),
+          inset 0 1px 2px rgba(255, 255, 255, 1);
+        padding: 0.65rem 1.1rem;
+        border-radius: 1.25rem;
+        white-space: nowrap;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        z-index: 25;
+      }
+
+      @media (max-width: 640px) {
+        .bubble-title-badge {
+          left: 78%;
+          padding: 0.5rem 0.85rem;
+        }
+      }
+
+      .project-bubble:hover .bubble-title-badge {
+        transform: translateY(-50%) translateX(6px) scale(1.05);
+        box-shadow: 
+          0 20px 42px -8px rgba(15, 23, 42, 0.2),
+          0 0 0 2px var(--bubble-glow, rgba(99, 102, 241, 0.35));
+      }
+
+      .bubble-badge-tag {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.15rem 0.5rem;
+        border-radius: 9999px;
+        margin-bottom: 0.25rem;
+      }
+
+      .bubble-badge-name {
+        font-family: "Lora", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+
+      .bubble-badge-sub {
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-top: 0.1rem;
+        font-weight: 500;
+      }
+
+      /* Control Bar Buttons */
+      .control-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .control-pill:hover {
+        background: #f8fafc;
+        color: #0f172a;
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
+      }
+
+      .control-pill.active {
+        background: #0f172a;
+        color: #ffffff;
+        border-color: #0f172a;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+      }
+
+      /* Classic Grid View */
       .project-item {
         position: relative;
       }
@@ -65,28 +326,6 @@
       .project-item:hover .project-overlay {
         opacity: 1;
       }
-
-      /* --- Underline effect on links --- */
-      .link-underline {
-        position: relative;
-        text-decoration: none;
-      }
-      .link-underline::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        transform: scaleX(0);
-        height: 1px;
-        bottom: -2px;
-        left: 0;
-        background-color: #111827;
-        transform-origin: bottom right;
-        transition: transform 0.3s ease-out;
-      }
-      .link-underline:hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-      }
     </style>
   </head>
   <body class="w-full">
@@ -99,10 +338,9 @@
           </div>
           <nav class="hidden md:flex items-center space-x-8 text-base">
             <a href="index.html" class="link-underline">Home</a>
+            <a href="#work" class="link-underline">Projects</a>
             <a href="#about" class="link-underline">About</a>
-            <a href="mailto:chima.designs@email.com" class="link-underline"
-              >Contact</a
-            >
+            <a href="mailto:chichima.designs@gmail.com" class="link-underline">Contact</a>
           </nav>
         </div>
       </div>
@@ -110,8 +348,9 @@
 
     <main class="container mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section -->
-      <section class="pt-40 pb-24 md:pt-56 md:pb-32">
+      <section class="pt-36 pb-16 md:pt-48 md:pb-20">
         <div class="max-w-3xl">
+          <span class="inline-block text-xs font-bold tracking-widest uppercase text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full mb-4">Interactive Portfolio</span>
           <h1 class="text-4xl md:text-6xl font-medium leading-tight reveal">
             A UI/UX designer crafting thoughtful and user-centric digital
             experiences.
@@ -126,14 +365,161 @@
         </div>
       </section>
 
-      <!-- Projects Section -->
+      <!-- Projects Section with Interactive Floating Bubble Showcase -->
       <section id="work" class="pb-24 md:pb-32">
+        <!-- Interactive Header & View Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 class="font-serif text-2xl md:text-3xl font-medium text-gray-900">Featured Projects</h2>
+            <p class="text-sm text-gray-500 mt-1">Grab, toss, or click any floating sphere to inspect case studies</p>
+          </div>
+          
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- View Toggle -->
+            <div class="inline-flex p-1 bg-gray-100 rounded-full border border-gray-200">
+              <button id="view-bubble-btn" class="control-pill active text-xs sm:text-sm !py-1.5 !px-3.5" onclick="setProjectView('bubble')">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <circle cx="8.5" cy="8.5" r="2" fill="currentColor" fill-opacity="0.3"></circle>
+                </svg>
+                <span>Bubbles</span>
+              </button>
+              <button id="view-grid-btn" class="control-pill text-xs sm:text-sm !py-1.5 !px-3.5 !bg-transparent !border-transparent !shadow-none" onclick="setProjectView('grid')">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                  <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                  <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                  <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                </svg>
+                <span>Grid</span>
+              </button>
+            </div>
+
+            <!-- Bubble Interaction Controls -->
+            <button id="scatter-btn" class="control-pill text-xs sm:text-sm !py-1.5 !px-3" title="Scatter and agitate bubbles" onclick="scatterBubbles()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4m0 12v4M2 12h4m12 0h4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+              </svg>
+              <span>Scatter</span>
+            </button>
+            <button id="center-btn" class="control-pill text-xs sm:text-sm !py-1.5 !px-3" title="Attract to center" onclick="gatherBubbles()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"></circle>
+                <circle cx="12" cy="12" r="5"></circle>
+                <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+              </svg>
+              <span>Center</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- VIEW 1: Interactive Floating Bubble Arena -->
+        <div id="bubble-container" class="bubble-arena">
+          <!-- Ambient Micro-Bubbles in the Background -->
+          <div class="ambient-bubble" style="width: 90px; height: 90px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+          <div class="ambient-bubble" style="width: 50px; height: 50px; top: 65%; left: 12%; animation-delay: 2s;"></div>
+          <div class="ambient-bubble" style="width: 110px; height: 110px; top: 25%; right: 10%; animation-delay: 4s;"></div>
+          <div class="ambient-bubble" style="width: 45px; height: 45px; top: 75%; right: 18%; animation-delay: 1s;"></div>
+          <div class="ambient-bubble" style="width: 70px; height: 70px; top: 80%; left: 45%; animation-delay: 3s;"></div>
+          <div class="ambient-bubble" style="width: 60px; height: 60px; top: 10%; left: 50%; animation-delay: 5s;"></div>
+
+          <!-- Helper tip pill -->
+          <div class="absolute top-4 left-1/2 -translate-x-1/2 pointer-events-none z-0 bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-slate-200/70 shadow-sm text-xs font-medium text-slate-600 flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-slate-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"></path>
+            </svg>
+            <span>Drag & throw bubbles around the arena &bull; Click to open case study</span>
+          </div>
+
+          <!-- PROJECT BUBBLE 1: LifeLas -->
+          <div
+            class="project-bubble"
+            id="bubble-lifelas"
+            data-url="lifelas-case-study.html"
+            style="--bubble-glow: rgba(56, 189, 248, 0.45);"
+            title="LifeLas Fintech App • Click to open case study"
+          >
+            <div class="bubble-circle">
+              <img src="Assets/Lifelas/LifeLas_Project.png" alt="LifeLas Fintech App" class="bubble-image" />
+              <div class="bubble-gloss-overlay"></div>
+              <div class="bubble-specular"></div>
+            </div>
+            <div class="bubble-title-badge">
+              <span class="bubble-badge-tag bg-sky-100 text-sky-700">Fintech AI</span>
+              <h4 class="bubble-badge-name">LifeLas</h4>
+              <p class="bubble-badge-sub">Mobile App</p>
+            </div>
+          </div>
+
+          <!-- PROJECT BUBBLE 2: Rhythm -->
+          <div
+            class="project-bubble"
+            id="bubble-rhythm"
+            data-url="rhythm-case-study.html"
+            style="--bubble-glow: rgba(16, 185, 129, 0.45);"
+            title="Rhythm Wellness Platform • Click to open case study"
+          >
+            <div class="bubble-circle">
+              <img src="Assets/Wellness_app/Wellness_app.png" alt="Rhythm Wellness Platform" class="bubble-image" />
+              <div class="bubble-gloss-overlay"></div>
+              <div class="bubble-specular"></div>
+            </div>
+            <div class="bubble-title-badge">
+              <span class="bubble-badge-tag bg-emerald-100 text-emerald-700">Health AI</span>
+              <h4 class="bubble-badge-name">Rhythm</h4>
+              <p class="bubble-badge-sub">Wellness Platform</p>
+            </div>
+          </div>
+
+          <!-- PROJECT BUBBLE 3: Atlas -->
+          <div
+            class="project-bubble"
+            id="bubble-atlas"
+            data-url="atlas-case-study.html"
+            style="--bubble-glow: rgba(245, 158, 11, 0.45);"
+            title="Atlas AI Travel Planner • Click to open case study"
+          >
+            <div class="bubble-circle">
+              <img src="Assets/atlas/atlas_card.png" alt="Atlas AI Travel Planner" class="bubble-image" />
+              <div class="bubble-gloss-overlay"></div>
+              <div class="bubble-specular"></div>
+            </div>
+            <div class="bubble-title-badge">
+              <span class="bubble-badge-tag bg-amber-100 text-amber-700">Travel Agent</span>
+              <h4 class="bubble-badge-name">Atlas</h4>
+              <p class="bubble-badge-sub">AI Travel Planner</p>
+            </div>
+          </div>
+
+          <!-- PROJECT BUBBLE 4: Prism -->
+          <div
+            class="project-bubble"
+            id="bubble-prism"
+            data-url="prism-case-study.html"
+            style="--bubble-glow: rgba(168, 85, 247, 0.45);"
+            title="Prism Eco-commerce Store • Click to open case study"
+          >
+            <div class="bubble-circle">
+              <img src="Assets/prism/prism_card.png" alt="Prism Eco-commerce Store" class="bubble-image" />
+              <div class="bubble-gloss-overlay"></div>
+              <div class="bubble-specular"></div>
+            </div>
+            <div class="bubble-title-badge">
+              <span class="bubble-badge-tag bg-purple-100 text-purple-700">AR Commerce</span>
+              <h4 class="bubble-badge-name">Prism</h4>
+              <p class="bubble-badge-sub">Eco-Commerce Store</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 2: Traditional Grid View (Toggled via button) -->
         <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 md:gap-y-24"
+          id="grid-container"
+          class="hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 md:gap-y-24"
         >
           <!-- Project 1 -->
           <a href="lifelas-case-study.html" class="project-item group reveal">
-            <div class="overflow-hidden mb-6 bg-gray-100">
+            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
               <img
                 src="Assets/Lifelas/LifeLas_Project.png"
                 alt="Fintech App"
@@ -151,9 +537,9 @@
           <!-- Project 2 -->
           <a
             href="rhythm-case-study.html"
-            class="project-item group reveal md:mt-24"
+            class="project-item group reveal md:mt-16"
           >
-            <div class="overflow-hidden mb-6 bg-gray-100">
+            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
               <img
                 src="Assets/Wellness_app/Wellness_app.png"
                 alt="Wellness Platform"
@@ -170,7 +556,7 @@
 
           <!-- Project 3 -->
           <a href="atlas-case-study.html" class="project-item group reveal">
-            <div class="overflow-hidden mb-6 bg-gray-100">
+            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
               <img
                 src="Assets/atlas/atlas_card.png"
                 alt="Travel Planner"
@@ -188,9 +574,9 @@
           <!-- Project 4 -->
           <a
             href="prism-case-study.html"
-            class="project-item group reveal md:mt-24"
+            class="project-item group reveal md:mt-16"
           >
-            <div class="overflow-hidden mb-6 bg-gray-100">
+            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
               <img
                 src="Assets/prism/prism_card.png"
                 alt="Eco-commerce"
@@ -259,6 +645,7 @@
       </div>
     </footer>
 
+    <!-- Interactive Floating Bubble Physics Engine -->
     <script>
       // --- Scroll Animations ---
       const observer = new IntersectionObserver(
@@ -269,13 +656,379 @@
             }
           });
         },
-        {
-          threshold: 0.1,
-        }
+        { threshold: 0.1 }
       );
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-      const revealElements = document.querySelectorAll(".reveal");
-      revealElements.forEach((el) => observer.observe(el));
+      // --- View Toggle State ---
+      function setProjectView(mode) {
+        const bubbleContainer = document.getElementById("bubble-container");
+        const gridContainer = document.getElementById("grid-container");
+        const bubbleBtn = document.getElementById("view-bubble-btn");
+        const gridBtn = document.getElementById("view-grid-btn");
+        const scatterBtn = document.getElementById("scatter-btn");
+        const centerBtn = document.getElementById("center-btn");
+
+        if (mode === "bubble") {
+          bubbleContainer.classList.remove("hidden");
+          gridContainer.classList.add("hidden");
+          bubbleBtn.className = "control-pill active text-xs sm:text-sm !py-1.5 !px-3.5";
+          gridBtn.className = "control-pill text-xs sm:text-sm !py-1.5 !px-3.5 !bg-transparent !border-transparent !shadow-none";
+          scatterBtn.style.display = "inline-flex";
+          centerBtn.style.display = "inline-flex";
+          if (typeof initBubblePositions === "function") {
+            initBubblePositions();
+          }
+        } else {
+          bubbleContainer.classList.add("hidden");
+          gridContainer.classList.remove("hidden");
+          gridBtn.className = "control-pill active text-xs sm:text-sm !py-1.5 !px-3.5";
+          bubbleBtn.className = "control-pill text-xs sm:text-sm !py-1.5 !px-3.5 !bg-transparent !border-transparent !shadow-none";
+          scatterBtn.style.display = "none";
+          centerBtn.style.display = "none";
+          document.querySelectorAll("#grid-container .reveal").forEach((el) => observer.observe(el));
+        }
+      }
+
+      // --- Floating Bubble Physics Engine ---
+      const arena = document.getElementById("bubble-container");
+      const bubbleElements = Array.from(document.querySelectorAll(".project-bubble"));
+
+      const bubbles = [];
+      let arenaWidth = arena.clientWidth;
+      let arenaHeight = arena.clientHeight;
+      let mousePos = { x: -1000, y: -1000, inside: false };
+      let draggedBubble = null;
+      let dragOffset = { x: 0, y: 0 };
+      let dragStartPos = { x: 0, y: 0 };
+      let pointerHistory = [];
+
+      // Initialize bubble models
+      bubbleElements.forEach((el, index) => {
+        bubbles.push({
+          el: el,
+          url: el.getAttribute("data-url"),
+          x: 0,
+          y: 0,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          radius: 160, // approximate half-width
+          mass: 1,
+          isDragging: false,
+          isHovered: false,
+          phase: index * (Math.PI / 2),
+          waveSpeed: 0.0018 + index * 0.0004
+        });
+      });
+
+      function updateArenaDimensions() {
+        arenaWidth = arena.clientWidth;
+        arenaHeight = arena.clientHeight;
+        bubbles.forEach((b) => {
+          const circleEl = b.el.querySelector(".bubble-circle") || b.el;
+          b.radius = (circleEl.offsetWidth / 2) || 150;
+        });
+      }
+
+      function initBubblePositions() {
+        updateArenaDimensions();
+        // Spread bubbles evenly across 4 quadrants
+        const cols = 2;
+        const rows = 2;
+        const cellW = arenaWidth / cols;
+        const cellH = arenaHeight / rows;
+
+        bubbles.forEach((b, i) => {
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+          const targetCenterX = col * cellW + cellW / 2;
+          const targetCenterY = row * cellH + cellH / 2;
+
+          b.x = targetCenterX - b.radius + (Math.random() - 0.5) * 30;
+          b.y = targetCenterY - b.radius + (Math.random() - 0.5) * 30;
+          b.vx = (Math.random() - 0.5) * 1.2;
+          b.vy = (Math.random() - 0.5) * 1.2;
+
+          // Clamp with badge allowance
+          b.x = Math.max(15, Math.min(arenaWidth - b.radius * 2 - 130, b.x));
+          b.y = Math.max(15, Math.min(arenaHeight - b.radius * 2 - 20, b.y));
+
+          b.el.style.left = `${b.x}px`;
+          b.el.style.top = `${b.y}px`;
+        });
+      }
+
+      // Physics Loop
+      let lastTime = performance.now();
+      function animate(now) {
+        const dt = Math.min((now - lastTime) / 1000, 0.04);
+        lastTime = now;
+
+        updateArenaDimensions();
+
+        const time = now;
+
+        for (let i = 0; i < bubbles.length; i++) {
+          const b = bubbles[i];
+
+          if (b.isDragging) {
+            // Dragged by pointer
+            b.x = mousePos.x - dragOffset.x;
+            b.y = mousePos.y - dragOffset.y;
+
+            // Track pointer velocity
+            pointerHistory.push({ x: b.x, y: b.y, t: now });
+            if (pointerHistory.length > 5) pointerHistory.shift();
+          } else {
+            // Natural gentle floating wave force
+            const floatForceX = Math.cos(time * b.waveSpeed + b.phase) * 12;
+            const floatForceY = Math.sin(time * b.waveSpeed * 1.2 + b.phase) * 16;
+
+            // Apply friction / air drag
+            const damping = b.isHovered ? 0.92 : 0.985;
+            b.vx *= damping;
+            b.vy *= damping;
+
+            b.x += (b.vx * 60 + floatForceX * 0.4) * dt;
+            b.y += (b.vy * 60 + floatForceY * 0.4) * dt;
+
+            // Mouse proximity repulsion (gentle dodge when moving cursor near)
+            if (mousePos.inside && !draggedBubble) {
+              const bCenterX = b.x + b.radius;
+              const bCenterY = b.y + b.radius;
+              const dx = bCenterX - mousePos.x;
+              const dy = bCenterY - mousePos.y;
+              const dist = Math.hypot(dx, dy);
+              const repelRadius = b.radius + 70;
+
+              if (dist < repelRadius && dist > 1) {
+                const force = (repelRadius - dist) / repelRadius;
+                b.vx += (dx / dist) * force * 1.8;
+                b.vy += (dy / dist) * force * 1.8;
+              }
+            }
+
+            // Wall Collisions with restitution
+            const minX = 15;
+            const maxX = arenaWidth - b.radius * 2 - 130;
+            const minY = 15;
+            const maxY = arenaHeight - b.radius * 2 - 20;
+
+            if (b.x < minX) {
+              b.x = minX;
+              b.vx = Math.abs(b.vx) * 0.85 + 0.3;
+            } else if (b.x > maxX) {
+              b.x = maxX;
+              b.vx = -Math.abs(b.vx) * 0.85 - 0.3;
+            }
+
+            if (b.y < minY) {
+              b.y = minY;
+              b.vy = Math.abs(b.vy) * 0.85 + 0.3;
+            } else if (b.y > maxY) {
+              b.y = maxY;
+              b.vy = -Math.abs(b.vy) * 0.85 - 0.3;
+            }
+          }
+
+          // Render
+          b.el.style.left = `${b.x}px`;
+          b.el.style.top = `${b.y}px`;
+        }
+
+        // Soft Inter-bubble Collision Separation
+        for (let i = 0; i < bubbles.length; i++) {
+          for (let j = i + 1; j < bubbles.length; j++) {
+            const b1 = bubbles[i];
+            const b2 = bubbles[j];
+
+            const c1x = b1.x + b1.radius;
+            const c1y = b1.y + b1.radius;
+            const c2x = b2.x + b2.radius;
+            const c2y = b2.y + b2.radius;
+
+            const dx = c2x - c1x;
+            const dy = c2y - c1y;
+            const dist = Math.hypot(dx, dy);
+            const minDist = b1.radius + b2.radius + 15;
+
+            if (dist < minDist && dist > 0) {
+              const overlap = minDist - dist;
+              const nx = dx / dist;
+              const ny = dy / dist;
+
+              // Separate
+              if (!b1.isDragging && !b2.isDragging) {
+                b1.x -= nx * overlap * 0.5;
+                b1.y -= ny * overlap * 0.5;
+                b2.x += nx * overlap * 0.5;
+                b2.y += ny * overlap * 0.5;
+
+                // Impulse exchange
+                const kx = b1.vx - b2.vx;
+                const ky = b1.vy - b2.vy;
+                const p = 2 * (nx * kx + ny * ky) / (b1.mass + b2.mass);
+
+                b1.vx -= p * b2.mass * nx * 0.5;
+                b1.vy -= p * b2.mass * ny * 0.5;
+                b2.vx += p * b1.mass * nx * 0.5;
+                b2.vy += p * b1.mass * ny * 0.5;
+              } else if (b1.isDragging && !b2.isDragging) {
+                b2.x += nx * overlap;
+                b2.y += ny * overlap;
+                b2.vx += nx * 1.5;
+                b2.vy += ny * 1.5;
+              } else if (!b1.isDragging && b2.isDragging) {
+                b1.x -= nx * overlap;
+                b1.y -= ny * overlap;
+                b1.vx -= nx * 1.5;
+                b1.vy -= ny * 1.5;
+              }
+            }
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // Scatter Interaction
+      window.scatterBubbles = function () {
+        const centerX = arenaWidth / 2;
+        const centerY = arenaHeight / 2;
+
+        bubbles.forEach((b) => {
+          const bCenterX = b.x + b.radius;
+          const bCenterY = b.y + b.radius;
+          const dx = bCenterX - centerX || (Math.random() - 0.5);
+          const dy = bCenterY - centerY || (Math.random() - 0.5);
+          const dist = Math.hypot(dx, dy) || 1;
+
+          const speed = 7 + Math.random() * 5;
+          b.vx = (dx / dist) * speed;
+          b.vy = (dy / dist) * speed;
+        });
+      };
+
+      // Center Gravitate Interaction
+      window.gatherBubbles = function () {
+        const centerX = arenaWidth / 2;
+        const centerY = arenaHeight / 2;
+
+        bubbles.forEach((b) => {
+          const bCenterX = b.x + b.radius;
+          const bCenterY = b.y + b.radius;
+          const dx = centerX - bCenterX;
+          const dy = centerY - bCenterY;
+          const dist = Math.hypot(dx, dy) || 1;
+
+          b.vx = (dx / dist) * 4.5;
+          b.vy = (dy / dist) * 4.5;
+        });
+      };
+
+      // Pointer Event Handlers (Mouse & Touch Drag / Toss)
+      function getArenaCoords(e) {
+        const rect = arena.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: clientX - rect.left,
+          y: clientY - rect.top
+        };
+      }
+
+      arena.addEventListener("mousemove", (e) => {
+        const coords = getArenaCoords(e);
+        mousePos.x = coords.x;
+        mousePos.y = coords.y;
+        mousePos.inside = true;
+      });
+
+      arena.addEventListener("mouseleave", () => {
+        mousePos.inside = false;
+      });
+
+      bubbles.forEach((b) => {
+        // Hover
+        b.el.addEventListener("mouseenter", () => { b.isHovered = true; });
+        b.el.addEventListener("mouseleave", () => { b.isHovered = false; });
+
+        // Pointer Down
+        const handleStart = (e) => {
+          const coords = getArenaCoords(e);
+          draggedBubble = b;
+          b.isDragging = true;
+          b.el.classList.add("is-dragging");
+
+          dragOffset.x = coords.x - b.x;
+          dragOffset.y = coords.y - b.y;
+          dragStartPos = { x: coords.x, y: coords.y };
+          pointerHistory = [{ x: b.x, y: b.y, t: performance.now() }];
+
+          b.vx = 0;
+          b.vy = 0;
+        };
+
+        b.el.addEventListener("mousedown", handleStart);
+        b.el.addEventListener("touchstart", handleStart, { passive: true });
+      });
+
+      const handlePointerMove = (e) => {
+        if (!draggedBubble) return;
+        const coords = getArenaCoords(e);
+        mousePos.x = coords.x;
+        mousePos.y = coords.y;
+      };
+
+      const handlePointerEnd = (e) => {
+        if (!draggedBubble) return;
+        const b = draggedBubble;
+        b.isDragging = false;
+        b.el.classList.remove("is-dragging");
+
+        // Calculate toss momentum from pointer history
+        if (pointerHistory.length >= 2) {
+          const first = pointerHistory[0];
+          const last = pointerHistory[pointerHistory.length - 1];
+          const dt = (last.t - first.t) / 1000;
+          if (dt > 0.01) {
+            b.vx = Math.max(-12, Math.min(12, ((last.x - first.x) / dt) * 0.04));
+            b.vy = Math.max(-12, Math.min(12, ((last.y - first.y) / dt) * 0.04));
+          }
+        }
+
+        // Check if this was a click vs a drag
+        const endCoords = e.changedTouches ? getArenaCoords({ touches: e.changedTouches, clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY }) : getArenaCoords(e);
+        const dragDist = Math.hypot(endCoords.x - dragStartPos.x, endCoords.y - dragStartPos.y);
+
+        if (dragDist < 8) {
+          // Open Case Study URL
+          window.location.href = b.url;
+        }
+
+        draggedBubble = null;
+      };
+
+      window.addEventListener("mousemove", handlePointerMove);
+      window.addEventListener("touchmove", handlePointerMove, { passive: true });
+      window.addEventListener("mouseup", handlePointerEnd);
+      window.addEventListener("touchend", handlePointerEnd);
+
+      window.addEventListener("resize", () => {
+        updateArenaDimensions();
+      });
+
+      // Start on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        initBubblePositions();
+        requestAnimationFrame(animate);
+      });
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+        initBubblePositions();
+        requestAnimationFrame(animate);
+      }
     </script>
-  </body>
+  <!-- VoiceOps AI Bot Embed for https://www.chichima.org/ -->
+  <script src="https://voiceops-ai-680018674242.us-east1.run.app/widget.js" data-client-id="client-chichima" data-position="bottom-right" defer></script>
+</body>
 </html>
