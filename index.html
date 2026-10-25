@@ -112,7 +112,7 @@
         </div>
         <nav class="hidden md:flex space-x-8 text-lg">
           <a href="#about" class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300">About</a>
-          <a href="#projects"
+          <a href="#skills"
             class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300">Skills</a>
           <a href="#contact"
             class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300">Contact</a>
@@ -139,7 +139,7 @@
         for AI, web development, and creating intuitive user experiences.
       </p>
       <div class="flex items-center gap-4 mt-8">
-        <a href="#projects"
+        <a href="#skills"
           class="px-8 py-3 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-sky-500/25">
           View My Skills
         </a>
@@ -164,7 +164,7 @@
     </section>
 
     <!-- About & Skills Section -->
-    <section id="about" class="py-24 reveal">
+    <section id="about" class="py-24 scroll-mt-20 reveal">
       <h2 class="text-4xl font-bold text-center text-white mb-12">
         About Me
       </h2>
@@ -210,7 +210,8 @@
     </section>
 
     <!-- NEW Skills Showcase Section -->
-    <section id="projects" class="py-24">
+    <section id="skills" class="py-24 scroll-mt-20">
+      <a id="projects"></a>
       <h2 class="text-4xl font-bold text-center text-white mb-16 reveal">
         My Skills
       </h2>
@@ -328,79 +329,115 @@
     data-position="bottom-right" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script>
-    // Typing effect for the hero section
-    var typingEffect = new Typed(".multiText", {
-      strings: ["Web Apps", "AI Models", "User Experiences"],
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 80,
-      backDelay: 1500,
-    });
+    (function () {
+      // Typing effect for the hero section
+      try {
+        if (typeof Typed !== "undefined" && document.querySelector(".multiText")) {
+          new Typed(".multiText", {
+            strings: ["Web Apps", "AI Models", "User Experiences"],
+            loop: true,
+            typeSpeed: 100,
+            backSpeed: 80,
+            backDelay: 1500,
+          });
+        }
+      } catch (e) {
+        console.warn("Typed effect error:", e);
+      }
 
-    // Intersection Observer for scroll animations
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
+      // Intersection Observer for scroll animations
+      const revealElements = document.querySelectorAll(".reveal");
+
+      if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+          }
+        );
+
+        revealElements.forEach((el) => {
+          revealObserver.observe(el);
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add("visible");
           }
         });
-      },
-      {
-        threshold: 0.1,
+      } else {
+        revealElements.forEach((el) => el.classList.add("visible"));
       }
-    );
 
-    const revealElements = document.querySelectorAll(".reveal");
-    revealElements.forEach((el) => observer.observe(el));
-
-    // Active nav link highlighting on scroll
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    window.addEventListener("scroll", () => {
-      let current = "";
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 70) {
-          // 70 is approx header height
-          current = section.getAttribute("id");
-        }
-      });
-
-      navLinks.forEach((link) => {
-        link.classList.remove("active");
-        if (link.getAttribute("href").includes(current)) {
-          link.classList.add("active");
-        }
-      });
-    });
-
-    // Custom style for skill badges
-    const style = document.createElement("style");
-    style.innerHTML = `
-            .skill-badge {
-                background-color: #1e293b; /* slate-800 */
-                color: #94a3b8; /* slate-400 */
-                padding: 6px 12px;
-                border-radius: 9999px;
-                font-size: 0.9rem;
-                font-weight: 500;
-                border: 1px solid #334155; /* slate-700 */
+      // Immediate reveal on internal anchor click (e.g. View My Skills, About Me)
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", function () {
+          const targetHash = this.getAttribute("href");
+          if (targetHash && targetHash !== "#") {
+            const targetEl = document.querySelector(targetHash);
+            if (targetEl) {
+              targetEl.classList.add("visible");
+              targetEl.querySelectorAll(".reveal").forEach((child) => child.classList.add("visible"));
             }
-        `;
-    document.head.appendChild(style);
-
-    // NEW: JS for interactive skill card hover effect
-    document.querySelectorAll(".skill-card").forEach((card) => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty("--x", `${x}px`);
-        card.style.setProperty("--y", `${y}px`);
+          }
+        });
       });
-    });
+
+      // Active nav link highlighting on scroll
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (window.pageYOffset >= sectionTop - 100) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          const href = link.getAttribute("href");
+          if (href) {
+            const cleanHref = href.replace("#", "");
+            if (cleanHref === current || (cleanHref === "skills" && current === "projects") || (cleanHref === "projects" && current === "skills")) {
+              link.classList.add("active");
+            }
+          }
+        });
+      });
+
+      // Custom style for skill badges
+      const style = document.createElement("style");
+      style.innerHTML = `
+        .skill-badge {
+          background-color: #1e293b; /* slate-800 */
+          color: #94a3b8; /* slate-400 */
+          padding: 6px 12px;
+          border-radius: 9999px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          border: 1px solid #334155; /* slate-700 */
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Interactive skill card hover effect
+      document.querySelectorAll(".skill-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty("--x", `${x}px`);
+          card.style.setProperty("--y", `${y}px`);
+        });
+      });
+    })();
   </script>
 </body>
 
