@@ -83,7 +83,7 @@
 
       @media (max-width: 640px) {
         .bubble-arena {
-          height: 720px;
+          height: 640px;
         }
       }
 
@@ -122,8 +122,8 @@
 
       @media (max-width: 640px) {
         .project-bubble {
-          width: 240px;
-          height: 240px;
+          width: 200px;
+          height: 200px;
         }
       }
 
@@ -231,8 +231,22 @@
 
       @media (max-width: 640px) {
         .bubble-title-badge {
-          left: 78%;
-          padding: 0.5rem 0.85rem;
+          left: 50% !important;
+          top: auto !important;
+          bottom: 10px !important;
+          transform: translateX(-50%) !important;
+          padding: 0.35rem 0.75rem;
+          box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.25);
+        }
+        .project-bubble:hover .bubble-title-badge {
+          transform: translateX(-50%) scale(1.05) !important;
+        }
+        .bubble-badge-name {
+          font-size: 0.95rem;
+        }
+        .bubble-badge-tag {
+          font-size: 0.55rem;
+          padding: 0.1rem 0.4rem;
         }
       }
 
@@ -647,386 +661,457 @@
 
     <!-- Interactive Floating Bubble Physics Engine -->
     <script>
-      // --- Scroll Animations ---
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
+      (function () {
+        "use strict";
+
+        // --- Scroll Animations ---
+        const revealElements = document.querySelectorAll(".reveal");
+        let revealObserver = null;
+
+        if ("IntersectionObserver" in window) {
+          revealObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("visible");
+                }
+              });
+            },
+            { threshold: 0.1 }
+          );
+
+          revealElements.forEach((el) => {
+            revealObserver.observe(el);
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+              el.classList.add("visible");
             }
           });
-        },
-        { threshold: 0.1 }
-      );
-      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-
-      // --- View Toggle State ---
-      function setProjectView(mode) {
-        const bubbleContainer = document.getElementById("bubble-container");
-        const gridContainer = document.getElementById("grid-container");
-        const bubbleBtn = document.getElementById("view-bubble-btn");
-        const gridBtn = document.getElementById("view-grid-btn");
-        const scatterBtn = document.getElementById("scatter-btn");
-        const centerBtn = document.getElementById("center-btn");
-
-        if (mode === "bubble") {
-          bubbleContainer.classList.remove("hidden");
-          gridContainer.classList.add("hidden");
-          bubbleBtn.className = "control-pill active text-xs sm:text-sm !py-1.5 !px-3.5";
-          gridBtn.className = "control-pill text-xs sm:text-sm !py-1.5 !px-3.5 !bg-transparent !border-transparent !shadow-none";
-          scatterBtn.style.display = "inline-flex";
-          centerBtn.style.display = "inline-flex";
-          if (typeof initBubblePositions === "function") {
-            initBubblePositions();
-          }
         } else {
-          bubbleContainer.classList.add("hidden");
-          gridContainer.classList.remove("hidden");
-          gridBtn.className = "control-pill active text-xs sm:text-sm !py-1.5 !px-3.5";
-          bubbleBtn.className = "control-pill text-xs sm:text-sm !py-1.5 !px-3.5 !bg-transparent !border-transparent !shadow-none";
-          scatterBtn.style.display = "none";
-          centerBtn.style.display = "none";
-          document.querySelectorAll("#grid-container .reveal").forEach((el) => observer.observe(el));
+          revealElements.forEach((el) => el.classList.add("visible"));
         }
-      }
 
-      // --- Floating Bubble Physics Engine ---
-      const arena = document.getElementById("bubble-container");
-      const bubbleElements = Array.from(document.querySelectorAll(".project-bubble"));
+        // --- View Toggle State ---
+        window.setProjectView = function (mode) {
+          const bubbleContainer = document.getElementById("bubble-container");
+          const gridContainer = document.getElementById("grid-container");
+          const bubbleBtn = document.getElementById("view-bubble-btn");
+          const gridBtn = document.getElementById("view-grid-btn");
+          const scatterBtn = document.getElementById("scatter-btn");
+          const centerBtn = document.getElementById("center-btn");
 
-      const bubbles = [];
-      let arenaWidth = arena.clientWidth;
-      let arenaHeight = arena.clientHeight;
-      let mousePos = { x: -1000, y: -1000, inside: false };
-      let draggedBubble = null;
-      let dragOffset = { x: 0, y: 0 };
-      let dragStartPos = { x: 0, y: 0 };
-      let pointerHistory = [];
+          if (!bubbleContainer || !gridContainer) return;
 
-      // Initialize bubble models
-      bubbleElements.forEach((el, index) => {
-        bubbles.push({
-          el: el,
-          url: el.getAttribute("data-url"),
-          x: 0,
-          y: 0,
-          vx: (Math.random() - 0.5) * 1.5,
-          vy: (Math.random() - 0.5) * 1.5,
-          radius: 160, // approximate half-width
-          mass: 1,
-          isDragging: false,
-          isHovered: false,
-          phase: index * (Math.PI / 2),
-          waveSpeed: 0.0018 + index * 0.0004
-        });
-      });
-
-      function updateArenaDimensions() {
-        arenaWidth = arena.clientWidth;
-        arenaHeight = arena.clientHeight;
-        bubbles.forEach((b) => {
-          const circleEl = b.el.querySelector(".bubble-circle") || b.el;
-          b.radius = (circleEl.offsetWidth / 2) || 150;
-        });
-      }
-
-      function initBubblePositions() {
-        updateArenaDimensions();
-        // Spread bubbles evenly across 4 quadrants
-        const cols = 2;
-        const rows = 2;
-        const cellW = arenaWidth / cols;
-        const cellH = arenaHeight / rows;
-
-        bubbles.forEach((b, i) => {
-          const col = i % cols;
-          const row = Math.floor(i / cols);
-          const targetCenterX = col * cellW + cellW / 2;
-          const targetCenterY = row * cellH + cellH / 2;
-
-          b.x = targetCenterX - b.radius + (Math.random() - 0.5) * 30;
-          b.y = targetCenterY - b.radius + (Math.random() - 0.5) * 30;
-          b.vx = (Math.random() - 0.5) * 1.2;
-          b.vy = (Math.random() - 0.5) * 1.2;
-
-          // Clamp with badge allowance
-          b.x = Math.max(15, Math.min(arenaWidth - b.radius * 2 - 130, b.x));
-          b.y = Math.max(15, Math.min(arenaHeight - b.radius * 2 - 20, b.y));
-
-          b.el.style.left = `${b.x}px`;
-          b.el.style.top = `${b.y}px`;
-        });
-      }
-
-      // Physics Loop
-      let lastTime = performance.now();
-      function animate(now) {
-        const dt = Math.min((now - lastTime) / 1000, 0.04);
-        lastTime = now;
-
-        updateArenaDimensions();
-
-        const time = now;
-
-        for (let i = 0; i < bubbles.length; i++) {
-          const b = bubbles[i];
-
-          if (b.isDragging) {
-            // Dragged by pointer
-            b.x = mousePos.x - dragOffset.x;
-            b.y = mousePos.y - dragOffset.y;
-
-            // Track pointer velocity
-            pointerHistory.push({ x: b.x, y: b.y, t: now });
-            if (pointerHistory.length > 5) pointerHistory.shift();
+          if (mode === "bubble") {
+            bubbleContainer.classList.remove("hidden");
+            gridContainer.classList.add("hidden");
+            if (bubbleBtn) bubbleBtn.className = "control-pill active text-xs sm:text-sm !py-1.5 !px-3.5";
+            if (gridBtn) gridBtn.className = "control-pill text-xs sm:text-sm !py-1.5 !px-3.5 !bg-transparent !border-transparent !shadow-none";
+            if (scatterBtn) scatterBtn.style.display = "inline-flex";
+            if (centerBtn) centerBtn.style.display = "inline-flex";
+            initBubblePositions();
           } else {
-            // Natural gentle floating wave force
-            const floatForceX = Math.cos(time * b.waveSpeed + b.phase) * 12;
-            const floatForceY = Math.sin(time * b.waveSpeed * 1.2 + b.phase) * 16;
+            bubbleContainer.classList.add("hidden");
+            gridContainer.classList.remove("hidden");
+            if (gridBtn) gridBtn.className = "control-pill active text-xs sm:text-sm !py-1.5 !px-3.5";
+            if (bubbleBtn) bubbleBtn.className = "control-pill text-xs sm:text-sm !py-1.5 !px-3.5 !bg-transparent !border-transparent !shadow-none";
+            if (scatterBtn) scatterBtn.style.display = "none";
+            if (centerBtn) centerBtn.style.display = "none";
 
-            // Apply friction / air drag
-            const damping = b.isHovered ? 0.92 : 0.985;
-            b.vx *= damping;
-            b.vy *= damping;
+            document.querySelectorAll("#grid-container .reveal").forEach((el) => {
+              if (revealObserver) revealObserver.observe(el);
+              el.classList.add("visible");
+            });
+          }
+        };
 
-            b.x += (b.vx * 60 + floatForceX * 0.4) * dt;
-            b.y += (b.vy * 60 + floatForceY * 0.4) * dt;
+        // --- Floating Bubble Physics Engine ---
+        const arena = document.getElementById("bubble-container");
+        if (!arena) return;
 
-            // Mouse proximity repulsion (gentle dodge when moving cursor near)
-            if (mousePos.inside && !draggedBubble) {
-              const bCenterX = b.x + b.radius;
-              const bCenterY = b.y + b.radius;
-              const dx = bCenterX - mousePos.x;
-              const dy = bCenterY - mousePos.y;
+        const bubbleElements = Array.from(document.querySelectorAll(".project-bubble"));
+        const bubbles = [];
+        let arenaWidth = arena.clientWidth || 360;
+        let arenaHeight = arena.clientHeight || 640;
+        let mousePos = { x: -1000, y: -1000, inside: false };
+        let draggedBubble = null;
+        let dragOffset = { x: 0, y: 0 };
+        let dragStartPos = { x: 0, y: 0 };
+        let dragStartTime = 0;
+        let pointerHistory = [];
+
+        // Initialize bubble models
+        bubbleElements.forEach((el, index) => {
+          bubbles.push({
+            el: el,
+            url: el.getAttribute("data-url"),
+            x: 0,
+            y: 0,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: (Math.random() - 0.5) * 1.5,
+            radius: 120,
+            mass: 1,
+            isDragging: false,
+            isHovered: false,
+            phase: index * (Math.PI / 2),
+            waveSpeed: 0.0018 + index * 0.0004,
+          });
+        });
+
+        function updateArenaDimensions() {
+          arenaWidth = arena.clientWidth || 360;
+          arenaHeight = arena.clientHeight || 640;
+          bubbles.forEach((b) => {
+            const circleEl = b.el.querySelector(".bubble-circle") || b.el;
+            b.radius = (circleEl.offsetWidth / 2) || (arenaWidth < 640 ? 100 : 150);
+          });
+        }
+
+        function initBubblePositions() {
+          updateArenaDimensions();
+          const cols = 2;
+          const rows = 2;
+          const cellW = arenaWidth / cols;
+          const cellH = arenaHeight / rows;
+          const isMobile = arenaWidth < 640;
+          const extraRight = isMobile ? 10 : 130;
+
+          bubbles.forEach((b, i) => {
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            const targetCenterX = col * cellW + cellW / 2;
+            const targetCenterY = row * cellH + cellH / 2;
+
+            b.x = targetCenterX - b.radius + (Math.random() - 0.5) * 20;
+            b.y = targetCenterY - b.radius + (Math.random() - 0.5) * 20;
+            b.vx = (Math.random() - 0.5) * 1.0;
+            b.vy = (Math.random() - 0.5) * 1.0;
+
+            const minX = 10;
+            const maxX = Math.max(minX + 5, arenaWidth - b.radius * 2 - extraRight);
+            const minY = 10;
+            const maxY = Math.max(minY + 5, arenaHeight - b.radius * 2 - 20);
+
+            b.x = Math.max(minX, Math.min(maxX, b.x));
+            b.y = Math.max(minY, Math.min(maxY, b.y));
+
+            b.el.style.left = `${b.x}px`;
+            b.el.style.top = `${b.y}px`;
+          });
+        }
+
+        // Physics Loop
+        let lastTime = performance.now();
+        function animate(now) {
+          const dt = Math.min((now - lastTime) / 1000, 0.04);
+          lastTime = now;
+
+          const isMobile = arenaWidth < 640;
+          const extraRight = isMobile ? 10 : 130;
+
+          for (let i = 0; i < bubbles.length; i++) {
+            const b = bubbles[i];
+
+            if (b.isDragging) {
+              b.x = mousePos.x - dragOffset.x;
+              b.y = mousePos.y - dragOffset.y;
+
+              pointerHistory.push({ x: b.x, y: b.y, t: now });
+              if (pointerHistory.length > 5) pointerHistory.shift();
+            } else {
+              const floatForceX = Math.cos(now * b.waveSpeed + b.phase) * 12;
+              const floatForceY = Math.sin(now * b.waveSpeed * 1.2 + b.phase) * 16;
+
+              const damping = b.isHovered ? 0.92 : 0.985;
+              b.vx *= damping;
+              b.vy *= damping;
+
+              b.x += (b.vx * 60 + floatForceX * 0.4) * dt;
+              b.y += (b.vy * 60 + floatForceY * 0.4) * dt;
+
+              // Mouse proximity repulsion
+              if (mousePos.inside && !draggedBubble) {
+                const bCenterX = b.x + b.radius;
+                const bCenterY = b.y + b.radius;
+                const dx = bCenterX - mousePos.x;
+                const dy = bCenterY - mousePos.y;
+                const dist = Math.hypot(dx, dy);
+                const repelRadius = b.radius + 70;
+
+                if (dist < repelRadius && dist > 1) {
+                  const force = (repelRadius - dist) / repelRadius;
+                  b.vx += (dx / dist) * force * 1.8;
+                  b.vy += (dy / dist) * force * 1.8;
+                }
+              }
+
+              // Arena Wall Collisions
+              const minX = 10;
+              const maxX = Math.max(minX + 5, arenaWidth - b.radius * 2 - extraRight);
+              const minY = 10;
+              const maxY = Math.max(minY + 5, arenaHeight - b.radius * 2 - 20);
+
+              if (b.x < minX) {
+                b.x = minX;
+                b.vx = Math.abs(b.vx) * 0.85 + 0.3;
+              } else if (b.x > maxX) {
+                b.x = maxX;
+                b.vx = -Math.abs(b.vx) * 0.85 - 0.3;
+              }
+
+              if (b.y < minY) {
+                b.y = minY;
+                b.vy = Math.abs(b.vy) * 0.85 + 0.3;
+              } else if (b.y > maxY) {
+                b.y = maxY;
+                b.vy = -Math.abs(b.vy) * 0.85 - 0.3;
+              }
+            }
+
+            b.el.style.left = `${b.x}px`;
+            b.el.style.top = `${b.y}px`;
+          }
+
+          // Soft Inter-bubble Collision Separation
+          for (let i = 0; i < bubbles.length; i++) {
+            for (let j = i + 1; j < bubbles.length; j++) {
+              const b1 = bubbles[i];
+              const b2 = bubbles[j];
+
+              const c1x = b1.x + b1.radius;
+              const c1y = b1.y + b1.radius;
+              const c2x = b2.x + b2.radius;
+              const c2y = b2.y + b2.radius;
+
+              const dx = c2x - c1x;
+              const dy = c2y - c1y;
               const dist = Math.hypot(dx, dy);
-              const repelRadius = b.radius + 70;
+              const minDist = b1.radius + b2.radius + (isMobile ? 8 : 15);
 
-              if (dist < repelRadius && dist > 1) {
-                const force = (repelRadius - dist) / repelRadius;
-                b.vx += (dx / dist) * force * 1.8;
-                b.vy += (dy / dist) * force * 1.8;
-              }
-            }
+              if (dist < minDist && dist > 0) {
+                const overlap = minDist - dist;
+                const nx = dx / dist;
+                const ny = dy / dist;
 
-            // Wall Collisions with restitution
-            const minX = 15;
-            const maxX = arenaWidth - b.radius * 2 - 130;
-            const minY = 15;
-            const maxY = arenaHeight - b.radius * 2 - 20;
+                if (!b1.isDragging && !b2.isDragging) {
+                  b1.x -= nx * overlap * 0.5;
+                  b1.y -= ny * overlap * 0.5;
+                  b2.x += nx * overlap * 0.5;
+                  b2.y += ny * overlap * 0.5;
 
-            if (b.x < minX) {
-              b.x = minX;
-              b.vx = Math.abs(b.vx) * 0.85 + 0.3;
-            } else if (b.x > maxX) {
-              b.x = maxX;
-              b.vx = -Math.abs(b.vx) * 0.85 - 0.3;
-            }
+                  const kx = b1.vx - b2.vx;
+                  const ky = b1.vy - b2.vy;
+                  const p = (2 * (nx * kx + ny * ky)) / (b1.mass + b2.mass);
 
-            if (b.y < minY) {
-              b.y = minY;
-              b.vy = Math.abs(b.vy) * 0.85 + 0.3;
-            } else if (b.y > maxY) {
-              b.y = maxY;
-              b.vy = -Math.abs(b.vy) * 0.85 - 0.3;
-            }
-          }
-
-          // Render
-          b.el.style.left = `${b.x}px`;
-          b.el.style.top = `${b.y}px`;
-        }
-
-        // Soft Inter-bubble Collision Separation
-        for (let i = 0; i < bubbles.length; i++) {
-          for (let j = i + 1; j < bubbles.length; j++) {
-            const b1 = bubbles[i];
-            const b2 = bubbles[j];
-
-            const c1x = b1.x + b1.radius;
-            const c1y = b1.y + b1.radius;
-            const c2x = b2.x + b2.radius;
-            const c2y = b2.y + b2.radius;
-
-            const dx = c2x - c1x;
-            const dy = c2y - c1y;
-            const dist = Math.hypot(dx, dy);
-            const minDist = b1.radius + b2.radius + 15;
-
-            if (dist < minDist && dist > 0) {
-              const overlap = minDist - dist;
-              const nx = dx / dist;
-              const ny = dy / dist;
-
-              // Separate
-              if (!b1.isDragging && !b2.isDragging) {
-                b1.x -= nx * overlap * 0.5;
-                b1.y -= ny * overlap * 0.5;
-                b2.x += nx * overlap * 0.5;
-                b2.y += ny * overlap * 0.5;
-
-                // Impulse exchange
-                const kx = b1.vx - b2.vx;
-                const ky = b1.vy - b2.vy;
-                const p = 2 * (nx * kx + ny * ky) / (b1.mass + b2.mass);
-
-                b1.vx -= p * b2.mass * nx * 0.5;
-                b1.vy -= p * b2.mass * ny * 0.5;
-                b2.vx += p * b1.mass * nx * 0.5;
-                b2.vy += p * b1.mass * ny * 0.5;
-              } else if (b1.isDragging && !b2.isDragging) {
-                b2.x += nx * overlap;
-                b2.y += ny * overlap;
-                b2.vx += nx * 1.5;
-                b2.vy += ny * 1.5;
-              } else if (!b1.isDragging && b2.isDragging) {
-                b1.x -= nx * overlap;
-                b1.y -= ny * overlap;
-                b1.vx -= nx * 1.5;
-                b1.vy -= ny * 1.5;
+                  b1.vx -= p * b2.mass * nx * 0.5;
+                  b1.vy -= p * b2.mass * ny * 0.5;
+                  b2.vx += p * b1.mass * nx * 0.5;
+                  b2.vy += p * b1.mass * ny * 0.5;
+                } else if (b1.isDragging && !b2.isDragging) {
+                  b2.x += nx * overlap;
+                  b2.y += ny * overlap;
+                  b2.vx += nx * 1.5;
+                  b2.vy += ny * 1.5;
+                } else if (!b1.isDragging && b2.isDragging) {
+                  b1.x -= nx * overlap;
+                  b1.y -= ny * overlap;
+                  b1.vx -= nx * 1.5;
+                  b1.vy -= ny * 1.5;
+                }
               }
             }
           }
+
+          requestAnimationFrame(animate);
         }
 
-        requestAnimationFrame(animate);
-      }
+        // Scatter Interaction
+        window.scatterBubbles = function () {
+          const centerX = arenaWidth / 2;
+          const centerY = arenaHeight / 2;
 
-      // Scatter Interaction
-      window.scatterBubbles = function () {
-        const centerX = arenaWidth / 2;
-        const centerY = arenaHeight / 2;
+          bubbles.forEach((b) => {
+            const bCenterX = b.x + b.radius;
+            const bCenterY = b.y + b.radius;
+            const dx = bCenterX - centerX || (Math.random() - 0.5);
+            const dy = bCenterY - centerY || (Math.random() - 0.5);
+            const dist = Math.hypot(dx, dy) || 1;
 
-        bubbles.forEach((b) => {
-          const bCenterX = b.x + b.radius;
-          const bCenterY = b.y + b.radius;
-          const dx = bCenterX - centerX || (Math.random() - 0.5);
-          const dy = bCenterY - centerY || (Math.random() - 0.5);
-          const dist = Math.hypot(dx, dy) || 1;
-
-          const speed = 7 + Math.random() * 5;
-          b.vx = (dx / dist) * speed;
-          b.vy = (dy / dist) * speed;
-        });
-      };
-
-      // Center Gravitate Interaction
-      window.gatherBubbles = function () {
-        const centerX = arenaWidth / 2;
-        const centerY = arenaHeight / 2;
-
-        bubbles.forEach((b) => {
-          const bCenterX = b.x + b.radius;
-          const bCenterY = b.y + b.radius;
-          const dx = centerX - bCenterX;
-          const dy = centerY - bCenterY;
-          const dist = Math.hypot(dx, dy) || 1;
-
-          b.vx = (dx / dist) * 4.5;
-          b.vy = (dy / dist) * 4.5;
-        });
-      };
-
-      // Pointer Event Handlers (Mouse & Touch Drag / Toss)
-      function getArenaCoords(e) {
-        const rect = arena.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        return {
-          x: clientX - rect.left,
-          y: clientY - rect.top
+            const speed = 7 + Math.random() * 5;
+            b.vx = (dx / dist) * speed;
+            b.vy = (dy / dist) * speed;
+          });
         };
-      }
 
-      arena.addEventListener("mousemove", (e) => {
-        const coords = getArenaCoords(e);
-        mousePos.x = coords.x;
-        mousePos.y = coords.y;
-        mousePos.inside = true;
-      });
+        // Center Gravitate Interaction
+        window.gatherBubbles = function () {
+          const centerX = arenaWidth / 2;
+          const centerY = arenaHeight / 2;
 
-      arena.addEventListener("mouseleave", () => {
-        mousePos.inside = false;
-      });
+          bubbles.forEach((b) => {
+            const bCenterX = b.x + b.radius;
+            const bCenterY = b.y + b.radius;
+            const dx = centerX - bCenterX;
+            const dy = centerY - bCenterY;
+            const dist = Math.hypot(dx, dy) || 1;
 
-      bubbles.forEach((b) => {
-        // Hover
-        b.el.addEventListener("mouseenter", () => { b.isHovered = true; });
-        b.el.addEventListener("mouseleave", () => { b.isHovered = false; });
+            b.vx = (dx / dist) * 4.5;
+            b.vy = (dy / dist) * 4.5;
+          });
+        };
 
-        // Pointer Down
-        const handleStart = (e) => {
+        // Pointer Event Handlers
+        function getArenaCoords(e) {
+          const rect = arena.getBoundingClientRect();
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          return {
+            x: clientX - rect.left,
+            y: clientY - rect.top,
+          };
+        }
+
+        arena.addEventListener("mousemove", (e) => {
           const coords = getArenaCoords(e);
-          draggedBubble = b;
-          b.isDragging = true;
-          b.el.classList.add("is-dragging");
+          mousePos.x = coords.x;
+          mousePos.y = coords.y;
+          mousePos.inside = true;
+        });
 
-          dragOffset.x = coords.x - b.x;
-          dragOffset.y = coords.y - b.y;
-          dragStartPos = { x: coords.x, y: coords.y };
-          pointerHistory = [{ x: b.x, y: b.y, t: performance.now() }];
+        arena.addEventListener("mouseleave", () => {
+          mousePos.inside = false;
+        });
 
-          b.vx = 0;
-          b.vy = 0;
+        bubbles.forEach((b) => {
+          b.el.addEventListener("mouseenter", () => { b.isHovered = true; });
+          b.el.addEventListener("mouseleave", () => { b.isHovered = false; });
+
+          const handleStart = (e) => {
+            const coords = getArenaCoords(e);
+            draggedBubble = b;
+            b.isDragging = true;
+            b.el.classList.add("is-dragging");
+
+            dragOffset.x = coords.x - b.x;
+            dragOffset.y = coords.y - b.y;
+            dragStartPos = { x: coords.x, y: coords.y };
+            dragStartTime = performance.now();
+            pointerHistory = [{ x: b.x, y: b.y, t: performance.now() }];
+
+            b.vx = 0;
+            b.vy = 0;
+          };
+
+          b.el.addEventListener("mousedown", handleStart);
+          b.el.addEventListener("touchstart", handleStart, { passive: true });
+
+          // Keyboard navigation support
+          b.el.setAttribute("role", "button");
+          b.el.setAttribute("tabindex", "0");
+          b.el.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              if (b.url) window.location.href = b.url;
+            }
+          });
+        });
+
+        const handlePointerMove = (e) => {
+          if (!draggedBubble) return;
+          const coords = getArenaCoords(e);
+          mousePos.x = coords.x;
+          mousePos.y = coords.y;
         };
 
-        b.el.addEventListener("mousedown", handleStart);
-        b.el.addEventListener("touchstart", handleStart, { passive: true });
-      });
+        const handlePointerEnd = (e) => {
+          if (!draggedBubble) return;
+          const b = draggedBubble;
+          b.isDragging = false;
+          b.el.classList.remove("is-dragging");
 
-      const handlePointerMove = (e) => {
-        if (!draggedBubble) return;
-        const coords = getArenaCoords(e);
-        mousePos.x = coords.x;
-        mousePos.y = coords.y;
-      };
+          if (pointerHistory.length >= 2) {
+            const first = pointerHistory[0];
+            const last = pointerHistory[pointerHistory.length - 1];
+            const dt = (last.t - first.t) / 1000;
+            if (dt > 0.01) {
+              b.vx = Math.max(-12, Math.min(12, ((last.x - first.x) / dt) * 0.04));
+              b.vy = Math.max(-12, Math.min(12, ((last.y - first.y) / dt) * 0.04));
+            }
+          }
 
-      const handlePointerEnd = (e) => {
-        if (!draggedBubble) return;
-        const b = draggedBubble;
-        b.isDragging = false;
-        b.el.classList.remove("is-dragging");
+          const endCoords = e.changedTouches
+            ? getArenaCoords({
+                touches: e.changedTouches,
+                clientX: e.changedTouches[0].clientX,
+                clientY: e.changedTouches[0].clientY,
+              })
+            : getArenaCoords(e);
+          const dragDist = Math.hypot(endCoords.x - dragStartPos.x, endCoords.y - dragStartPos.y);
+          const elapsed = performance.now() - dragStartTime;
 
-        // Calculate toss momentum from pointer history
-        if (pointerHistory.length >= 2) {
-          const first = pointerHistory[0];
-          const last = pointerHistory[pointerHistory.length - 1];
-          const dt = (last.t - first.t) / 1000;
-          if (dt > 0.01) {
-            b.vx = Math.max(-12, Math.min(12, ((last.x - first.x) / dt) * 0.04));
-            b.vy = Math.max(-12, Math.min(12, ((last.y - first.y) / dt) * 0.04));
+          // Reliable tap/click detection
+          if (dragDist < 20 || (elapsed < 300 && dragDist < 40)) {
+            if (b.url) {
+              window.location.href = b.url;
+            }
+          }
+
+          draggedBubble = null;
+        };
+
+        window.addEventListener("mousemove", handlePointerMove);
+        window.addEventListener("touchmove", handlePointerMove, { passive: true });
+        window.addEventListener("mouseup", handlePointerEnd);
+        window.addEventListener("touchend", handlePointerEnd);
+
+        window.addEventListener("resize", () => {
+          updateArenaDimensions();
+        });
+
+        // Smooth scrolling for internal anchor links (#work, #about)
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+          link.addEventListener("click", function (e) {
+            const targetHash = this.getAttribute("href");
+            if (targetHash && targetHash !== "#") {
+              const targetEl = document.querySelector(targetHash);
+              if (targetEl) {
+                e.preventDefault();
+                targetEl.classList.add("visible");
+                const headerOffset = 80;
+                const elementPosition = targetEl.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth",
+                });
+
+                if (window.history && window.history.pushState) {
+                  window.history.pushState(null, "", targetHash);
+                } else {
+                  location.hash = targetHash;
+                }
+              }
+            }
+          });
+        });
+
+        // Start animation loop exactly once
+        let animationStarted = false;
+        function startEngine() {
+          if (!animationStarted) {
+            animationStarted = true;
+            initBubblePositions();
+            requestAnimationFrame(animate);
           }
         }
 
-        // Check if this was a click vs a drag
-        const endCoords = e.changedTouches ? getArenaCoords({ touches: e.changedTouches, clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY }) : getArenaCoords(e);
-        const dragDist = Math.hypot(endCoords.x - dragStartPos.x, endCoords.y - dragStartPos.y);
-
-        if (dragDist < 8) {
-          // Open Case Study URL
-          window.location.href = b.url;
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", startEngine);
+        } else {
+          startEngine();
         }
-
-        draggedBubble = null;
-      };
-
-      window.addEventListener("mousemove", handlePointerMove);
-      window.addEventListener("touchmove", handlePointerMove, { passive: true });
-      window.addEventListener("mouseup", handlePointerEnd);
-      window.addEventListener("touchend", handlePointerEnd);
-
-      window.addEventListener("resize", () => {
-        updateArenaDimensions();
-      });
-
-      // Start on page load
-      document.addEventListener("DOMContentLoaded", () => {
-        initBubblePositions();
-        requestAnimationFrame(animate);
-      });
-      if (document.readyState === "complete" || document.readyState === "interactive") {
-        initBubblePositions();
-        requestAnimationFrame(animate);
-      }
+      })();
     </script>
   <!-- VoiceOps AI Bot Embed for https://www.chichima.org/ -->
   <script src="https://voiceops-ai-680018674242.us-east1.run.app/widget.js" data-client-id="client-chichima" data-position="bottom-right" defer></script>
