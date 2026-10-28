@@ -26,12 +26,11 @@
         font-family: "Lora", serif;
       }
 
-      /* --- Scroll Animations --- */
+      /* --- Scroll Animations - visible by default to prevent blank sections --- */
       .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
-          transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
       }
 
       .reveal.visible {
@@ -204,42 +203,44 @@
         pointer-events: none;
       }
 
-      /* Title Badge Floating Beside Bubble */
+      /* Title Badge Floating on Bubble */
       .bubble-title-badge {
         position: absolute;
-        left: 84%;
-        top: 50%;
-        transform: translateY(-50%);
+        left: 50%;
+        bottom: 14px;
+        transform: translateX(-50%);
         background: rgba(255, 255, 255, 0.94);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border: 1.5px solid rgba(255, 255, 255, 0.95);
         box-shadow: 
-          0 16px 36px -8px rgba(15, 23, 42, 0.14),
+          0 16px 36px -8px rgba(15, 23, 42, 0.16),
           0 6px 14px -4px rgba(15, 23, 42, 0.08),
           inset 0 1px 2px rgba(255, 255, 255, 1);
-        padding: 0.65rem 1.1rem;
+        padding: 0.5rem 1rem;
         border-radius: 1.25rem;
         white-space: nowrap;
         pointer-events: none;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
         z-index: 25;
       }
 
+      .project-bubble:hover .bubble-title-badge {
+        transform: translateX(-50%) scale(1.06);
+        box-shadow: 
+          0 20px 42px -8px rgba(15, 23, 42, 0.22),
+          0 0 0 2px var(--bubble-glow, rgba(99, 102, 241, 0.35));
+      }
+
       @media (max-width: 640px) {
         .bubble-title-badge {
-          left: 50% !important;
-          top: auto !important;
-          bottom: 10px !important;
-          transform: translateX(-50%) !important;
+          bottom: 10px;
           padding: 0.35rem 0.75rem;
           box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.25);
-        }
-        .project-bubble:hover .bubble-title-badge {
-          transform: translateX(-50%) scale(1.05) !important;
         }
         .bubble-badge-name {
           font-size: 0.95rem;
@@ -248,13 +249,6 @@
           font-size: 0.55rem;
           padding: 0.1rem 0.4rem;
         }
-      }
-
-      .project-bubble:hover .bubble-title-badge {
-        transform: translateY(-50%) translateX(6px) scale(1.05);
-        box-shadow: 
-          0 20px 42px -8px rgba(15, 23, 42, 0.2),
-          0 0 0 2px var(--bubble-glow, rgba(99, 102, 241, 0.35));
       }
 
       .bubble-badge-tag {
@@ -356,7 +350,21 @@
             <a href="#about" class="link-underline">About</a>
             <a href="mailto:chichima.designs@gmail.com" class="link-underline">Contact</a>
           </nav>
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-btn" type="button" class="text-gray-700 hover:text-black p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none" aria-label="Toggle navigation menu">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
+      <!-- Mobile dropdown menu -->
+      <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-md">
+        <a href="index.html" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Home</a>
+        <a href="#work" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Projects</a>
+        <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">About</a>
+        <a href="mailto:chichima.designs@gmail.com" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Contact</a>
       </div>
     </header>
 
@@ -668,6 +676,16 @@
         const revealElements = document.querySelectorAll(".reveal");
         let revealObserver = null;
 
+        function revealVisible() {
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          revealElements.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < viewportHeight + 50 && rect.bottom > -50) {
+              el.classList.add("visible");
+            }
+          });
+        }
+
         if ("IntersectionObserver" in window) {
           revealObserver = new IntersectionObserver(
             (entries) => {
@@ -677,19 +695,21 @@
                 }
               });
             },
-            { threshold: 0.1 }
+            { threshold: 0.05, rootMargin: "0px 0px 50px 0px" }
           );
 
           revealElements.forEach((el) => {
             revealObserver.observe(el);
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-              el.classList.add("visible");
-            }
           });
-        } else {
-          revealElements.forEach((el) => el.classList.add("visible"));
         }
+
+        revealVisible();
+        window.addEventListener("scroll", revealVisible, { passive: true });
+        window.addEventListener("resize", revealVisible, { passive: true });
+        setTimeout(revealVisible, 300);
+        setTimeout(() => {
+          revealElements.forEach((el) => el.classList.add("visible"));
+        }, 700);
 
         // --- View Toggle State ---
         window.setProjectView = function (mode) {
@@ -763,37 +783,37 @@
           arenaHeight = arena.clientHeight || 640;
           bubbles.forEach((b) => {
             const circleEl = b.el.querySelector(".bubble-circle") || b.el;
-            b.radius = (circleEl.offsetWidth / 2) || (arenaWidth < 640 ? 100 : 150);
+            b.radius = (circleEl.offsetWidth / 2) || (arenaWidth < 640 ? 100 : 140);
           });
         }
 
         function initBubblePositions() {
           updateArenaDimensions();
-          const cols = 2;
-          const rows = 2;
-          const cellW = arenaWidth / cols;
-          const cellH = arenaHeight / rows;
           const isMobile = arenaWidth < 640;
-          const extraRight = isMobile ? 10 : 130;
+          const bubbleDiameter = (bubbles[0] ? bubbles[0].radius * 2 : (isMobile ? 200 : 280));
+          const padX = isMobile ? 12 : 36;
+          const padY = isMobile ? 12 : 36;
+          const usableW = Math.max(bubbleDiameter, arenaWidth - padX * 2);
+          const usableH = Math.max(bubbleDiameter, arenaHeight - padY * 2);
+
+          const positions = [
+            { x: padX + usableW * 0.24 - bubbleDiameter / 2, y: padY + usableH * 0.24 - bubbleDiameter / 2, vx: 0.6, vy: 0.4 },
+            { x: padX + usableW * 0.76 - bubbleDiameter / 2, y: padY + usableH * 0.24 - bubbleDiameter / 2, vx: -0.6, vy: 0.5 },
+            { x: padX + usableW * 0.24 - bubbleDiameter / 2, y: padY + usableH * 0.76 - bubbleDiameter / 2, vx: 0.5, vy: -0.5 },
+            { x: padX + usableW * 0.76 - bubbleDiameter / 2, y: padY + usableH * 0.76 - bubbleDiameter / 2, vx: -0.5, vy: -0.6 },
+          ];
 
           bubbles.forEach((b, i) => {
-            const col = i % cols;
-            const row = Math.floor(i / cols);
-            const targetCenterX = col * cellW + cellW / 2;
-            const targetCenterY = row * cellH + cellH / 2;
-
-            b.x = targetCenterX - b.radius + (Math.random() - 0.5) * 20;
-            b.y = targetCenterY - b.radius + (Math.random() - 0.5) * 20;
-            b.vx = (Math.random() - 0.5) * 1.0;
-            b.vy = (Math.random() - 0.5) * 1.0;
-
+            const pos = positions[i] || { x: 30, y: 30, vx: 0.5, vy: 0.5 };
             const minX = 10;
-            const maxX = Math.max(minX + 5, arenaWidth - b.radius * 2 - extraRight);
+            const maxX = Math.max(minX + 5, arenaWidth - b.radius * 2 - 10);
             const minY = 10;
-            const maxY = Math.max(minY + 5, arenaHeight - b.radius * 2 - 20);
+            const maxY = Math.max(minY + 5, arenaHeight - b.radius * 2 - 10);
 
-            b.x = Math.max(minX, Math.min(maxX, b.x));
-            b.y = Math.max(minY, Math.min(maxY, b.y));
+            b.x = Math.max(minX, Math.min(maxX, pos.x));
+            b.y = Math.max(minY, Math.min(maxY, pos.y));
+            b.vx = pos.vx;
+            b.vy = pos.vy;
 
             b.el.style.left = `${b.x}px`;
             b.el.style.top = `${b.y}px`;
@@ -807,7 +827,6 @@
           lastTime = now;
 
           const isMobile = arenaWidth < 640;
-          const extraRight = isMobile ? 10 : 130;
 
           for (let i = 0; i < bubbles.length; i++) {
             const b = bubbles[i];
@@ -847,9 +866,9 @@
 
               // Arena Wall Collisions
               const minX = 10;
-              const maxX = Math.max(minX + 5, arenaWidth - b.radius * 2 - extraRight);
+              const maxX = Math.max(minX + 5, arenaWidth - b.radius * 2 - 10);
               const minY = 10;
-              const maxY = Math.max(minY + 5, arenaHeight - b.radius * 2 - 20);
+              const maxY = Math.max(minY + 5, arenaHeight - b.radius * 2 - 15);
 
               if (b.x < minX) {
                 b.x = minX;
@@ -1068,6 +1087,15 @@
           updateArenaDimensions();
         });
 
+        // Mobile navigation toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        if (mobileMenuBtn && mobileMenu) {
+          mobileMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+          });
+        }
+
         // Smooth scrolling for internal anchor links (#work, #about)
         document.querySelectorAll('a[href^="#"]').forEach((link) => {
           link.addEventListener("click", function (e) {
@@ -1076,13 +1104,25 @@
               const targetEl = document.querySelector(targetHash);
               if (targetEl) {
                 e.preventDefault();
+
+                // Close mobile menu if open
+                if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+                  mobileMenu.classList.add("hidden");
+                }
+
                 targetEl.classList.add("visible");
-                const headerOffset = 80;
-                const elementPosition = targetEl.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                targetEl.querySelectorAll(".reveal").forEach((child) => child.classList.add("visible"));
+
+                const heading = targetEl.querySelector("h2, h3") || targetEl;
+                heading.classList.add("visible");
+
+                const header = document.querySelector("header");
+                const headerHeight = header ? header.offsetHeight : 70;
+                const headingRect = heading.getBoundingClientRect();
+                const offsetPosition = headingRect.top + window.pageYOffset - headerHeight - 20;
 
                 window.scrollTo({
-                  top: offsetPosition,
+                  top: Math.max(0, offsetPosition),
                   behavior: "smooth",
                 });
 

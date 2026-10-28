@@ -38,11 +38,11 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* Fade-in animation */
+        /* Fade-in animation - visible by default */
         .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
         .fade-in.visible {
@@ -763,13 +763,27 @@
             }, observerOptions);
 
             // Observe all elements with fade-in class
-            document.querySelectorAll('.fade-in').forEach((el) => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            function revealFadeVisible() {
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                fadeElements.forEach((el) => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < vh + 50 && rect.bottom > -50) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+
+            fadeElements.forEach((el) => {
                 revealObserver.observe(el);
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    el.classList.add('visible');
-                }
             });
+
+            revealFadeVisible();
+            window.addEventListener('scroll', revealFadeVisible, { passive: true });
+            setTimeout(revealFadeVisible, 300);
+            setTimeout(() => {
+                fadeElements.forEach((el) => el.classList.add('visible'));
+            }, 800);
 
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {

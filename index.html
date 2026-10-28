@@ -82,11 +82,11 @@
       opacity: 1;
     }
 
-    /* Scroll-triggered animations */
+    /* Scroll-triggered animations - visible by default to prevent blank screens */
     .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     }
 
     .reveal.visible {
@@ -117,14 +117,24 @@
           <a href="#contact"
             class="nav-link text-slate-300 hover:text-sky-400 transition-colors duration-300">Contact</a>
         </nav>
-        <div class="md:hidden">
-          <!-- Mobile menu button can be added here -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-btn" type="button" class="text-slate-300 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors focus:outline-none" aria-label="Toggle navigation menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
+    <!-- Mobile dropdown menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+      <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">About</a>
+      <a href="#skills" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Skills</a>
+      <a href="#contact" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Contact</a>
+    </div>
   </header>
 
-  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
     <!-- Hero Section -->
     <section id="home" class="text-center pt-8 pb-16 flex flex-col justify-center items-center reveal">
       <span class="text-sky-400 text-lg font-medium">Hello, I'm Chimezie Chima.</span>
@@ -164,7 +174,7 @@
     </section>
 
     <!-- About & Skills Section -->
-    <section id="about" class="py-24 scroll-mt-20 reveal">
+    <section id="about" class="pt-16 pb-16 md:pt-20 md:pb-20 scroll-mt-20 reveal">
       <h2 class="text-4xl font-bold text-center text-white mb-12">
         About Me
       </h2>
@@ -210,7 +220,7 @@
     </section>
 
     <!-- NEW Skills Showcase Section -->
-    <section id="skills" class="py-24 scroll-mt-20">
+    <section id="skills" class="pt-12 pb-20 md:pt-16 md:pb-24 scroll-mt-20">
       <a id="projects"></a>
       <h2 class="text-4xl font-bold text-center text-white mb-16 reveal">
         My Skills
@@ -324,9 +334,6 @@
       </div>
     </div>
   </footer>
-  <!-- VoiceOps AI Bot Embed for https://www.chichima.org/ -->
-  <script src="https://voiceops-ai-680018674242.us-east1.run.app/widget.js" data-client-id="client-chichima"
-    data-position="bottom-right" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script>
     (function () {
@@ -345,8 +352,27 @@
         console.warn("Typed effect error:", e);
       }
 
+      // Mobile navigation toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+      }
+
       // Intersection Observer for scroll animations
       const revealElements = document.querySelectorAll(".reveal");
+
+      function revealVisible() {
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        revealElements.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < viewportHeight + 50 && rect.bottom > -50) {
+            el.classList.add("visible");
+          }
+        });
+      }
 
       if ("IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver(
@@ -358,20 +384,24 @@
             });
           },
           {
-            threshold: 0.1,
+            threshold: 0.05,
+            rootMargin: "0px 0px 50px 0px"
           }
         );
 
         revealElements.forEach((el) => {
           revealObserver.observe(el);
-          const rect = el.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) {
-            el.classList.add("visible");
-          }
         });
-      } else {
-        revealElements.forEach((el) => el.classList.add("visible"));
       }
+
+      // Run immediate check and safety timeouts
+      revealVisible();
+      window.addEventListener("scroll", revealVisible, { passive: true });
+      window.addEventListener("resize", revealVisible, { passive: true });
+      setTimeout(revealVisible, 300);
+      setTimeout(() => {
+        revealElements.forEach((el) => el.classList.add("visible"));
+      }, 700);
 
       // Smooth scrolling and immediate reveal on internal anchor click (e.g. View My Skills, About Me)
       document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -381,15 +411,27 @@
             const targetEl = document.querySelector(targetHash);
             if (targetEl) {
               e.preventDefault();
+
+              // Close mobile menu if open
+              if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+                mobileMenu.classList.add("hidden");
+              }
+
+              // Immediately ensure target and all nested reveals are visible
               targetEl.classList.add("visible");
               targetEl.querySelectorAll(".reveal").forEach((child) => child.classList.add("visible"));
 
-              const headerOffset = 70;
-              const elementPosition = targetEl.getBoundingClientRect().top;
-              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+              // Calculate clean scroll position based on heading
+              const heading = targetEl.querySelector("h2") || targetEl;
+              heading.classList.add("visible");
+
+              const header = document.querySelector("header");
+              const headerHeight = header ? header.offsetHeight : 64;
+              const headingRect = heading.getBoundingClientRect();
+              const offsetPosition = headingRect.top + window.pageYOffset - headerHeight - 20;
 
               window.scrollTo({
-                top: offsetPosition,
+                top: Math.max(0, offsetPosition),
                 behavior: "smooth",
               });
 
@@ -411,7 +453,7 @@
         let current = "";
         sections.forEach((section) => {
           const sectionTop = section.offsetTop;
-          if (window.pageYOffset >= sectionTop - 100) {
+          if (window.pageYOffset >= sectionTop - 120) {
             current = section.getAttribute("id");
           }
         });
@@ -426,7 +468,7 @@
             }
           }
         });
-      });
+      }, { passive: true });
 
       // Custom style for skill badges
       const style = document.createElement("style");
@@ -455,6 +497,9 @@
       });
     })();
   </script>
+  <!-- VoiceOps AI Bot Embed for https://www.chichima.org/ -->
+  <script src="https://voiceops-ai-680018674242.us-east1.run.app/widget.js" data-client-id="client-chichima"
+    data-position="bottom-right" defer></script>
 </body>
 
 </html>

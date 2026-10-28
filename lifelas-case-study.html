@@ -33,10 +33,11 @@
             border: 1px solid rgba(148, 163, 184, 0.1);
         }
 
+        /* Reveal animation - visible by default */
         .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
         .reveal.visible {
@@ -1052,13 +1053,26 @@
             });
 
             const revealElements = document.querySelectorAll('.reveal');
+            function revealElementsVisible() {
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                revealElements.forEach((el) => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < vh + 50 && rect.bottom > -50) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+
             revealElements.forEach((el) => {
                 revealObserver.observe(el);
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    el.classList.add('visible');
-                }
             });
+
+            revealElementsVisible();
+            window.addEventListener('scroll', revealElementsVisible, { passive: true });
+            setTimeout(revealElementsVisible, 300);
+            setTimeout(() => {
+                revealElements.forEach((el) => el.classList.add('visible'));
+            }, 800);
 
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
