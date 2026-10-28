@@ -14,8 +14,8 @@
     <style>
       body {
         font-family: "Inter", sans-serif;
-        background-color: #fafaf9;
-        color: #111827; /* Gray-900 */
+        background-color: #0f172a;
+        color: #cbd5e1;
         overflow-x: hidden;
       }
 
@@ -42,16 +42,21 @@
       .link-underline {
         position: relative;
         text-decoration: none;
+        color: #cbd5e1;
+        transition: color 0.2s ease;
+      }
+      .link-underline:hover {
+        color: #ffffff;
       }
       .link-underline::after {
         content: "";
         position: absolute;
         width: 100%;
         transform: scaleX(0);
-        height: 1px;
+        height: 1.5px;
         bottom: -2px;
         left: 0;
-        background-color: #111827;
+        background-color: #6366f1;
         transform-origin: bottom right;
         transition: transform 0.3s ease-out;
       }
@@ -64,11 +69,11 @@
       .bubble-arena {
         position: relative;
         width: 100%;
-        height: 820px;
+        height: 800px;
         border-radius: 2rem;
-        background: radial-gradient(circle at 50% 20%, #ffffff, #f1f5f9 85%);
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+        background: radial-gradient(circle at 50% 25%, #1e293b 0%, #0f172a 85%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08);
         overflow: hidden;
         touch-action: none;
         user-select: none;
@@ -76,7 +81,7 @@
 
       @media (min-width: 1024px) {
         .bubble-arena {
-          height: 880px;
+          height: 840px;
         }
       }
 
@@ -91,9 +96,9 @@
         position: absolute;
         border-radius: 50%;
         pointer-events: none;
-        background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(224, 231, 255, 0.35) 60%, rgba(199, 210, 254, 0.15));
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8), 0 8px 24px rgba(99, 102, 241, 0.06);
+        background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.25), rgba(56, 189, 248, 0.1) 60%, transparent);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 8px 24px rgba(99, 102, 241, 0.15);
         animation: floatDrift 16s ease-in-out infinite alternate;
       }
 
@@ -132,12 +137,12 @@
         height: 100%;
         border-radius: 50%;
         overflow: hidden;
-        border: 2px solid rgba(255, 255, 255, 0.95);
+        border: 2px solid rgba(255, 255, 255, 0.25);
         box-shadow: 
-          0 22px 50px -10px rgba(15, 23, 42, 0.18),
-          0 10px 24px -6px rgba(15, 23, 42, 0.1),
-          inset 0 3px 8px rgba(255, 255, 255, 0.8),
-          inset 0 -6px 16px rgba(0, 0, 0, 0.15);
+          0 22px 50px -10px rgba(0, 0, 0, 0.6),
+          0 10px 24px -6px rgba(0, 0, 0, 0.4),
+          inset 0 3px 8px rgba(255, 255, 255, 0.3),
+          inset 0 -6px 16px rgba(0, 0, 0, 0.6);
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
       }
 
@@ -151,9 +156,9 @@
       .project-bubble:active .bubble-circle,
       .project-bubble.is-dragging .bubble-circle {
         box-shadow: 
-          0 35px 70px -12px rgba(15, 23, 42, 0.3),
-          0 0 0 3px rgba(255, 255, 255, 0.95),
-          inset 0 4px 10px rgba(255, 255, 255, 0.9);
+          0 35px 70px -12px rgba(0, 0, 0, 0.7),
+          0 0 0 3px rgba(255, 255, 255, 0.9),
+          inset 0 4px 10px rgba(255, 255, 255, 0.5);
       }
 
       .project-bubble:hover:not(.is-dragging) {
@@ -163,9 +168,9 @@
 
       .project-bubble:hover:not(.is-dragging) .bubble-circle {
         box-shadow: 
-          0 30px 65px -10px var(--bubble-glow, rgba(99, 102, 241, 0.45)),
-          0 0 0 2.5px rgba(255, 255, 255, 1),
-          inset 0 4px 12px rgba(255, 255, 255, 0.9);
+          0 30px 65px -10px var(--bubble-glow, rgba(99, 102, 241, 0.6)),
+          0 0 0 2.5px rgba(255, 255, 255, 0.95),
+          inset 0 4px 12px rgba(255, 255, 255, 0.6);
       }
 
       .bubble-image {
@@ -186,7 +191,7 @@
         inset: 0;
         border-radius: 50%;
         background: radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.3) 0%, transparent 60%),
-                    radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.2) 0%, transparent 70%);
+                    radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
         pointer-events: none;
         mix-blend-mode: overlay;
       }
@@ -209,14 +214,14 @@
         left: 50%;
         bottom: 14px;
         transform: translateX(-50%);
-        background: rgba(255, 255, 255, 0.94);
+        background: rgba(15, 23, 42, 0.88);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1.5px solid rgba(255, 255, 255, 0.95);
+        border: 1.5px solid rgba(255, 255, 255, 0.16);
         box-shadow: 
-          0 16px 36px -8px rgba(15, 23, 42, 0.16),
-          0 6px 14px -4px rgba(15, 23, 42, 0.08),
-          inset 0 1px 2px rgba(255, 255, 255, 1);
+          0 16px 36px -8px rgba(0, 0, 0, 0.6),
+          0 6px 14px -4px rgba(0, 0, 0, 0.4),
+          inset 0 1px 2px rgba(255, 255, 255, 0.2);
         padding: 0.5rem 1rem;
         border-radius: 1.25rem;
         white-space: nowrap;
@@ -232,15 +237,15 @@
       .project-bubble:hover .bubble-title-badge {
         transform: translateX(-50%) scale(1.06);
         box-shadow: 
-          0 20px 42px -8px rgba(15, 23, 42, 0.22),
-          0 0 0 2px var(--bubble-glow, rgba(99, 102, 241, 0.35));
+          0 20px 42px -8px rgba(0, 0, 0, 0.7),
+          0 0 0 2px var(--bubble-glow, rgba(99, 102, 241, 0.5));
       }
 
       @media (max-width: 640px) {
         .bubble-title-badge {
           bottom: 10px;
           padding: 0.35rem 0.75rem;
-          box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.25);
+          box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.5);
         }
         .bubble-badge-name {
           font-size: 0.95rem;
@@ -265,13 +270,13 @@
         font-family: "Lora", serif;
         font-size: 1.1rem;
         font-weight: 600;
-        color: #0f172a;
+        color: #ffffff;
         line-height: 1.2;
       }
 
       .bubble-badge-sub {
         font-size: 0.75rem;
-        color: #64748b;
+        color: #94a3b8;
         margin-top: 0.1rem;
         font-weight: 500;
       }
@@ -285,35 +290,47 @@
         border-radius: 9999px;
         font-size: 0.875rem;
         font-weight: 500;
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        color: #475569;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #94a3b8;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         transition: all 0.2s ease;
         cursor: pointer;
       }
 
       .control-pill:hover {
-        background: #f8fafc;
-        color: #0f172a;
-        border-color: #cbd5e1;
+        background: rgba(51, 65, 85, 0.9);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.2);
         transform: translateY(-1px);
       }
 
       .control-pill.active {
-        background: #0f172a;
+        background: #4f46e5;
         color: #ffffff;
-        border-color: #0f172a;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        border-color: #6366f1;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
       }
 
       /* Classic Grid View */
       .project-item {
         position: relative;
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1.5rem;
+        padding: 1.5rem;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .project-item:hover {
+        border-color: rgba(99, 102, 241, 0.4);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.1);
       }
 
       .project-image {
         transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border-radius: 1rem;
       }
 
       .project-item:hover .project-image {
@@ -326,9 +343,10 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.02);
+        background: rgba(0, 0, 0, 0.2);
         opacity: 0;
         transition: opacity 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border-radius: 1rem;
       }
 
       .project-item:hover .project-overlay {
@@ -342,7 +360,7 @@
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex items-center justify-between">
           <div class="text-xl font-medium font-serif">
-            <a href="index.html" class="link-underline">Chimezie Chima</a>
+            <a href="index.html" class="link-underline text-white">Chimezie Chima</a>
           </div>
           <nav class="hidden md:flex items-center space-x-8 text-base">
             <a href="index.html" class="link-underline">Home</a>
@@ -351,7 +369,7 @@
             <a href="mailto:chichima.designs@gmail.com" class="link-underline">Contact</a>
           </nav>
           <div class="md:hidden flex items-center">
-            <button id="mobile-menu-btn" type="button" class="text-gray-700 hover:text-black p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none" aria-label="Toggle navigation menu">
+            <button id="mobile-menu-btn" type="button" class="text-slate-300 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors focus:outline-none" aria-label="Toggle navigation menu">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
@@ -360,25 +378,25 @@
         </div>
       </div>
       <!-- Mobile dropdown menu -->
-      <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-md">
-        <a href="index.html" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Home</a>
-        <a href="#work" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Projects</a>
-        <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">About</a>
-        <a href="mailto:chichima.designs@gmail.com" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Contact</a>
+      <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
+        <a href="index.html" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Home</a>
+        <a href="#work" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Projects</a>
+        <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">About</a>
+        <a href="mailto:chichima.designs@gmail.com" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Contact</a>
       </div>
     </header>
 
     <main class="container mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section -->
-      <section class="pt-36 pb-16 md:pt-48 md:pb-20">
+      <section class="pt-28 pb-8 md:pt-36 md:pb-12">
         <div class="max-w-3xl">
-          <span class="inline-block text-xs font-bold tracking-widest uppercase text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full mb-4">Interactive Portfolio</span>
-          <h1 class="text-4xl md:text-6xl font-medium leading-tight reveal">
+          <span class="inline-block text-xs font-bold tracking-widest uppercase text-indigo-400 bg-indigo-950/80 border border-indigo-500/30 px-3 py-1.5 rounded-full mb-4">Interactive UI/UX Portfolio</span>
+          <h1 class="text-4xl md:text-6xl font-medium leading-tight text-white reveal">
             A UI/UX designer crafting thoughtful and user-centric digital
             experiences.
           </h1>
           <p
-            class="mt-6 text-lg text-gray-600 reveal"
+            class="mt-5 text-lg text-slate-300 reveal"
             style="transition-delay: 100ms"
           >
             Based in Ottawa, Canada. I focus on creating clean, elegant
@@ -392,13 +410,13 @@
         <!-- Interactive Header & View Controls -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h2 class="font-serif text-2xl md:text-3xl font-medium text-gray-900">Featured Projects</h2>
-            <p class="text-sm text-gray-500 mt-1">Grab, toss, or click any floating sphere to inspect case studies</p>
+            <h2 class="font-serif text-2xl md:text-3xl font-medium text-white">Featured Projects</h2>
+            <p class="text-sm text-slate-400 mt-1">Grab, toss, or click any floating sphere to inspect case studies</p>
           </div>
           
           <div class="flex flex-wrap items-center gap-2">
             <!-- View Toggle -->
-            <div class="inline-flex p-1 bg-gray-100 rounded-full border border-gray-200">
+            <div class="inline-flex p-1 bg-slate-900/90 rounded-full border border-slate-700/80">
               <button id="view-bubble-btn" class="control-pill active text-xs sm:text-sm !py-1.5 !px-3.5" onclick="setProjectView('bubble')">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="9"></circle>
@@ -446,8 +464,8 @@
           <div class="ambient-bubble" style="width: 60px; height: 60px; top: 10%; left: 50%; animation-delay: 5s;"></div>
 
           <!-- Helper tip pill -->
-          <div class="absolute top-4 left-1/2 -translate-x-1/2 pointer-events-none z-0 bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-slate-200/70 shadow-sm text-xs font-medium text-slate-600 flex items-center gap-2">
-            <svg class="w-3.5 h-3.5 text-slate-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div class="absolute top-4 left-1/2 -translate-x-1/2 pointer-events-none z-0 bg-slate-900/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-slate-700/80 shadow-sm text-xs font-medium text-slate-300 flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"></path>
             </svg>
             <span>Drag & throw bubbles around the arena &bull; Click to open case study</span>
@@ -458,7 +476,7 @@
             class="project-bubble"
             id="bubble-lifelas"
             data-url="lifelas-case-study.html"
-            style="--bubble-glow: rgba(56, 189, 248, 0.45);"
+            style="--bubble-glow: rgba(56, 189, 248, 0.6);"
             title="LifeLas Fintech App • Click to open case study"
           >
             <div class="bubble-circle">
@@ -467,7 +485,7 @@
               <div class="bubble-specular"></div>
             </div>
             <div class="bubble-title-badge">
-              <span class="bubble-badge-tag bg-sky-100 text-sky-700">Fintech AI</span>
+              <span class="bubble-badge-tag bg-sky-950/90 text-sky-300 border border-sky-500/30">Fintech AI</span>
               <h4 class="bubble-badge-name">LifeLas</h4>
               <p class="bubble-badge-sub">Mobile App</p>
             </div>
@@ -478,7 +496,7 @@
             class="project-bubble"
             id="bubble-rhythm"
             data-url="rhythm-case-study.html"
-            style="--bubble-glow: rgba(16, 185, 129, 0.45);"
+            style="--bubble-glow: rgba(16, 185, 129, 0.6);"
             title="Rhythm Wellness Platform • Click to open case study"
           >
             <div class="bubble-circle">
@@ -487,7 +505,7 @@
               <div class="bubble-specular"></div>
             </div>
             <div class="bubble-title-badge">
-              <span class="bubble-badge-tag bg-emerald-100 text-emerald-700">Health AI</span>
+              <span class="bubble-badge-tag bg-emerald-950/90 text-emerald-300 border border-emerald-500/30">Health AI</span>
               <h4 class="bubble-badge-name">Rhythm</h4>
               <p class="bubble-badge-sub">Wellness Platform</p>
             </div>
@@ -498,7 +516,7 @@
             class="project-bubble"
             id="bubble-atlas"
             data-url="atlas-case-study.html"
-            style="--bubble-glow: rgba(245, 158, 11, 0.45);"
+            style="--bubble-glow: rgba(245, 158, 11, 0.6);"
             title="Atlas AI Travel Planner • Click to open case study"
           >
             <div class="bubble-circle">
@@ -507,7 +525,7 @@
               <div class="bubble-specular"></div>
             </div>
             <div class="bubble-title-badge">
-              <span class="bubble-badge-tag bg-amber-100 text-amber-700">Travel Agent</span>
+              <span class="bubble-badge-tag bg-amber-950/90 text-amber-300 border border-amber-500/30">Travel Agent</span>
               <h4 class="bubble-badge-name">Atlas</h4>
               <p class="bubble-badge-sub">AI Travel Planner</p>
             </div>
@@ -518,7 +536,7 @@
             class="project-bubble"
             id="bubble-prism"
             data-url="prism-case-study.html"
-            style="--bubble-glow: rgba(168, 85, 247, 0.45);"
+            style="--bubble-glow: rgba(168, 85, 247, 0.6);"
             title="Prism Eco-commerce Store • Click to open case study"
           >
             <div class="bubble-circle">
@@ -527,7 +545,7 @@
               <div class="bubble-specular"></div>
             </div>
             <div class="bubble-title-badge">
-              <span class="bubble-badge-tag bg-purple-100 text-purple-700">AR Commerce</span>
+              <span class="bubble-badge-tag bg-purple-950/90 text-purple-300 border border-purple-500/30">AR Commerce</span>
               <h4 class="bubble-badge-name">Prism</h4>
               <p class="bubble-badge-sub">Eco-Commerce Store</p>
             </div>
@@ -537,11 +555,11 @@
         <!-- VIEW 2: Traditional Grid View (Toggled via button) -->
         <div
           id="grid-container"
-          class="hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 md:gap-y-24"
+          class="hidden grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 md:gap-y-16"
         >
           <!-- Project 1 -->
           <a href="lifelas-case-study.html" class="project-item group reveal">
-            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
+            <div class="overflow-hidden mb-6 bg-slate-950 rounded-2xl border border-slate-800">
               <img
                 src="Assets/Lifelas/LifeLas_Project.png"
                 alt="Fintech App"
@@ -549,19 +567,20 @@
               />
               <div class="project-overlay"></div>
             </div>
-            <h3 class="font-serif text-2xl font-medium">Fintech Mobile App</h3>
-            <p class="text-gray-600 mt-2">
-              LifeLas empowers users to design their financial future with
-              visual clarity and confidence.
+            <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-sky-950/80 text-sky-400 border border-sky-800/40 mb-2">Fintech AI</span>
+            <h3 class="font-serif text-2xl font-medium text-white group-hover:text-sky-300 transition-colors">LifeLas Mobile App</h3>
+            <p class="text-slate-400 mt-2 text-sm leading-relaxed">
+              Empowers users to design their financial future with
+              visual clarity and confidence through gamified goal tracking.
             </p>
           </a>
 
           <!-- Project 2 -->
           <a
             href="rhythm-case-study.html"
-            class="project-item group reveal md:mt-16"
+            class="project-item group reveal md:mt-12"
           >
-            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
+            <div class="overflow-hidden mb-6 bg-slate-950 rounded-2xl border border-slate-800">
               <img
                 src="Assets/Wellness_app/Wellness_app.png"
                 alt="Wellness Platform"
@@ -569,16 +588,17 @@
               />
               <div class="project-overlay"></div>
             </div>
-            <h3 class="font-serif text-2xl font-medium">Wellness Platform</h3>
-            <p class="text-gray-600 mt-2">
-              Helping users improve their metabolism through intelligent meal
-              tracking and personalized insights.
+            <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-800/40 mb-2">Health AI</span>
+            <h3 class="font-serif text-2xl font-medium text-white group-hover:text-emerald-300 transition-colors">Rhythm Wellness Platform</h3>
+            <p class="text-slate-400 mt-2 text-sm leading-relaxed">
+              Helping users improve their metabolic health through intelligent meal
+              tracking and personalized circadian rhythm insights.
             </p>
           </a>
 
           <!-- Project 3 -->
           <a href="atlas-case-study.html" class="project-item group reveal">
-            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
+            <div class="overflow-hidden mb-6 bg-slate-950 rounded-2xl border border-slate-800">
               <img
                 src="Assets/atlas/atlas_card.png"
                 alt="Travel Planner"
@@ -586,19 +606,20 @@
               />
               <div class="project-overlay"></div>
             </div>
-            <h3 class="font-serif text-2xl font-medium">AI Travel Planner</h3>
-            <p class="text-gray-600 mt-2">
-              Transforming travel from a series of stressful decisions into a
-              seamless, personal story through intelligent journey weaving.
+            <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-950/80 text-amber-400 border border-amber-800/40 mb-2">Travel Agent</span>
+            <h3 class="font-serif text-2xl font-medium text-white group-hover:text-amber-300 transition-colors">Atlas AI Travel Planner</h3>
+            <p class="text-slate-400 mt-2 text-sm leading-relaxed">
+              Transforming travel from stressful planning into a seamless,
+              personal journey with adaptive intelligent itinerary weaving.
             </p>
           </a>
 
           <!-- Project 4 -->
           <a
             href="prism-case-study.html"
-            class="project-item group reveal md:mt-16"
+            class="project-item group reveal md:mt-12"
           >
-            <div class="overflow-hidden mb-6 bg-gray-100 rounded-2xl">
+            <div class="overflow-hidden mb-6 bg-slate-950 rounded-2xl border border-slate-800">
               <img
                 src="Assets/prism/prism_card.png"
                 alt="Eco-commerce"
@@ -606,22 +627,23 @@
               />
               <div class="project-overlay"></div>
             </div>
-            <h3 class="font-serif text-2xl font-medium">Eco-commerce Store</h3>
-            <p class="text-gray-600 mt-2">
+            <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-950/80 text-purple-400 border border-purple-800/40 mb-2">AR Commerce</span>
+            <h3 class="font-serif text-2xl font-medium text-white group-hover:text-purple-300 transition-colors">Prism Eco-commerce Store</h3>
+            <p class="text-slate-400 mt-2 text-sm leading-relaxed">
               A UI/UX case study on a futuristic e-commerce app that empowers
-              users to find the best deals through AI and Augmented Reality.
+              users to find sustainable deals through AI and Augmented Reality.
             </p>
           </a>
         </div>
       </section>
 
       <!-- About Section -->
-      <section id="about" class="py-24 md:py-32 border-t border-gray-200">
+      <section id="about" class="py-20 md:py-28 border-t border-slate-800/80">
         <div class="max-w-3xl reveal">
-          <h2 class="font-serif text-3xl md:text-4xl font-medium">
+          <h2 class="font-serif text-3xl md:text-4xl font-medium text-white">
             My process is rooted in empathy and a constant pursuit of clarity.
           </h2>
-          <p class="mt-6 text-lg text-gray-600">
+          <p class="mt-6 text-lg text-slate-300 leading-relaxed">
             I believe great design is not just about aesthetics, but about
             understanding the user's needs to create a seamless, enjoyable
             journey. From initial research and wireframing to high-fidelity
@@ -633,34 +655,34 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-16 border-t border-gray-200">
+    <footer class="py-16 border-t border-slate-800/80">
       <div
         class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-8"
       >
         <div class="text-center md:text-left">
-          <h3 class="font-serif text-2xl font-medium">
+          <h3 class="font-serif text-2xl font-medium text-white">
             Let's create something together.
           </h3>
           <a
             href="mailto:chichima.designs@gmail.com"
-            class="text-lg text-gray-600 hover:text-black link-underline"
+            class="text-lg text-slate-400 hover:text-white link-underline"
             >chichima.designs@gmail.com</a
           >
         </div>
-        <div class="flex space-x-6 text-gray-500">
+        <div class="flex space-x-6 text-slate-400">
           <a
             href="https://github.com/chizTheDeveloper"
-            class="hover:text-black transition-colors"
+            class="hover:text-white transition-colors"
             >GitHub</a
           >
           <a
             href="https://www.linkedin.com/in/chimezie-chima-253762186/"
-            class="hover:text-black transition-colors"
+            class="hover:text-white transition-colors"
             >LinkedIn</a
           >
           <a
             href="https://www.behance.net/chimeziechima"
-            class="hover:text-black transition-colors"
+            class="hover:text-white transition-colors"
             >Behance</a
           >
         </div>
@@ -1153,7 +1175,7 @@
         }
       })();
     </script>
-  <!-- VoiceOps AI Bot Embed for https://www.chichima.org/ -->
-  <script src="https://voiceops-ai-680018674242.us-east1.run.app/widget.js" data-client-id="client-chichima" data-position="bottom-right" defer></script>
+  <!-- Chimezie Chima AI Voice & Interactive Assistant -->
+  <script src="voice-assistant.js" defer></script>
 </body>
 </html>
